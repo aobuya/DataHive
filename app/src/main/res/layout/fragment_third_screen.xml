@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    tools:context=".introslider.ThirdScreen">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:text="@string/skip"
+        android:textSize="12sp"
+        android:textColor="@color/black"/>
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="8dp" />
+
+    <ImageView
+        android:id="@+id/observe_data"
+        android:layout_width="match_parent"
+        android:layout_height="460dp"
+        android:src="@drawable/observe_data"
+        android:contentDescription="@string/TODO" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="32dp" />
+
+    <TextView
+        android:id="@+id/third_screen_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/third_screen_title_text"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"/>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="18dp" />
+
+    <TextView
+        android:id="@+id/third_screen_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/third_screen_description_text"
+        android:textSize="18sp"
+        android:textColor="@color/black"/>
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="48dp"/>
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/check"
+        android:layout_gravity="end"
+        android:contentDescription="@string/TODO"/>
+
+
+</LinearLayout>
