@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager2.widget.ViewPager2
-import com.example.datahive.R
 import com.example.datahive.databinding.FragmentViewPagerBinding
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
 
@@ -37,8 +36,8 @@ class ViewPager : Fragment() {
         wormDotsIndicator.attachTo(viewPager2)
 
         /*TODO
-            Debug
-        */
+            Change dot indicator colors based on current screen
+
         when (viewPager2.currentItem) {
             0 -> {
                 wormDotsIndicator.setDotIndicatorColor(R.color.black)
@@ -53,7 +52,9 @@ class ViewPager : Fragment() {
                 wormDotsIndicator.setDotIndicatorColor(R.color.black)
                 wormDotsIndicator.setStrokeDotsIndicatorColor(R.color.bee_yellow)
             }
+
         }
+         */
 
         return binding.root
 
