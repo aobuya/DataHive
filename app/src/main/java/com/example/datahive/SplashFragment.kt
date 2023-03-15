@@ -1,7 +1,6 @@
 package com.example.datahive
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -26,7 +25,7 @@ class SplashFragment : Fragment() {
 
         Handler(Looper.getMainLooper()).postDelayed({
             if(finishedOnBoarding()) {
-                findNavController().navigate(R.id.action_splashFragment_to_homeFragment)
+                findNavController().navigate(R.id.action_splashFragment_to_lobbyFragment)
             }
                 else {
                     findNavController().navigate(R.id.action_splashFragment_to_viewPager)
