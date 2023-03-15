@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import androidx.viewpager2.widget.ViewPager2
 import com.example.datahive.R
 import com.example.datahive.databinding.FragmentFirstScreenBinding
 
@@ -24,10 +25,15 @@ class FirstScreen : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentFirstScreenBinding.inflate(inflater, container, false)
 
+        val viewPager = activity?.findViewById<ViewPager2>(R.id.viewPager2)
+
         binding.firstScreenSkipButton.setOnClickListener {
             
             findNavController().navigate(R.id.action_viewPager_to_lobbyFragment)
             finishedOnBoarding()
+        }
+        binding.firstScreenRightArrow.setOnClickListener {
+            viewPager?.currentItem = 1
         }
 
 

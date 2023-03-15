@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import androidx.viewpager2.widget.ViewPager2
 import com.example.datahive.R
 import com.example.datahive.databinding.FragmentSecondScreenBinding
 
@@ -23,9 +24,15 @@ class SecondScreen : Fragment() {
         
         _binding = FragmentSecondScreenBinding.inflate(inflater, container, false)
         
+        val viewPager = activity?.findViewById<ViewPager2>(R.id.viewPager2)
+        
         binding.secondScreenSkipButton.setOnClickListener { 
             findNavController().navigate(R.id.action_viewPager_to_lobbyFragment)
             finishedOnBoarding()
+        }
+
+        binding.secondScreenArrowRight.setOnClickListener {
+            viewPager?.currentItem = 2
         }
         
         

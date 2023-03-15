@@ -17,25 +17,22 @@ class SplashFragment : Fragment() {
     private val binding get() = _binding!!
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-            _binding = FragmentSplashBinding.inflate(inflater, container, false)
+        _binding = FragmentSplashBinding.inflate(inflater, container, false)
 
         Handler(Looper.getMainLooper()).postDelayed({
-            if(finishedOnBoarding()) {
+            if (finishedOnBoarding()) {
                 findNavController().navigate(R.id.action_splashFragment_to_lobbyFragment)
+            } else {
+                findNavController().navigate(R.id.action_splashFragment_to_viewPager)
             }
-                else {
-                    findNavController().navigate(R.id.action_splashFragment_to_viewPager)
-                }
-        },2000)
-            return binding.root
+        }, 2000)
+        return binding.root
 
     }
 
-     private fun finishedOnBoarding(): Boolean{
+    private fun finishedOnBoarding(): Boolean {
 
         val sharedPref = requireActivity().getSharedPreferences("onBoarding", Context.MODE_PRIVATE)
         return sharedPref.getBoolean("Finished", false)
