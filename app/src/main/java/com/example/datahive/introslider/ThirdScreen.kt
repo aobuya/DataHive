@@ -11,25 +11,22 @@ import com.example.datahive.databinding.FragmentThirdScreenBinding
 
 
 class ThirdScreen : Fragment() {
-    
+
     private var _binding: FragmentThirdScreenBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        
+
         //inflate layout for this fragment
         _binding = FragmentThirdScreenBinding.inflate(inflater, container, false)
 
         finishedOnBoarding()
-        
-        
-        
-        
+
         return binding.root
     }
+
     private fun finishedOnBoarding() {
         val sharedPref = requireActivity().getSharedPreferences("onBoarding", Context.MODE_PRIVATE)
         val editor = sharedPref.edit()
@@ -37,10 +34,10 @@ class ThirdScreen : Fragment() {
         editor.putBoolean("Finished", true)
         editor.apply()
     }
-    
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-   
+
 }
