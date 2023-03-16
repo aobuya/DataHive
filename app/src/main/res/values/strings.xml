@@ -12,4 +12,17 @@
     <string name="skip">SKIP</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <!--New string Block -->
+    <string name="email">Email</string>
+    <string name="e_mail">Enter email</string>
+    <string name="reg_tag">Create your account here</string>
+    <string name="password">Enter Password</string>
+    <string name="Register">Create account</string>
+    <string name="login">Register</string>
+    <string name="log_tag">Sign in using your account</string>
+    <string name="log">Login</string>
+    <string name="forgot_password">Forgot password? Click here to reset</string>
+    <string name="cn_password">Confirm password</string>
+    <string name="red_tag">Already have an account? Sign in here</string>
 </resources>
