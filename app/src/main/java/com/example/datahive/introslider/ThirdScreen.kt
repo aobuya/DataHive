@@ -25,9 +25,9 @@ class ThirdScreen : Fragment() {
         _binding = FragmentThirdScreenBinding.inflate(inflater, container, false)
 
         finishedOnBoarding()
-        
-        binding.finish.setOnClickListener { 
-            findNavController().navigate(R.id.action_viewPager_to_lobbyFragment)
+
+        binding.finish.setOnClickListener {
+            findNavController().navigate(R.id.action_viewPager_to_SignupFragment)
         }
 
         return binding.root

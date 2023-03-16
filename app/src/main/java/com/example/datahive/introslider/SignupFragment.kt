@@ -1,5 +1,12 @@
 package com.example.datahive.introslider
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import com.example.datahive.R
+
 /**
  * A simple [Fragment] subclass.
  * Use the [SignupFragment.newInstance] factory method to
