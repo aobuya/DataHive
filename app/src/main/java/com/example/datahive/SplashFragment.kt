@@ -24,8 +24,7 @@ class SplashFragment : Fragment() {
 
         Handler(Looper.getMainLooper()).postDelayed({
             if (finishedOnBoarding()) {
-                val intent = Intent(activity, LogInActivity::class.java)
-                activity?.startActivity(intent)
+                findNavController().navigate(R.id.action_viewPager_to_LobbyFragment)
             } else {
                 findNavController().navigate(R.id.action_splashFragment_to_viewPager)
             }

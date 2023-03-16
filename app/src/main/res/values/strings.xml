@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">DataHive</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <!-- Onboarding screens -->
     <string name="TODO">TODO</string>
     <string name="logo_description">DataHive Logo</string>
     <string name="first_screen_title_text">Set your goals</string>
@@ -9,7 +9,7 @@
     <string name="second_description_text">Input your data manually or connect your device for automatic tracking</string>
     <string name="third_screen_title_text">Track Progress</string>
     <string name="third_screen_description_text">Check out charts and graphs to monitor your progress</string>
-    <string name="skip">SKIP</string>
+    <string name="skip">Skip</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <!-- TODO: Remove or change this placeholder text -->
@@ -25,4 +25,9 @@
     <string name="forgot_password">Forgot password? Click here to reset</string>
     <string name="cn_password">Confirm password</string>
     <string name="red_tag">Already have an account? Sign in here</string>
+
+    <!--Getting started screen-->
+    <string name="lobby_title">Welcome to Data Hive!</string>
+    <string name="lobby_description">Never Miss a Beat. Stay on Track with Personalized Data Insights</string>
+    <string name="lobby_button">Get Started</string>
 </resources>
