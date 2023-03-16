@@ -29,7 +29,7 @@ class FirstScreen : Fragment() {
 
         binding.firstScreenSkipButton.setOnClickListener {
             
-            findNavController().navigate(R.id.action_viewPager_to_lobbyFragment)
+            findNavController().navigate(R.id.action_viewPager_to_SignupFragment)
             finishedOnBoarding()
         }
         binding.firstScreenRightArrow.setOnClickListener {
