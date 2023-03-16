@@ -1,6 +1,7 @@
 package com.example.datahive
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -23,7 +24,8 @@ class SplashFragment : Fragment() {
 
         Handler(Looper.getMainLooper()).postDelayed({
             if (finishedOnBoarding()) {
-                findNavController().navigate(R.id.action_viewPager_to_SignupFragment)
+                val intent = Intent(activity, LogInActivity::class.java)
+                activity?.startActivity(intent)
             } else {
                 findNavController().navigate(R.id.action_splashFragment_to_viewPager)
             }
