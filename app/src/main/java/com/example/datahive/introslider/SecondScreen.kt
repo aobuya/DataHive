@@ -29,8 +29,7 @@ class SecondScreen : Fragment() {
         val viewPager = activity?.findViewById<ViewPager2>(R.id.viewPager2)
         
         binding.secondScreenSkipButton.setOnClickListener {
-            val intent = Intent(activity, LogInActivity::class.java)
-            activity?.startActivity(intent)
+            findNavController().navigate(R.id.action_viewPager_to_LobbyFragment)
             finishedOnBoarding()
         }
 

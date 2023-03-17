@@ -81,7 +81,6 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="15dp"
-
         android:textColor="@android:color/white"
         android:text="@string/login"/>
     <TextView
@@ -91,16 +90,18 @@
         android:fontFamily="@font/asap_italic_variablefont_wdth_wght"
         android:text="@string/red_tag"
         android:textSize="17sp"
-
         android:layout_marginStart="25dp"
         android:layout_marginBottom="50dp"
         android:layout_below="@id/btn_login"/>
 
     <ImageView
-        android:layout_margin="10px"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:src="@drawable/hive"
-        android:layout_centerHorizontal="true"/>
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/hive" />
 
 </RelativeLayout>
