@@ -23,7 +23,7 @@ class LobbyFragment : Fragment() {
 
         binding.getStartedButton.setOnClickListener {
             requireActivity().run {
-                startActivity(Intent(this, SignUpActivity::class.java))
+                startActivity(Intent(this, LogInActivity::class.java))
                 finish()
             }
         }

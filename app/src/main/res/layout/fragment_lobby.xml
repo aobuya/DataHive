@@ -36,8 +36,7 @@
         android:layout_height="wrap_content"
         android:text="@string/lobby_description"
         android:gravity="center"
-        android:fontFamily="@font/asap_variablefont_wdthwght"
-        style="@style/MaterialAlertDialog.Material3.Body.Text"/>
+        android:fontFamily="@font/asap_variablefont_wdthwght"/>
     <Space
         android:layout_width="match_parent"
         android:layout_height="18dp"/>
