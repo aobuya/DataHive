@@ -1,5 +1,6 @@
 package com.example.datahive
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.datahive.databinding.ActivityLogInBinding
@@ -16,5 +17,10 @@ class LogInActivity : AppCompatActivity() {
         setContentView(view)
 
         supportActionBar?.hide()
+
+        binding.btnLogin.setOnClickListener{
+            val intent = Intent(this, Dashboard::class.java)
+            this?.startActivity(intent)
+        }
     }
 }

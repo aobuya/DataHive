@@ -3,18 +3,27 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-sdk tools:overrideLibrary="androidx.core.splashscreen" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" tools:ignore="ProtectedPermissions" />
+
+
+
 
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/hive"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.DataHive"
         tools:targetApi="31">
         <activity
+
+            android:name=".Dashboard"
+
             android:name=".SignUpActivity"
+
             android:exported="false" />
         <activity
             android:name=".LogInActivity"
