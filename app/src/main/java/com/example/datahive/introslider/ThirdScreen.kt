@@ -16,7 +16,8 @@ import com.example.datahive.databinding.FragmentThirdScreenBinding
 
 class ThirdScreen : Fragment() {
 
-    private var binding: FragmentThirdScreenBinding? = null
+    private var _binding: FragmentThirdScreenBinding? = null
+    private val binding get() = _binding!!
 
 
 
@@ -25,17 +26,15 @@ class ThirdScreen : Fragment() {
     ): View? {
 
         //inflate layout for this fragment
-        binding = FragmentThirdScreenBinding.inflate(inflater, container, false)
+        _binding = FragmentThirdScreenBinding.inflate(inflater, container, false)
 
         finishedOnBoarding()
 
-        binding!!.finish.setOnClickListener {
-
-            val intent = Intent(activity, LogInActivity::class.java)
-            activity?.startActivity(intent)
+        binding.finish.setOnClickListener {
+            findNavController().navigate(R.id.action_viewPager_to_LobbyFragment)
         }
 
-        return binding!!.root
+        return binding.root
     }
 
     private fun finishedOnBoarding() {
@@ -48,7 +47,7 @@ class ThirdScreen : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding = null
+        _binding = null
     }
 
 }

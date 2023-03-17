@@ -19,7 +19,11 @@
         android:theme="@style/Theme.DataHive"
         tools:targetApi="31">
         <activity
+
             android:name=".Dashboard"
+
+            android:name=".SignUpActivity"
+
             android:exported="false" />
         <activity
             android:name=".LogInActivity"

@@ -31,8 +31,7 @@ class FirstScreen : Fragment() {
 
         binding.firstScreenSkipButton.setOnClickListener {
 
-            val intent = Intent(activity, LogInActivity::class.java)
-            activity?.startActivity(intent)
+            findNavController().navigate(R.id.action_viewPager_to_LobbyFragment)
             finishedOnBoarding()
         }
         binding.firstScreenRightArrow.setOnClickListener {
