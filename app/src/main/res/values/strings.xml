@@ -25,4 +25,6 @@
     <string name="forgot_password">Forgot password? Click here to reset</string>
     <string name="cn_password">Confirm password</string>
     <string name="red_tag">Already have an account? Sign in here</string>
+    <string name="dataUsage">Data Usage</string>
+    <string name="mbs">10 Mbs</string>
 </resources>
