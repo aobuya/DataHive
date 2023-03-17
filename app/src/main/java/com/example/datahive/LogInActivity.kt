@@ -1,5 +1,6 @@
 package com.example.datahive
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -39,6 +40,9 @@ class LogInActivity : AppCompatActivity() {
                 dataHiveAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
                     if(it.isSuccessful) {
                         Toast.makeText(this,"Account created successfully",Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this, Dashboard::class.java)
+                        startActivity(intent)
+
                     }else{
                         Toast.makeText(this,it.exception.toString(),Toast.LENGTH_SHORT).show()
                     }
@@ -48,7 +52,7 @@ class LogInActivity : AppCompatActivity() {
             }
 
         }else{
-            Toast.makeText(this,"Email and passowrd cannot be empty",Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,"Email and password cannot be empty",Toast.LENGTH_SHORT).show()
         }
 
 

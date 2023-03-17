@@ -13,7 +13,6 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:padding="16dp"
-        android:fontFamily="@font/asap_italic_variablefont_wdth_wght"
         android:text="Top 5 Apps by Data Usage"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
@@ -33,7 +32,6 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:text="@string/dataUsage"
-            android:fontFamily="@font/asap_variablefont_wdthwght"
             android:textColor="#000000"
             android:textSize="18sp"/>
 
@@ -44,7 +42,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/mbs"
-            android:fontFamily="@font/asap_variablefont_wdthwght"
             android:textColor="#000000"
             android:textSize="32sp" />
 
