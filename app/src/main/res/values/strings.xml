@@ -19,7 +19,7 @@
     <string name="reg_tag">Create your account here</string>
     <string name="password">Enter Password</string>
     <string name="Register">Create account</string>
-    <string name="login">Register</string>
+    <string name="login">Login</string>
     <string name="log_tag">Sign in using your account</string>
     <string name="log">Login</string>
     <string name="forgot_password">Forgot password? Click here to reset</string>
