@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import com.example.datahive.Dashboard
 import com.example.datahive.login.SignUpActivity
 import com.example.datahive.databinding.FragmentLobbyBinding
+import com.example.datahive.holder.MainNavigation
 import com.example.datahive.login.RegisterActivity
 import com.google.firebase.auth.FirebaseAuth
 
@@ -31,7 +32,7 @@ class LobbyFragment : Fragment() {
         if (user != null) {
 
             // The user is logged in, move to the dashboard activity
-            val intent = Intent(requireActivity(), Dashboard::class.java)
+            val intent = Intent(requireActivity(), MainNavigation::class.java)
             startActivity(intent)
             requireActivity().finish()
         } else {
