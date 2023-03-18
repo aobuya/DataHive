@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".holder.NavDashboard">
+
+    <include layout="@layout/toolbar"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="?attr/actionBarSize">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:padding="16dp"
+            android:fontFamily="@font/asap_variablefont_wdthwght"
+            android:text="Top 5 Apps by Data Usage"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+        <androidx.cardview.widget.CardView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/cardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:background="@drawable/et_custom"
+            android:elevation="8dp"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/topLeftTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="@string/dataUsage"
+                android:fontFamily="@font/asap_variablefont_wdthwght"
+                android:textColor="#000000"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:id="@+id/centerTextView"
+                android:layout_margin="30dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/asap_variablefont_wdthwght"
+                android:text="@string/mbs"
+                android:textColor="#000000"
+                android:textSize="32sp" />
+
+        </androidx.cardview.widget.CardView>
+
+        <ListView
+            android:id="@+id/apps_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/asap_variablefont_wdthwght"
+            android:divider="@null"
+            android:dividerHeight="0dp" />
+
+    </LinearLayout>
+</FrameLayout>
