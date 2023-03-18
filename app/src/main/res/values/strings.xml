@@ -19,7 +19,7 @@
     <string name="reg_tag">Create your account here</string>
     <string name="password">Enter Password</string>
     <string name="Register">Create account</string>
-    <string name="login">Register</string>
+    <string name="login">Log in</string>
     <string name="log_tag">Sign in using your account</string>
     <string name="log">Login</string>
     <string name="forgot_password">Forgot password? Click here to reset</string>
@@ -32,4 +32,8 @@
     <string name="lobby_button">Get Started</string>
     <string name="dataUsage">Data Usage</string>
     <string name="mbs">10 Mbs</string>
+    <string name="reset_tag">Reset Password</string>
+    <string name="reset_email_tx">Enter email here</string>
+    <string name="reset_email_btn">Reset Password</string>
+    <string name="login_tag">Login here</string>
 </resources>

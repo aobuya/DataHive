@@ -6,9 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.datahive.LogInActivity
-import com.example.datahive.SignUpActivity
+import com.example.datahive.Dashboard
+import com.example.datahive.login.SignUpActivity
 import com.example.datahive.databinding.FragmentLobbyBinding
+import com.example.datahive.login.RegisterActivity
+import com.google.firebase.auth.FirebaseAuth
 
 class LobbyFragment : Fragment() {
 
@@ -21,16 +23,31 @@ class LobbyFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentLobbyBinding.inflate(inflater, container, false)
 
-        binding.getStartedButton.setOnClickListener {
-            requireActivity().run {
-                startActivity(Intent(this, LogInActivity::class.java))
-                finish()
+        // Get the current user from Firebase
+        val user = FirebaseAuth.getInstance().currentUser
+
+
+        // Check if the user is null or not
+        if (user != null) {
+
+            // The user is logged in, move to the dashboard activity
+            val intent = Intent(requireActivity(), Dashboard::class.java)
+            startActivity(intent)
+            requireActivity().finish()
+        } else {
+            // The user is not logged in, show the lobby fragment
+
+            binding.getStartedButton.setOnClickListener {
+                requireActivity().run {
+                    startActivity(Intent(this, RegisterActivity::class.java))
+                    finish()
+                }
             }
-        }
-        binding.passRedirect.setOnClickListener {
-            requireActivity().run {
-                startActivity(Intent(this, LogInActivity::class.java))
-                finish()
+            binding.passRedirect.setOnClickListener {
+                requireActivity().run {
+                    startActivity(Intent(this, SignUpActivity::class.java))
+                    finish()
+                }
             }
         }
 

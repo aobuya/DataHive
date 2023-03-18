@@ -3,16 +3,15 @@ package com.example.datahive
 import android.app.usage.UsageStats
 import android.app.usage.UsageStatsManager
 import android.content.Context
-import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.datahive.databinding.ActivityDashboardBinding
 import java.util.*
 import android.widget.ArrayAdapter
+import android.os.Build
 
 
 class Dashboard : AppCompatActivity() {
@@ -20,7 +19,7 @@ class Dashboard : AppCompatActivity() {
     private lateinit var binding: ActivityDashboardBinding
     private lateinit var packageManager: PackageManager
     private lateinit var usageStatsManager: UsageStatsManager
-    private val MY_PERMISSIONS_REQUEST_PACKAGE_USAGE_STATS = 100
+    private val myPermissions = 100
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,62 +29,74 @@ class Dashboard : AppCompatActivity() {
         setContentView(view)
         //val listView = findViewById<ListView>(R.id.listView)
         usageStatsManager = getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
+        packageManager = applicationContext.packageManager
 
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.PACKAGE_USAGE_STATS) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.PACKAGE_USAGE_STATS), MY_PERMISSIONS_REQUEST_PACKAGE_USAGE_STATS)
+
+        if (ContextCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.PACKAGE_USAGE_STATS
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(android.Manifest.permission.PACKAGE_USAGE_STATS),
+                myPermissions
+            )
         } else {
             getUsageStats()
         }
     }
 
+
     private fun getUsageStats() {
-        val calendar = Calendar.getInstance()
-        calendar.add(Calendar.DAY_OF_MONTH, -7) // get stats for last 7 days
-        val startTime = calendar.timeInMillis
-        val endTime = System.currentTimeMillis()
+            val calendar = Calendar.getInstance()
+            calendar.add(Calendar.DAY_OF_MONTH, -7) // get stats for last 7 days
+            val startTime = calendar.timeInMillis
+            val endTime = System.currentTimeMillis()
 
-        val usageStatsList = usageStatsManager.queryUsageStats(UsageStatsManager.INTERVAL_DAILY, startTime, endTime)
+            val usageStatsList = usageStatsManager.queryUsageStats(UsageStatsManager.INTERVAL_DAILY, startTime, endTime)
 
-        if (usageStatsList.isNotEmpty()) {
-            usageStatsList.sortByDescending { usageStats ->
-                try {
-                    val fieldRx = UsageStats::class.java.getDeclaredField("totalRxBytes")
-                    val fieldTx = UsageStats::class.java.getDeclaredField("totalTxBytes")
-                    fieldRx.isAccessible = true
-                    fieldTx.isAccessible = true
-                    (fieldRx.getLong(usageStats) + fieldTx.getLong(usageStats)).compareTo(
-                        fieldRx.getLong(usageStatsList[0]) + fieldTx.getLong(usageStatsList[0])
-                    )
-                } catch (e: Exception) {
-                    0
-                }
-            }
-
-            val topApps = mutableListOf<Pair<String, Long>>()
-            for (i in 0 until minOf(usageStatsList.size, 5)) {
-                val usageStats = usageStatsList[i]
-                       try {
-                    val applicationInfo = packageManager.getApplicationInfo(usageStats.packageName, 0)
-                    val appName = applicationInfo.loadLabel(packageManager).toString()
-                    val dataUsage = try {
+            if (usageStatsList.isNotEmpty()) {
+                usageStatsList.sortByDescending { usageStats ->
+                    try {
                         val fieldRx = UsageStats::class.java.getDeclaredField("totalRxBytes")
                         val fieldTx = UsageStats::class.java.getDeclaredField("totalTxBytes")
                         fieldRx.isAccessible = true
                         fieldTx.isAccessible = true
-                        fieldRx.getLong(usageStats) + fieldTx.getLong(usageStats)
+                        (fieldRx.getLong(usageStats) + fieldTx.getLong(usageStats)).compareTo(
+                            fieldRx.getLong(usageStatsList[0]) + fieldTx.getLong(usageStatsList[0])
+                        )
                     } catch (e: Exception) {
-                        0L
+                        0
                     }
-                    topApps.add(Pair(appName, dataUsage))
-                } catch (e: PackageManager.NameNotFoundException) {
-                    e.printStackTrace()
                 }
-            }
-            binding.appsList.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, topApps)
 
+                val topApps = mutableListOf<Pair<String, Long>>()
+                for (i in 0 until minOf(usageStatsList.size, 5)) {
+                    val usageStats = usageStatsList[i]
+                           try {
+                        val applicationInfo = packageManager.getApplicationInfo(usageStats.packageName, 0)
+                        val appName = applicationInfo.loadLabel(packageManager).toString()
+                        val dataUsage = try {
+                            val fieldRx = UsageStats::class.java.getDeclaredField("totalRxBytes")
+                            val fieldTx = UsageStats::class.java.getDeclaredField("totalTxBytes")
+                            fieldRx.isAccessible = true
+                            fieldTx.isAccessible = true
+                            fieldRx.getLong(usageStats) + fieldTx.getLong(usageStats)
+                        } catch (e: Exception) {
+                            0L
+                        }
+                        topApps.add(Pair(appName, dataUsage))
+                    } catch (e: PackageManager.NameNotFoundException) {
+                        e.printStackTrace()
+                    }
+                }
+                binding.appsList.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, topApps)
+
+            }
         }
-    }
 }
+
 
 //backup ---- code :)
 /**usageStatsList = mutableListOf()
@@ -126,7 +137,7 @@ class Dashboard : AppCompatActivity() {
             ActivityCompat.requestPermissions(
                 this,
                 arrayOf(Manifest.permission.PACKAGE_USAGE_STATS),
-                MY_PERMISSIONS_REQUEST_PACKAGE_USAGE_STATS
+                MyPermissions
             )
         }
     }
@@ -155,7 +166,7 @@ class Dashboard : AppCompatActivity() {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == MY_PERMISSIONS_REQUEST_PACKAGE_USAGE_STATS) {
+        if (requestCode == MyPermissions) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 getUsageStats()
             } else {
