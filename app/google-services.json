@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "281585055794",
-    "project_id": "datahive-a2e46",
-    "storage_bucket": "datahive-a2e46.appspot.com"
+    "project_number": "240319580783",
+    "project_id": "datahive-664eb",
+    "storage_bucket": "datahive-664eb.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:281585055794:android:2f0e653390aeae9600242b",
+        "mobilesdk_app_id": "1:240319580783:android:59ed98a3bbaa439bfe1b9a",
         "android_client_info": {
           "package_name": "com.example.datahive"
         }
       },
       "oauth_client": [
         {
-          "client_id": "281585055794-tbvqbjcfg70v4k0bcdskocl02ujp0c0o.apps.googleusercontent.com",
+          "client_id": "240319580783-2nqmrr443211a3ddmk0rcmvt2imt8l32.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAF1WVWGeP4PJox9P-fUoCbl8MPIDtzh3A"
+          "current_key": "AIzaSyCsxFnUA0-ViP6LxROGu_iGG7-2WILV9ks"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "281585055794-tbvqbjcfg70v4k0bcdskocl02ujp0c0o.apps.googleusercontent.com",
+              "client_id": "240319580783-2nqmrr443211a3ddmk0rcmvt2imt8l32.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
