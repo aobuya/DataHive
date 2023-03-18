@@ -25,14 +25,18 @@
     <string name="forgot_password">Forgot password? Click here to reset</string>
     <string name="cn_password">Confirm password</string>
     <string name="red_tag">Already have an account? Sign in here</string>
-<<<<<<<<< Temporary merge branch 1
+
 
     <!--Getting started screen-->
     <string name="lobby_title">Welcome to Data Hive!</string>
     <string name="lobby_description">Never Miss a Beat. Stay on Track with Personalized Data Insights</string>
     <string name="lobby_button">Get Started</string>
-=========
+
     <string name="dataUsage">Data Usage</string>
     <string name="mbs">10 Mbs</string>
->>>>>>>>> Temporary merge branch 2
+    <string name="login_tag">Login here</string>
+    <string name="reset_email_btn">Reset password</string>
+    <string name="reset_email_tx">Enter Password</string>
+    <string name="reset_tag">Reset Password</string>
+
 </resources>

@@ -18,15 +18,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DataHive"
         tools:targetApi="31">
+
+
         <activity
-<<<<<<<<< Temporary merge branch 1
-            android:name=".SignUpActivity"
-=========
-            android:name=".Dashboard"
->>>>>>>>> Temporary merge branch 2
-            android:exported="false" />
-        <activity
-            android:name=".LogInActivity"
+            android:name=".login.RegisterActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
