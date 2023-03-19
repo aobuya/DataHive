@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import com.example.datahive.Dashboard
 import com.example.datahive.databinding.ActivityRegisterBinding
+import com.example.datahive.holder.MainNavigation
 import com.google.firebase.auth.FirebaseAuth
 
 class RegisterActivity : AppCompatActivity() {
@@ -46,7 +47,7 @@ class RegisterActivity : AppCompatActivity() {
                 dataHiveAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
                     if(it.isSuccessful) {
                         Toast.makeText(this,"Account created successfully",Toast.LENGTH_SHORT).show()
-                        val intent = Intent(this, Dashboard::class.java)
+                        val intent = Intent(this, MainNavigation::class.java)
                         startActivity(intent)
 
                     }else{

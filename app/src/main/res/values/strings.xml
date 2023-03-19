@@ -19,7 +19,7 @@
     <string name="reg_tag">Create your account here</string>
     <string name="password">Enter Password</string>
     <string name="Register">Create account</string>
-    <string name="login">Register</string>
+    <string name="login">Login</string>
     <string name="log_tag">Sign in using your account</string>
     <string name="log">Login</string>
     <string name="forgot_password">Forgot password? Click here to reset</string>
@@ -38,5 +38,8 @@
     <string name="reset_email_btn">Reset password</string>
     <string name="reset_email_tx">Enter Password</string>
     <string name="reset_tag">Reset Password</string>
+    <string name="profile">Profile Page</string>
+    <string name="sign_out">Sign out</string>
+    <string name="report_tag">Send Report</string>
 
 </resources>

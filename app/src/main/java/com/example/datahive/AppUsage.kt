@@ -1,7 +1,8 @@
 package com.example.datahive
 
 
-data class AppUsage(
-        val packageName: String,
-        val dataUsage: Long)
+data class AppData(
+        val appName: String,
+        val dataUsage: Long
+)
 

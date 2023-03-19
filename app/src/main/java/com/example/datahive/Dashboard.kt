@@ -1,9 +1,14 @@
 package com.example.datahive
 
+import android.annotation.SuppressLint
+import android.app.usage.NetworkStats
+import android.app.usage.NetworkStatsManager
 import android.app.usage.UsageStats
 import android.app.usage.UsageStatsManager
 import android.content.Context
 import android.content.pm.PackageManager
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -12,6 +17,7 @@ import com.example.datahive.databinding.ActivityDashboardBinding
 import java.util.*
 import android.widget.ArrayAdapter
 import android.os.Build
+import kotlin.collections.sortByDescending
 
 
 class Dashboard : AppCompatActivity() {
@@ -22,13 +28,92 @@ class Dashboard : AppCompatActivity() {
     private val myPermissions = 100
 
 
+    @SuppressLint("WrongThread")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDashboardBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-        //val listView = findViewById<ListView>(R.id.listView)
-        usageStatsManager = getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
+
+
+
+        // Get the network stats manager
+        val networkStatsManager = getSystemService(Context.NETWORK_STATS_SERVICE) as NetworkStatsManager
+
+        // Get the network type
+        val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val network = connectivityManager.activeNetwork
+        val networkCapabilities = connectivityManager.getNetworkCapabilities(network)
+        val networkType = if (networkCapabilities!!.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+            NetworkCapabilities.TRANSPORT_WIFI
+        } else if (networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
+            NetworkCapabilities.TRANSPORT_CELLULAR
+        } else {
+            return
+        }
+
+        // Get the start and end times for today
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.HOUR_OF_DAY, 0)
+        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.SECOND, 0)
+        val startTime = calendar.timeInMillis
+        calendar.set(Calendar.HOUR_OF_DAY, 23)
+        calendar.set(Calendar.MINUTE, 59)
+        calendar.set(Calendar.SECOND, 59)
+        val endTime = calendar.timeInMillis
+
+        // Get the network stats for each app
+        val networkStats = networkStatsManager.queryDetailsForUid(
+            networkType,
+            "",
+            startTime,
+            endTime,
+            android.os.Process.myUid()
+        )
+
+        // Create a map to store the data usage for each app
+        val dataUsageMap = mutableMapOf<String, Long>()
+
+        // Loop through the network stats and add up the data usage for each app
+        val bucket = NetworkStats.Bucket()
+        while (networkStats.hasNextBucket() && networkStats.getNextBucket(bucket)) {
+            val uid = bucket.uid
+            val packageName = packageManager.getNameForUid(uid)
+            if (packageName != null) {
+                val dataUsage = dataUsageMap.getOrDefault(packageName, 0L)
+                dataUsageMap[packageName] = dataUsage + bucket.rxBytes + bucket.txBytes
+            }
+        }
+
+        // Convert the map to a list of app data
+        val appDataList = dataUsageMap.map { AppData(it.key, it.value) }
+
+        // Sort the app data list by data usage
+        //appDataList.sortByDescending { .dataUsage }
+
+        // Create an array adapter for the app data list
+        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_2, android.R.id.text1, appDataList)
+
+        // Set the array adapter on the list view
+        binding.appsList.adapter = adapter
+    }
+
+    data class AppData(val appName: String, val dataUsage: Long) {
+        override fun toString(): String {
+            val dataUsageStr = "${dataUsage / 1024 / 1024} MB"
+            return "$appName\n$dataUsageStr"
+        }
+    }
+}
+
+private fun <E> List<E>.sortByDescending(any: Any) {
+
+}
+
+
+//val listView = findViewById<ListView>(R.id.listView)
+        /**usageStatsManager = getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
         packageManager = applicationContext.packageManager
 
 
