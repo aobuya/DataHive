@@ -38,5 +38,8 @@
     <string name="reset_email_btn">Reset password</string>
     <string name="reset_email_tx">Enter Password</string>
     <string name="reset_tag">Reset Password</string>
+    <string name="profile">Profile Page</string>
+    <string name="sign_out">Sign out</string>
+    <string name="report_tag">Send Report</string>
 
 </resources>
