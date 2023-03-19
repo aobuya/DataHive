@@ -10,6 +10,7 @@ import com.example.datahive.databinding.ActivityMainNavigationBinding
 class MainNavigation : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainNavigationBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainNavigationBinding.inflate(layoutInflater)

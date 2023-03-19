@@ -32,7 +32,7 @@
             android:name=".login.ResetPassword"
             android:exported="false" />
         <activity
-            android:name=".login.SignUpActivity"
+            android:name=".login.LogInActivity"
             android:exported="false" />
         <activity
             android:name=".login.RegisterActivity"
