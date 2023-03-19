@@ -24,10 +24,6 @@ class NavUsage : Fragment() {
         (activity as AppCompatActivity).setSupportActionBar(binding.root.findViewById(R.id.toolbar))
         return binding.root
     }
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 
 
 }

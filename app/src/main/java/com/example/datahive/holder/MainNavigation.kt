@@ -27,7 +27,6 @@ class MainNavigation : AppCompatActivity() {
     //Network Library
     private lateinit var dataUsagesAdapter: DataUsagesAdapter
     private var usagesDataList = ArrayList<UsagesData>()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainNavigationBinding.inflate(layoutInflater)

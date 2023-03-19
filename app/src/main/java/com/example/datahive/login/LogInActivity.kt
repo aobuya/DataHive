@@ -4,14 +4,13 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import com.example.datahive.databinding.ActivityLogInBinding
+import com.example.datahive.databinding.ActivitySignUpBinding
 import com.example.datahive.holder.MainNavigation
 import com.google.firebase.auth.FirebaseAuth
 
-class LogInActivity : AppCompatActivity() {
+class SignUpActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityLogInBinding
-
+    private lateinit var binding: ActivitySignUpBinding
     private lateinit var dataHiveAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,7 +18,7 @@ class LogInActivity : AppCompatActivity() {
 
         dataHiveAuth = FirebaseAuth.getInstance()
 
-        binding = ActivityLogInBinding.inflate(layoutInflater)
+        binding = ActivitySignUpBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
 
@@ -30,15 +29,8 @@ class LogInActivity : AppCompatActivity() {
         binding.forgotPass.setOnClickListener {
             val intent = Intent(this, ResetPassword::class.java)
             startActivity(intent)
-            finish()
         }
 
-        //register in redirect
-        binding.registerRedirect.setOnClickListener {
-            val intent = Intent(this,RegisterActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
 
     }
 
@@ -52,7 +44,7 @@ class LogInActivity : AppCompatActivity() {
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         // Sign in success
-                        val getUser = dataHiveAuth.currentUser
+                        val user = dataHiveAuth.currentUser
                         Toast.makeText(this,"Login  successfully",Toast.LENGTH_SHORT).show()
                         val intent = Intent(this, MainNavigation::class.java)
                         startActivity(intent)

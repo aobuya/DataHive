@@ -158,11 +158,6 @@ class NavDashboard : Fragment() {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
 
 
     /**private fun setupPermissions() {

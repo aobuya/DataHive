@@ -68,5 +68,6 @@ dependencies {
 >>>>>>> 8e65589 (merge conflicts)
     implementation 'com.github.JahidHasanCO:NetworkUsage:1.0.1'
 
+    implementation 'com.google.firebase:firebase-auth:21.0.1'
 
 }

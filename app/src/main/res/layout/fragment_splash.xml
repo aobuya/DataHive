@@ -15,4 +15,11 @@
         android:src="@drawable/hive"
         android:contentDescription="@string/logo_description"/>
 
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        />
+
 </FrameLayout>

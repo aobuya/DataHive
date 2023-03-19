@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import com.example.datahive.Dashboard
 import com.example.datahive.databinding.ActivityRegisterBinding
 import com.example.datahive.holder.MainNavigation
 import com.google.firebase.auth.FirebaseAuth
@@ -34,9 +35,8 @@ class RegisterActivity : AppCompatActivity() {
         }
         //login if already registered
         binding.loginRedirect.setOnClickListener{
-            val intent = Intent(this, LogInActivity::class.java)
+            val intent = Intent(this, SignUpActivity::class.java)
             startActivity(intent)
-            finish()
         }
     }
 
