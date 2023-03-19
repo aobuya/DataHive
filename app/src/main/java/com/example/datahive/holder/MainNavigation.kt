@@ -24,7 +24,7 @@ import java.util.logging.Handler
 class MainNavigation : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainNavigationBinding
-    
+
     //Network Library
     private lateinit var dataUsagesAdapter: DataUsagesAdapter
     private var usagesDataList = ArrayList<UsagesData>()
