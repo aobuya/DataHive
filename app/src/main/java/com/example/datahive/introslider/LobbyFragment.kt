@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.datahive.login.LogInActivity
+import com.example.datahive.login.SignUpActivity
 import com.example.datahive.databinding.FragmentLobbyBinding
 import com.example.datahive.login.RegisterActivity
 
