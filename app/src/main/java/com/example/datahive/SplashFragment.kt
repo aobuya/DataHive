@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.example.datahive.databinding.FragmentSplashBinding
+import com.example.datahive.holder.MainNavigation
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.ktx.Firebase
 
@@ -20,6 +21,8 @@ class SplashFragment : Fragment() {
     private var _binding: FragmentSplashBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var dataHiveAuth: FirebaseAuth
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -27,12 +30,24 @@ class SplashFragment : Fragment() {
 
 
         Handler(Looper.getMainLooper()).postDelayed({
-                if (finishedOnBoarding()) {
-                    findNavController().navigate(R.id.action_viewPager_to_LobbyFragment)
-                } else {
-                    findNavController().navigate(R.id.action_splashFragment_to_viewPager)
+            dataHiveAuth = FirebaseAuth.getInstance()
 
-                }
+            val isUserLoggedIn = dataHiveAuth.currentUser
+
+                if (finishedOnBoarding()) {
+                    if (isUserLoggedIn != null) {
+                        requireActivity().run {
+                            startActivity(Intent(this, MainNavigation::class.java))
+                            finish()
+                        }
+                    }else{
+                        findNavController().navigate(R.id.action_viewPager_to_LobbyFragment)
+
+                    }
+                    } else {
+                        findNavController().navigate(R.id.action_splashFragment_to_viewPager)
+
+                    }
             }, 2000)
             return binding.root
 

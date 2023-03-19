@@ -34,8 +34,9 @@ class RegisterActivity : AppCompatActivity() {
         }
         //login if already registered
         binding.loginRedirect.setOnClickListener{
-            val intent = Intent(this, SignUpActivity::class.java)
+            val intent = Intent(this, LogInActivity::class.java)
             startActivity(intent)
+            finish()
         }
     }
 

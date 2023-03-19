@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".login.SignUpActivity">
+    tools:context=".login.LogInActivity">
 
     <TextView
         android:id="@+id/tv_title"
@@ -68,15 +68,25 @@
         android:textColor="@android:color/white"
         android:text="@string/login"/>
     <TextView
-        android:id="@+id/forgot_pass"
+    android:id="@+id/forgot_pass"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:fontFamily="@font/asap_italic_variablefont_wdth_wght"
+    android:text="@string/forgot_password"
+    android:textSize="17sp"
+    android:layout_marginStart="25dp"
+    android:layout_marginBottom="18dp"
+    android:layout_below="@id/btn_login"/>
+    <TextView
+        android:id="@+id/register_redirect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/asap_italic_variablefont_wdth_wght"
-        android:text="@string/forgot_password"
+        android:text="@string/reg_tag"
         android:textSize="17sp"
         android:layout_marginStart="25dp"
         android:layout_marginBottom="50dp"
-        android:layout_below="@id/btn_login"/>
+        android:layout_below="@id/forgot_pass"/>
 
     <ImageView
         android:layout_width="60dp"
