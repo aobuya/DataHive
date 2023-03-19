@@ -2,11 +2,15 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'com.google.gms.google-services'
+
 }
 
 android {
     namespace 'com.example.datahive'
     compileSdk 33
+    buildFeatures {
+        viewBinding true
+    }
 
     defaultConfig {
         applicationId "com.example.datahive"
@@ -56,5 +60,6 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics-ktx'
 
     implementation 'com.google.firebase:firebase-auth:21.0.1'
+    implementation 'com.github.JahidHasanCO:NetworkUsage:1.0.1'
 
 }
