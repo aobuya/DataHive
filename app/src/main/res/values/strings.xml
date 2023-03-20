@@ -47,5 +47,9 @@
     <string name="wifi">WiFI</string>
     <string name="mobile">Mobile</string>
     <string name="last_30_days">Last 30 Days</string>
+    <string name="top_apps">App Usage</string>
+    <string name="total_mobile">Mobile</string>
+    <string name="wifi_total">WiFi</string>
+    <string name="totals">Total</string>
 
 </resources>
