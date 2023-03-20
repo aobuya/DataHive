@@ -21,19 +21,16 @@ class ResetPassword : AppCompatActivity() {
         setContentView(view)
 
         dataHiveAuth = FirebaseAuth.getInstance()
-        val getUser = dataHiveAuth.currentUser
-
-
 
         binding.btnResetPassword.setOnClickListener{
             val email = binding.enterEmail.text.trim().toString().trim()
 
-            resetPassword(email, getUser)
+            resetPassword(email)
         }
 
         //redirect users to the login screen
         binding.loginRedirect.setOnClickListener {
-            val intent = Intent(this, SignUpActivity::class.java)
+            val intent = Intent(this, LogInActivity::class.java)
             startActivity(intent)
             finish()
         }
@@ -41,7 +38,7 @@ class ResetPassword : AppCompatActivity() {
 
     }
     //Firebase password rest implementation
-    private fun resetPassword(email: String, user: FirebaseUser?) {
+    private fun resetPassword(email: String) {
 
         if (email.isNotEmpty()) {
             dataHiveAuth.sendPasswordResetEmail(email).addOnCompleteListener { task ->
@@ -53,7 +50,7 @@ class ResetPassword : AppCompatActivity() {
                         Toast.LENGTH_LONG
                     ).show()
 
-                    val intent = Intent(this, SignUpActivity::class.java)
+                    val intent = Intent(this, LogInActivity::class.java)
                     startActivity(intent)
                     finish()
                 } else {

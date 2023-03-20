@@ -8,7 +8,7 @@ import com.example.datahive.databinding.ActivityLogInBinding
 import com.example.datahive.holder.MainNavigation
 import com.google.firebase.auth.FirebaseAuth
 
-class SignUpActivity : AppCompatActivity() {
+class LogInActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLogInBinding
     private lateinit var dataHiveAuth: FirebaseAuth
@@ -29,6 +29,7 @@ class SignUpActivity : AppCompatActivity() {
         binding.forgotPass.setOnClickListener {
             val intent = Intent(this, ResetPassword::class.java)
             startActivity(intent)
+            finish()
         }
 
 

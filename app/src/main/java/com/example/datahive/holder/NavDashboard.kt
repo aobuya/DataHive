@@ -43,7 +43,7 @@ class NavDashboard : Fragment() {
         savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         _binding = FragmentNavDashboardBinding.inflate(inflater, container, false)
-        (activity as AppCompatActivity).setSupportActionBar(binding.root.findViewById(R.id.toolbar))
+        //(activity as AppCompatActivity).setSupportActionBar(binding.root.findViewById(R.id.toolbar))
 
 
         setupPermissions()

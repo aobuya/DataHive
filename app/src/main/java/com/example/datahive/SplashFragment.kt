@@ -40,7 +40,7 @@ class SplashFragment : Fragment() {
                         startActivity(Intent(this, MainNavigation::class.java))
                         finish()
                     }
-                }else{
+                } else {
                     findNavController().navigate(R.id.action_viewPager_to_LobbyFragment)
 
                 }
