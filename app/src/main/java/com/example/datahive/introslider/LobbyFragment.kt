@@ -6,17 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-<<<<<<< HEAD
-import com.example.datahive.login.LogInActivity
-<<<<<<< HEAD
 import com.example.datahive.login.SignUpActivity
-
-=======
->>>>>>> 8e65589 (merge conflicts)
-=======
-import com.example.datahive.Dashboard
-import com.example.datahive.login.SignUpActivity
->>>>>>> parent of 5ce1b92 (minor fixes and additions)
 import com.example.datahive.databinding.FragmentLobbyBinding
 import com.example.datahive.holder.MainNavigation
 import com.example.datahive.login.RegisterActivity

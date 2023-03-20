@@ -4,7 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import com.example.datahive.Dashboard
+
 import com.example.datahive.databinding.ActivityRegisterBinding
 import com.example.datahive.holder.MainNavigation
 import com.google.firebase.auth.FirebaseAuth
