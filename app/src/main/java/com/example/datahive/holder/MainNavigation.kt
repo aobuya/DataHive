@@ -14,7 +14,6 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.datahive.DataUsagesAdapter
-
 import com.example.datahive.R
 import com.example.datahive.UsagesData
 import com.example.datahive.databinding.ActivityMainNavigationBinding
@@ -28,8 +27,6 @@ class MainNavigation : AppCompatActivity() {
     //Network Library
     private lateinit var dataUsagesAdapter: DataUsagesAdapter
     private var usagesDataList = ArrayList<UsagesData>()
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainNavigationBinding.inflate(layoutInflater)
