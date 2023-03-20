@@ -20,8 +20,8 @@ class SplashFragment : Fragment() {
 
     private var _binding: FragmentSplashBinding? = null
     private val binding get() = _binding!!
-
     private lateinit var dataHiveAuth: FirebaseAuth
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -34,24 +34,24 @@ class SplashFragment : Fragment() {
 
             val isUserLoggedIn = dataHiveAuth.currentUser
 
-                if (finishedOnBoarding()) {
-                    if (isUserLoggedIn != null) {
-                        requireActivity().run {
-                            startActivity(Intent(this, MainNavigation::class.java))
-                            finish()
-                        }
-                    }else{
-                        findNavController().navigate(R.id.action_viewPager_to_LobbyFragment)
-
+            if (finishedOnBoarding()) {
+                if (isUserLoggedIn != null) {
+                    requireActivity().run {
+                        startActivity(Intent(this, MainNavigation::class.java))
+                        finish()
                     }
-                    } else {
-                        findNavController().navigate(R.id.action_splashFragment_to_viewPager)
+                }else{
+                    findNavController().navigate(R.id.action_viewPager_to_LobbyFragment)
 
-                    }
-            }, 2000)
-            return binding.root
+                }
+            } else {
+                findNavController().navigate(R.id.action_splashFragment_to_viewPager)
 
-        }
+            }
+        }, 2000)
+        return binding.root
+
+    }
 
 
     private fun finishedOnBoarding(): Boolean {

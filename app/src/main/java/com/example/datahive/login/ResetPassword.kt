@@ -11,10 +11,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
 class ResetPassword : AppCompatActivity() {
-    private lateinit var binding: ActivityResetPasswordBinding
+    private lateinit var binding : ActivityResetPasswordBinding
 
     private lateinit var dataHiveAuth: FirebaseAuth
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityResetPasswordBinding.inflate(layoutInflater)
@@ -26,21 +25,21 @@ class ResetPassword : AppCompatActivity() {
 
 
 
-        binding.btnResetPassword.setOnClickListener {
-            val email = binding.enterEmail.text.trim().toString().trim()
+        binding.btnResetPassword.setOnClickListener{
+            val email = binding.resetEmail.text.trim().toString().trim()
 
             resetPassword(email, getUser)
         }
+
         //redirect users to the login screen
         binding.loginRedirect.setOnClickListener {
-            val intent = Intent(this, LogInActivity::class.java)
+            val intent = Intent(this, SignUpActivity::class.java)
             startActivity(intent)
             finish()
         }
 
 
     }
-
     //Firebase password rest implementation
     private fun resetPassword(email: String, user: FirebaseUser?) {
 
@@ -54,7 +53,7 @@ class ResetPassword : AppCompatActivity() {
                         Toast.LENGTH_LONG
                     ).show()
 
-                    val intent = Intent(this, LogInActivity::class.java)
+                    val intent = Intent(this, SignUpActivity::class.java)
                     startActivity(intent)
                     finish()
                 } else {
