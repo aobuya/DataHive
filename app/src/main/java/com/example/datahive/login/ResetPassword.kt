@@ -26,7 +26,7 @@ class ResetPassword : AppCompatActivity() {
 
 
         binding.btnResetPassword.setOnClickListener{
-            val email = binding.resetEmail.text.trim().toString().trim()
+            val email = binding.enterEmail.text.trim().toString().trim()
 
             resetPassword(email, getUser)
         }
