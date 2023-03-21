@@ -53,4 +53,15 @@
     <string name="totals">Total</string>
     <string name="support_tag"><![CDATA[Help & Support]]></string>
 
+    <!--Spinner Items-->
+    <string-array name="date_options">
+        <item>Today</item>
+        <item>Yesterday</item>
+    </string-array>connectivity_option
+
+    <string-array name="connectivity_option">
+        <item>Wi-Fi</item>
+        <item>Mobile</item>
+    </string-array>
+
 </resources>

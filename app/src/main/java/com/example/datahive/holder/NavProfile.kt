@@ -11,6 +11,7 @@ import com.example.datahive.R
 import com.example.datahive.databinding.FragmentAppUsageBinding
 import com.example.datahive.databinding.FragmentNavProfileBinding
 import com.example.datahive.login.LogInActivity
+
 import com.google.firebase.auth.FirebaseAuth
 
 
@@ -18,7 +19,6 @@ class NavProfile : Fragment() {
 
     private var _binding: FragmentNavProfileBinding? = null
     private val binding get() = _binding!!
-
     private lateinit var dataHiveAuth : FirebaseAuth
 
     override fun onCreateView(
@@ -28,7 +28,6 @@ class NavProfile : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentNavProfileBinding.inflate(inflater, container, false)
         (activity as AppCompatActivity).setSupportActionBar(binding.root.findViewById(R.id.toolbar))
-
         dataHiveAuth = FirebaseAuth.getInstance()
 
         binding.signOutButton.setOnClickListener {
@@ -40,11 +39,15 @@ class NavProfile : Fragment() {
             }
 
         }
-
         return binding.root
     }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
 }
+
+
+
+
