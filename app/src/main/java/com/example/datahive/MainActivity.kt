@@ -9,18 +9,19 @@ import com.example.datahive.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding : ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
 
 
-        override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
 
-                super.onCreate(savedInstanceState)
-                binding = ActivityMainBinding.inflate(layoutInflater)
-                val view = binding.root
-                
-                setContentView(view)
+        super.onCreate(savedInstanceState)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
 
-            supportActionBar?.hide()
-        }
+        setContentView(view)
+
+        supportActionBar?.hide()
+    }
 
 }

@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.view.WindowCompat
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,6 +30,7 @@ class MainNavigation : AppCompatActivity() {
    private var usagesDataList = ArrayList<UsagesData>()
    override fun onCreate(savedInstanceState: Bundle?) {
        super.onCreate(savedInstanceState)
+       WindowCompat.setDecorFitsSystemWindows(window, false)
        binding = ActivityMainNavigationBinding.inflate(layoutInflater)
        val view = binding.root
        setContentView(view)
