@@ -1,4 +1,4 @@
-package com.example.datahive
+package com.example.datahive.app_usage
 
 import android.graphics.Bitmap
 import android.graphics.Canvas

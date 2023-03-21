@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.datahive.R
 import com.example.datahive.databinding.FragmentAppUsageBinding
-import com.example.datahive.databinding.FragmentNavDashboardBinding
 
 import android.app.usage.NetworkStatsManager
 import android.content.Context
@@ -17,15 +16,10 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.ConnectivityManager
 import android.provider.Settings
-import android.widget.ArrayAdapter
-import android.widget.ListView
-import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.datahive.AppDataAdapter
-import com.example.datahive.AppDetails
-import com.example.datahive.UsagesData
+import com.example.datahive.app_usage.AppDataAdapter
+import com.example.datahive.app_usage.AppDetails
 
 
 class NavUsage : Fragment() {
