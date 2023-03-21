@@ -10,7 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.datahive.R
 import com.example.datahive.databinding.FragmentAppUsageBinding
 import com.example.datahive.databinding.FragmentNavProfileBinding
-import com.example.datahive.login.SignUpActivity
+import com.example.datahive.login.LogInActivity
+
 import com.google.firebase.auth.FirebaseAuth
 
 
@@ -33,7 +34,7 @@ class NavProfile : Fragment() {
             dataHiveAuth.signOut()
 
             requireActivity().run {
-                startActivity(Intent(this,SignUpActivity::class.java))
+                startActivity(Intent(this,LogInActivity::class.java))
                 finishAffinity()
             }
 
