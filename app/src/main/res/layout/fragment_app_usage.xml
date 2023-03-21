@@ -23,9 +23,12 @@
             android:fontFamily="@font/asap_variablefont_wdthwght"
             android:text="@string/top_apps"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-        <ListView
+
+
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/listView"
             android:layout_width="match_parent"
+            tools:listitem="@layout/app_data_usage_item"
             android:layout_height="match_parent" />
 
 

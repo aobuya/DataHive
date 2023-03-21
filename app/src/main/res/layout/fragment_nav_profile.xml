@@ -6,8 +6,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".holder.NavProfile">
-
     <include layout="@layout/toolbar" />
+
+
     <ImageView
         android:id="@+id/lobby_screen_header"
         android:layout_width="250dp"
