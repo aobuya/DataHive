@@ -25,6 +25,8 @@
     <string name="forgot_password">Forgot password? Click here to reset</string>
     <string name="cn_password">Confirm password</string>
     <string name="red_tag">Already have an account? Sign in here</string>
+    <string name="sign_up_with_google">Sign In with Google</string>
+    <string name="your_web_client_id">240319580783-971ais510s91o54502ergibh2iaeo7mv.apps.googleusercontent.com</string>
 
 
     <!--Getting started screen-->
