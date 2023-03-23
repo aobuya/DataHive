@@ -67,6 +67,19 @@
         android:layout_marginTop="15dp"
         android:textColor="@android:color/white"
         android:text="@string/login"/>
+    <Button
+        android:id="@+id/btn_google_sign_in"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_below="@id/btn_login"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="20dp"
+        android:text="@string/sign_in_with_google"
+        app:icon="@drawable/google_color"
+        app:iconSize="20dp"
+        app:strokeColor="@color/bee_yellow"/>
     <TextView
         android:id="@+id/forgot_pass"
         android:layout_width="wrap_content"
@@ -76,7 +89,7 @@
         android:textSize="17sp"
         android:layout_marginStart="25dp"
         android:layout_marginBottom="50dp"
-        android:layout_below="@id/btn_login"/>
+        android:layout_below="@id/btn_google_sign_in"/>
 
     <ImageView
         android:layout_width="60dp"

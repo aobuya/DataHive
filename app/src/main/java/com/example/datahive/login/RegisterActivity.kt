@@ -23,6 +23,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.common.api.CommonStatusCodes
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.GoogleAuthProvider
 
@@ -33,9 +34,9 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var dataHiveAuth: FirebaseAuth
 
     private lateinit var oneTapClient: SignInClient
-    private lateinit var signInRequest: BeginSignInRequest
-    private lateinit var googleSignInClient: GoogleSignInClient
+    private lateinit var signUpRequest: BeginSignInRequest
     private val REQ_ONE_TAP = 2
+    private var showOneTapUI = true
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,18 +47,22 @@ class RegisterActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        supportActionBar?.hide()
+        //configure google sign in
+        oneTapClient = Identity.getSignInClient(this)
+        signUpRequest = BeginSignInRequest.builder()
+            .setGoogleIdTokenRequestOptions(
+                BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
+                    .setSupported(true)
+                    // Your server's client ID, not your Android client ID.
+                    .setServerClientId(getString(R.string.datahive_web_client_id))
+                    // Show all accounts on the device.
+                    .setFilterByAuthorizedAccounts(false)
+                    .build()
+            )
+            .build()
+
 
         dataHiveAuth = FirebaseAuth.getInstance()
-
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail()
-            .build()
-        
-        googleSignInClient = GoogleSignIn.getClient(this , gso)
-
-        
 
 
 
@@ -75,7 +80,7 @@ class RegisterActivity : AppCompatActivity() {
         }
         //log in with google
         binding.btnGoogleSignUp.setOnClickListener {
-            googleSignIn()
+            signUpUserWithGoogle()
         }
     }
 
@@ -105,44 +110,73 @@ class RegisterActivity : AppCompatActivity() {
 
     }
 
-    private fun googleSignIn() {
-        val signInIntent = googleSignInClient.signInIntent
-        launcher.launch(signInIntent)
-    }
-
-    private val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-         result ->
-                if (result.resultCode == Activity.RESULT_OK){
-
-                    val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
-                    handleResults(task)
+    private fun signUpUserWithGoogle() {
+        oneTapClient.beginSignIn(signUpRequest)
+            .addOnSuccessListener(this) { result ->
+                try {
+                    startIntentSenderForResult(
+                        result.pendingIntent.intentSender, REQ_ONE_TAP,
+                        null, 0, 0, 0
+                    )
+                } catch (e: IntentSender.SendIntentException) {
+                    Log.e(TAG, "Couldn't start One Tap UI: ${e.localizedMessage}")
                 }
-    }
-    private fun handleResults(task: Task<GoogleSignInAccount>) {
-        if (task.isSuccessful){
-            val account : GoogleSignInAccount? = task.result
-            if (account != null){
-                updateUI(account)
             }
-        }else{
-            Toast.makeText(this, task.exception.toString() , Toast.LENGTH_SHORT).show()
-        }
-    }
-     private fun updateUI(account: GoogleSignInAccount) {
-        val credential = GoogleAuthProvider.getCredential(account.idToken , null)
-        dataHiveAuth.signInWithCredential(credential).addOnCompleteListener {
-            if (it.isSuccessful){
-                val intent : Intent = Intent(this , LogInActivity::class.java)
-                /*intent.putExtra("email" , account.email)
-                intent.putExtra("name" , account.displayName)*/
-                startActivity(intent)
-                finish()
-            }else{
-                Toast.makeText(this, it.exception.toString() , Toast.LENGTH_SHORT).show()
-
+            .addOnFailureListener(this) { e ->
+                // No Google Accounts found. Just continue presenting the signed-out UI.
+                Log.d(TAG, e.localizedMessage)
             }
-        }
-    }
-    
 
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        when (requestCode) {
+            REQ_ONE_TAP -> {
+                try {
+                    val googleCredential = oneTapClient.getSignInCredentialFromIntent(data)
+                    val idToken = googleCredential.googleIdToken
+                    when {
+                        idToken != null -> {
+                            // Got an ID token from Google. Use it to authenticate
+                            // with Firebase.
+                            val firebaseCredential = GoogleAuthProvider.getCredential(idToken, null)
+                            dataHiveAuth.signInWithCredential(firebaseCredential)
+                                .addOnCompleteListener(this) { task ->
+                                    if (task.isSuccessful) {
+                                        // Sign in success, update UI with the signed-in user's information
+                                        Log.d(TAG, "signInWithCredential:success")
+                                        val user = dataHiveAuth.currentUser
+                                        val intent = Intent(this, MainNavigation::class.java)
+                                        startActivity(intent)
+                                        finish()
+                                    } else {
+                                        // If sign in fails, display a message to the user.
+                                        Log.w(TAG, "signInWithCredential:failure", task.exception)
+                                        Toast.makeText(this, "Error! please try again",Toast.LENGTH_SHORT).show()
+                                    }
+                                }
+                        }
+                        else -> {
+                            // Shouldn't happen.
+                            Log.d(TAG, "No ID token!")
+                        }
+                    }
+                } catch (e: ApiException) {
+                    Log.d("REGISTER WITH GOOGLE API EXCEPTION", "API Exception Error", e)
+                    when (e.statusCode) {
+                        CommonStatusCodes.CANCELED -> {
+                            Log.d(TAG, "One-tap dialog was closed.")
+                            // Don't re-prompt the user.
+                            showOneTapUI = false
+                        }
+                    }
+                }
+            }
+
+        }
+
+    }
 }
