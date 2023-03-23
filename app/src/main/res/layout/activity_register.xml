@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".login.SignUpActivity">
+    tools:context=".login.RegisterActivity">
 
     <TextView
         android:id="@+id/tv_title"
@@ -72,7 +72,6 @@
         android:padding="15dp"
         android:textSize="15sp" />
 
-
     <Button
         android:id="@+id/btn_login"
         android:layout_width="match_parent"
@@ -83,6 +82,20 @@
         android:layout_marginTop="15dp"
         android:textColor="@android:color/white"
         android:text="@string/Register"/>
+
+    <Button
+        android:id="@+id/btn_google_sign_up"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_below="@id/btn_login"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="20dp"
+        android:text="@string/sign_up_with_google"
+        app:icon="@drawable/google_color"
+        app:iconSize="20dp"
+        app:strokeColor="@color/bee_yellow"/>
     <TextView
         android:id="@+id/login_redirect"
         android:layout_width="wrap_content"
@@ -92,7 +105,7 @@
         android:textSize="17sp"
         android:layout_marginStart="25dp"
         android:layout_marginBottom="50dp"
-        android:layout_below="@id/btn_login"/>
+        android:layout_below="@id/btn_google_sign_up"/>
 
     <ImageView
         android:layout_width="60dp"
