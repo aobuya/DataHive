@@ -7,11 +7,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.datahive.databinding.AppDataUsageItemBinding
 
-class AppDataAdapter(private val appDataList: List<AppDetails>) :
+class AppDataAdapter(private var appDataList: List<AppDetails>) :
     RecyclerView.Adapter<AppDataAdapter.AppDataViewHolder>() {
 
     inner class AppDataViewHolder(private val binding: AppDataUsageItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
+
         fun bind(appDetails: AppDetails) {
             binding.appNameTextView.text = appDetails.name
             //binding.appIconImageView.setImageDrawable(appDetails.icon)
@@ -39,6 +41,12 @@ class AppDataAdapter(private val appDataList: List<AppDetails>) :
             binding.appIconImageView.setImageBitmap(scaledIcon)
 
         }
+    }
+    
+    fun setFilteredList(filteredList: ArrayList<AppDetails>) {
+
+        this.appDataList = filteredList
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AppDataViewHolder {

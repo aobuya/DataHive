@@ -16,16 +16,21 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.ConnectivityManager
 import android.provider.Settings
+import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.datahive.app_usage.AppDataAdapter
 import com.example.datahive.app_usage.AppDetails
+import java.util.*
+import kotlin.collections.ArrayList
 
 
-class NavUsage : Fragment() {
+class NavUsage : Fragment(), SearchView.OnQueryTextListener {
     private var _binding: FragmentAppUsageBinding? = null
     private val binding get() = _binding!!
-    private var appDataUsageList = ArrayList<AppDetails>()
+    private var appDataUsageList = ArrayList<AppDetails>()    
+    private lateinit var appDataAdapter: AppDataAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,13 +38,14 @@ class NavUsage : Fragment() {
     ): View? {
 
         _binding = FragmentAppUsageBinding.inflate(inflater, container, false)
-        (activity as AppCompatActivity).setSupportActionBar(binding.root.findViewById(R.id.toolbar))
+        //(activity as AppCompatActivity).setSupportActionBar(binding.root.findViewById(R.id.toolbar))
 
 
-
+        binding.appUsageSearchView.setOnQueryTextListener(this)
 
         return binding.root
     }
+
     override fun onResume() {
         super.onResume()
         if (hasUsageStatsPermission()) {
@@ -53,16 +59,22 @@ class NavUsage : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
     private fun hasUsageStatsPermission(): Boolean {
-        val appOpsManager = requireContext().getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
-        val mode = appOpsManager.checkOpNoThrow("android:get_usage_stats", android.os.Process.myUid(), requireContext().packageName)
+        val appOpsManager =
+            requireContext().getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
+        val mode = appOpsManager.checkOpNoThrow(
+            "android:get_usage_stats",
+            android.os.Process.myUid(),
+            requireContext().packageName
+        )
         return mode == AppOpsManager.MODE_ALLOWED
     }
 
     private fun requestUsageStatsPermission() {
         val intent = Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS)
         startActivity(intent)
-    }
+    } 
 
     private fun displayAppDataUsage() {
         val networkStatsManager =
@@ -102,11 +114,41 @@ class NavUsage : Fragment() {
         val layoutManager = LinearLayoutManager(context)
         val appDataRecyclerView: RecyclerView = requireView().findViewById(R.id.listView)
         appDataRecyclerView.layoutManager = layoutManager
-        val appDataAdapter = AppDataAdapter(appDataUsageList)
+        appDataAdapter = AppDataAdapter(appDataUsageList)
         appDataRecyclerView.adapter = appDataAdapter
+    }
+      private fun filterList(text: String) {
+        for (app in appDataUsageList) {
+            var filteredList = ArrayList<AppDetails>()
+            val appName = app.name
+            if (appName.lowercase().contains(text.lowercase(Locale.getDefault()))) {
+                filteredList.add(app)
+
+                if (filteredList.isNotEmpty()) {
+
+                    appDataAdapter.setFilteredList(filteredList)
+
+                } else {
+                    Toast.makeText(requireContext(), "App not found", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 
 
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        if (query != null) {
+            filterList(query)
+        }
+        return true
+    }
+
+    override fun onQueryTextChange(query: String?): Boolean {
+        if (query != null) {
+            filterList(query)
+        }
+        return true
+    }
 
 
 }

@@ -54,6 +54,7 @@
     <string name="wifi_total">WiFi</string>
     <string name="totals">Total</string>
     <string name="support_tag"><![CDATA[Help & Support]]></string>
+    <string name="search_hint">Search</string>
 
     <!--Spinner Items-->
     <string-array name="date_options">

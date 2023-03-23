@@ -1,55 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".holder.NavUsage"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".holder.NavDashboard">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/dashboard_AppBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="?attr/colorPrimary"
+        android:fitsSystemWindows="true"
+        app:liftOnScroll="true">
 
-    <include layout="@layout/toolbar" />
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            style="?attr/collapsingToolbarLayoutLargeStyle"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/collapsingToolbarLayoutLargeSize"
+            app:contentScrim="?attr/colorPrimary"
+            app:expandedTitleGravity="bottom"
+            app:layout_collapseMode="pin"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/chat_TopAppBar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                android:elevation="0dp"
+                app:layout_collapseMode="pin"
+                app:title="@string/top_apps"/>
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:id="@+id/ln1"
-        android:layout_marginTop="?attr/actionBarSize">
-        <TextView
-            android:id="@+id/title"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/app_usage_search_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:padding="16dp"
-            android:fontFamily="@font/asap_variablefont_wdthwght"
-            android:text="@string/top_apps"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            android:layout_gravity="end"
+            app:animateNavigationIcon="true" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
-            android:orientation="horizontal">
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:layout_dodgeInsetEdges="bottom">
+
             <Spinner
                 android:id="@+id/date_spinner"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:padding="10dp"
+                android:entries="@array/date_options"
 
-                android:entries="@array/date_options" />
+                android:padding="10dp" />
+
             <Space
                 android:layout_width="20dp"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
 
             <Spinner
                 android:id="@+id/connectivity_option"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:padding="10dp"
-
-                android:entries="@array/connectivity_option" />
+                android:entries="@array/connectivity_option"
+                android:padding="10dp" />
 
         </LinearLayout>
 
@@ -57,10 +83,8 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/listView"
             android:layout_width="match_parent"
-            tools:listitem="@layout/app_data_usage_item"
-            android:layout_height="match_parent" />
-
-
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/app_data_usage_item" />
     </LinearLayout>
 
-</RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
