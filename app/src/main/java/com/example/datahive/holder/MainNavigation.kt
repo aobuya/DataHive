@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.datahive.DataUsagesAdapter
@@ -35,7 +36,8 @@ class MainNavigation : AppCompatActivity() {
        val view = binding.root
        setContentView(view)
 
-       val navController = findNavController(R.id.nav_host_fragment)
+       val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+       val navController = navHostFragment.navController
        binding.bottomNavigation.setupWithNavController(navController)
 
    }
