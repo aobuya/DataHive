@@ -32,22 +32,7 @@
     <Space
         android:layout_width="match_parent"
         android:layout_height="6dp"/>
-    <TextView
-        android:id="@+id/lobby_screen_description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/sign_out"
-        android:gravity="center"
-        />
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="18dp"/>
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/signOutButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/sign_out"
+
         android:textStyle="bold"/>
     <Space
         android:layout_width="match_parent"
@@ -159,6 +144,16 @@
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="18dp"/>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/signOutButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/sign_out"
 
 
 

@@ -30,7 +30,7 @@ import kotlin.collections.ArrayList
 class NavUsage : Fragment(), SearchView.OnQueryTextListener {
     private var _binding: FragmentAppUsageBinding? = null
     private val binding get() = _binding!!
-    private var appDataUsageList = ArrayList<AppDetails>()    
+    private var appDataUsageList = ArrayList<AppDetails>()
     private lateinit var appDataAdapter: AppDataAdapter
 
     override fun onCreateView(
@@ -40,7 +40,6 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
 
         _binding = FragmentAppUsageBinding.inflate(inflater, container, false)
         //(activity as AppCompatActivity).setSupportActionBar(binding.root.findViewById(R.id.toolbar))
-
 
         binding.appUsageSearchView.setOnQueryTextListener(this)
 
@@ -123,28 +122,27 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
     }
 
     private fun filterList(text: String) {
+        var filteredList = ArrayList<AppDetails>()
         for (app in appDataUsageList) {
-            var filteredList = ArrayList<AppDetails>()
             val appName = app.name
             if (appName.lowercase().contains(text.lowercase(Locale.getDefault()))) {
                 filteredList.add(app)
-
-                if (filteredList.isNotEmpty()) {
-
-                    appDataAdapter.setFilteredList(filteredList)
-
-                } else {
-                    Toast.makeText(requireContext(), "App not found", Toast.LENGTH_SHORT).show()
-                }
             }
         }
-    }
 
+        if (filteredList.isNotEmpty()) {
+            appDataAdapter.setFilteredList(filteredList)
+        } else {
+            //Toast.makeText(requireContext(), "App not found", Toast.LENGTH_SHORT).show()
+        }
+    }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
         if (query != null) {
             filterList(query)
         }
+
+
         return true
     }
 
