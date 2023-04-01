@@ -28,21 +28,27 @@ class AppDataAdapter(private var appDataList: List<AppDetails>) :
             binding.appDataUsageTextView.text = dataUsageStr
 
             val appIconDrawable = appDetails.icon
-            val appIconBitmap = Bitmap.createBitmap(
-                appIconDrawable.intrinsicWidth,
-                appIconDrawable.intrinsicHeight,
-                Bitmap.Config.ARGB_8888
-            )
-            val canvas = Canvas(appIconBitmap)
-            appIconDrawable.setBounds(0, 0, canvas.width, canvas.height)
-            appIconDrawable.draw(canvas)
+            val appIconBitmap = appIconDrawable?.let {
+                Bitmap.createBitmap(
+                    it.intrinsicWidth,
+                    appIconDrawable.intrinsicHeight,
+                    Bitmap.Config.ARGB_8888
+                )
+            }
+            val canvas = appIconBitmap?.let { Canvas(it) }
+            if (canvas != null) {
+                appIconDrawable?.setBounds(0, 0, canvas.width, canvas.height)
+            }
+            if (canvas != null) {
+                appIconDrawable?.draw(canvas)
+            }
 
-            val scaledIcon = Bitmap.createScaledBitmap(appIconBitmap, 64, 64, false)
+            val scaledIcon = appIconBitmap?.let { Bitmap.createScaledBitmap(it, 64, 64, false) }
             binding.appIconImageView.setImageBitmap(scaledIcon)
 
         }
     }
-    
+
     fun setFilteredList(filteredList: ArrayList<AppDetails>) {
 
         this.appDataList = filteredList
