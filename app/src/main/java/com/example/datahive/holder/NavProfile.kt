@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import com.example.datahive.BottomSheetFragment
 import com.example.datahive.R
 import com.example.datahive.databinding.FragmentAppUsageBinding
 import com.example.datahive.databinding.FragmentNavProfileBinding
@@ -39,6 +40,13 @@ class NavProfile : Fragment() {
             }
 
         }
+        //open Bottomsheet for server configuration
+        binding.cardConfig.setOnClickListener {
+            val bottomSheetFragment = BottomSheetFragment()
+            bottomSheetFragment.show(childFragmentManager, "BottomSheetDialog")
+        }
+
+
         return binding.root
     }
     override fun onDestroyView() {

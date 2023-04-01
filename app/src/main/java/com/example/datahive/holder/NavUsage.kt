@@ -13,6 +13,7 @@ import com.example.datahive.databinding.FragmentAppUsageBinding
 import android.app.usage.NetworkStatsManager
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.net.ConnectivityManager
 import android.provider.Settings
@@ -74,7 +75,7 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
     private fun requestUsageStatsPermission() {
         val intent = Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS)
         startActivity(intent)
-    } 
+    }
 
     private fun displayAppDataUsage() {
         val networkStatsManager =
@@ -83,31 +84,34 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
         val installedApps = packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
 
         for (appInfo in installedApps) {
-            val uid = appInfo.uid
-            val appName = appInfo.loadLabel(packageManager).toString()
-            val appIcon = appInfo.loadIcon(packageManager)
+            // Check if the app is not a system app
+            if (appInfo.flags and ApplicationInfo.FLAG_SYSTEM == 0) {
+                val uid = appInfo.uid
+                val appName = appInfo.loadLabel(packageManager).toString()
+                val appIcon = appInfo.loadIcon(packageManager)
 
-            try {
-                val networkStats = networkStatsManager.queryDetailsForUid(
-                    ConnectivityManager.TYPE_WIFI,
-                    null,
-                    0,
-                    System.currentTimeMillis(),
-                    uid
-                )
+                try {
+                    val networkStats = networkStatsManager.queryDetailsForUid(
+                        ConnectivityManager.TYPE_WIFI,
+                        null,
+                        0,
+                        System.currentTimeMillis(),
+                        uid
+                    )
 
-                var totalDataUsage = 0L
-                while (networkStats.hasNextBucket()) {
-                    val bucket = android.app.usage.NetworkStats.Bucket()
-                    networkStats.getNextBucket(bucket)
-                    totalDataUsage += bucket.rxBytes + bucket.txBytes
+                    var totalDataUsage = 0L
+                    while (networkStats.hasNextBucket()) {
+                        val bucket = android.app.usage.NetworkStats.Bucket()
+                        networkStats.getNextBucket(bucket)
+                        totalDataUsage += bucket.rxBytes + bucket.txBytes
+                    }
+
+                    val appDetails = AppDetails(appName, appIcon, totalDataUsage)
+                    appDataUsageList.add(appDetails)
+
+                } catch (e: Exception) {
+                    e.printStackTrace()
                 }
-
-                val appDetails = AppDetails(appName, appIcon, totalDataUsage)
-                appDataUsageList.add(appDetails)
-
-            } catch (e: Exception) {
-                e.printStackTrace()
             }
         }
 
@@ -117,7 +121,8 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
         appDataAdapter = AppDataAdapter(appDataUsageList)
         appDataRecyclerView.adapter = appDataAdapter
     }
-      private fun filterList(text: String) {
+
+    private fun filterList(text: String) {
         for (app in appDataUsageList) {
             var filteredList = ArrayList<AppDetails>()
             val appName = app.name
