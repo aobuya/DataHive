@@ -16,6 +16,7 @@ import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.provider.Settings
 import android.widget.ProgressBar
 import android.widget.Toast
@@ -79,6 +80,9 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
         startActivity(intent)
     }
 
+
+
+
     private fun displayAppDataUsage() {
         val networkStatsManager =
             requireContext().getSystemService(Context.NETWORK_STATS_SERVICE) as NetworkStatsManager
@@ -133,7 +137,7 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
     }
 
     private fun filterList(text: String) {
-        var filteredList = ArrayList<AppDetails>()
+        val filteredList = ArrayList<AppDetails>()
         for (app in appDataUsageList) {
             val appName = app.app
             if (appName.lowercase().contains(text.lowercase(Locale.getDefault()))) {
@@ -152,7 +156,6 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
         if (query != null) {
             filterList(query)
         }
-
 
         return true
     }
