@@ -55,7 +55,7 @@
     <string name="totals">Total</string>
     <string name="support_tag"><![CDATA[Help & Support]]></string>
     <string name="search_hint">Search</string>
-    <string name="txt_config">Server confgurations</string>
+    <string name="txt_config">Server configurations</string>
 
     <!--Spinner Items-->
     <string-array name="date_options">

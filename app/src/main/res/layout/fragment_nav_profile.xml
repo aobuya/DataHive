@@ -8,7 +8,6 @@
     tools:context=".holder.NavProfile">
     <include layout="@layout/toolbar" />
 
-
     <ImageView
         android:id="@+id/lobby_screen_header"
         android:layout_width="250dp"
@@ -33,7 +32,6 @@
         android:layout_width="match_parent"
         android:layout_height="6dp"/>
 
-        android:textStyle="bold"/>
     <Space
         android:layout_width="match_parent"
         android:layout_height="6dp"/>
@@ -145,16 +143,17 @@
 
     </androidx.cardview.widget.CardView>
 
+
     <Space
         android:layout_width="match_parent"
         android:layout_height="18dp"/>
     <com.google.android.material.button.MaterialButton
         android:id="@+id/signOutButton"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="@string/sign_out"
-
-
+        android:text="@string/sign_out"/>
 
 </LinearLayout>
