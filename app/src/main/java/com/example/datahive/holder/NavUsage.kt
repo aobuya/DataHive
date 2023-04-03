@@ -80,7 +80,6 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
     }
 
     private fun displayAppDataUsage() {
-
         val networkStatsManager =
             requireContext().getSystemService(Context.NETWORK_STATS_SERVICE) as NetworkStatsManager
         val packageManager = requireContext().packageManager
@@ -113,13 +112,18 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
 
                     val appDetails = AppDetails(appName, appIcon, totalDataUsage)
                     appDataUsageList.add(appDetails)
-                    progress.visibility = View.GONE
 
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
             }
         }
+
+        // Sort the appDataUsageList by total data usage from largest to smallest
+        appDataUsageList = ArrayList(appDataUsageList.sortedByDescending { it.totalDataUsage })
+
+
+        progress.visibility = View.GONE
 
         val layoutManager = LinearLayoutManager(context)
         val appDataRecyclerView: RecyclerView = requireView().findViewById(R.id.listView)
@@ -131,7 +135,7 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
     private fun filterList(text: String) {
         var filteredList = ArrayList<AppDetails>()
         for (app in appDataUsageList) {
-            val appName = app.name
+            val appName = app.app
             if (appName.lowercase().contains(text.lowercase(Locale.getDefault()))) {
                 filteredList.add(app)
             }
