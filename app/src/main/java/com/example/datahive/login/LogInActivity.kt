@@ -101,7 +101,7 @@ class LogInActivity : AppCompatActivity() {
         oneTapClient.beginSignIn(signUpRequest)
             .addOnSuccessListener(this) { result ->
                 try {
-                    startIntentSenderForResult(
+                     startIntentSenderForResult(
                         result.pendingIntent.intentSender, REQ_ONE_TAP,
                         null, 0, 0, 0
                     )

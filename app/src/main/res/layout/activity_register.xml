@@ -88,14 +88,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="?attr/materialButtonOutlinedStyle"
+        android:visibility="gone"
         android:layout_below="@id/btn_login"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="1dp"
         android:layout_marginRight="20dp"
         android:text="@string/sign_up_with_google"
         app:icon="@drawable/google_color"
         app:iconSize="20dp"
         app:strokeColor="@color/bee_yellow"/>
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_height="wrap_content"/>
     <TextView
         android:id="@+id/login_redirect"
         android:layout_width="wrap_content"
@@ -103,6 +108,7 @@
         android:fontFamily="@font/asap_italic_variablefont_wdth_wght"
         android:text="@string/red_tag"
         android:textSize="17sp"
+        android:textColor="@color/bee_yellow"
         android:layout_marginStart="25dp"
         android:layout_marginBottom="50dp"
         android:layout_below="@id/btn_google_sign_up"/>
@@ -112,9 +118,9 @@
         android:layout_height="60dp"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
-        android:src="@drawable/hive" />
+         />
 
 </RelativeLayout>
