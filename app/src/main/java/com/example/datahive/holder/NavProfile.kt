@@ -1,6 +1,7 @@
 package com.example.datahive.holder
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -44,6 +45,29 @@ class NavProfile : Fragment() {
         binding.cardConfig.setOnClickListener {
             val bottomSheetFragment = BottomSheetFragment()
             bottomSheetFragment.show(childFragmentManager, "BottomSheetDialog")
+        }
+        //open the Gmail and send a report
+        binding.cardReport.setOnClickListener {
+            val intent = Intent(Intent.ACTION_SENDTO).apply {
+                data = Uri.parse("mailto:")
+                putExtra(Intent.EXTRA_EMAIL, arrayOf("datahive07@gmail.com"))
+                putExtra(Intent.EXTRA_SUBJECT, "DataHive - Report")
+            }
+            if (intent.resolveActivity(requireContext().packageManager) != null) {
+                startActivity(intent)
+            }
+
+        }
+        //open the Gmail and send a support request
+        binding.cardSupport.setOnClickListener {
+            val intent = Intent(Intent.ACTION_SENDTO).apply {
+                data = Uri.parse("mailto:")
+                putExtra(Intent.EXTRA_EMAIL, arrayOf("datahive07@gmail.com"))
+                putExtra(Intent.EXTRA_SUBJECT, "DataHive - Support")
+            }
+            if (intent.resolveActivity(requireContext().packageManager) != null) {
+                startActivity(intent)
+            }
         }
 
 
