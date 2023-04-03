@@ -17,6 +17,7 @@ import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.net.ConnectivityManager
 import android.provider.Settings
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,6 +33,8 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
     private val binding get() = _binding!!
     private var appDataUsageList = ArrayList<AppDetails>()
     private lateinit var appDataAdapter: AppDataAdapter
+    private lateinit var progressBar: ProgressBar
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -77,10 +80,13 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
     }
 
     private fun displayAppDataUsage() {
+
         val networkStatsManager =
             requireContext().getSystemService(Context.NETWORK_STATS_SERVICE) as NetworkStatsManager
         val packageManager = requireContext().packageManager
         val installedApps = packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
+        val progress = binding.progressBar
+        progress.visibility = View.VISIBLE
 
         for (appInfo in installedApps) {
             // Check if the app is not a system app
@@ -107,6 +113,7 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
 
                     val appDetails = AppDetails(appName, appIcon, totalDataUsage)
                     appDataUsageList.add(appDetails)
+                    progress.visibility = View.GONE
 
                 } catch (e: Exception) {
                     e.printStackTrace()
