@@ -1,4 +1,5 @@
 package com.example.datahive.holder
+
 import android.annotation.SuppressLint
 import android.app.AppOpsManager
 import android.content.Context
@@ -24,31 +25,41 @@ import android.os.Handler
 import android.os.Process
 import androidx.recyclerview.widget.LinearLayoutManager
 import dev.jahidhasanco.networkusage.*
-//import kotlinx.android.synthetic.main.activity_main.*
-
 import android.Manifest
-
+import android.content.ContentValues.TAG
+import android.util.Log
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.SetOptions
+import com.google.firebase.firestore.auth.User
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 
 class NavDashboard : Fragment() {
     private var _binding: FragmentNavDashboardBinding? = null
     private val binding get() = _binding!!
+
     private lateinit var dataUsagesAdapter: DataUsagesAdapter
     private var usagesDataList = ArrayList<UsagesData>()
+
+    private lateinit var dataHiveAuth: FirebaseAuth
 
 
     @SuppressLint("HardwareIds")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?): View? {
+        savedInstanceState: Bundle?
+    ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentNavDashboardBinding.inflate(inflater, container, false)
         //(activity as AppCompatActivity).setSupportActionBar(binding.root.findViewById(R.id.toolbar))
 
+        dataHiveAuth = FirebaseAuth.getInstance()
 
         setupPermissions()
 
-        val networkUsage = NetworkUsageManager(requireContext(), Util.getSubscriberId(requireContext()))
+        val networkUsage =
+            NetworkUsageManager(requireContext(), Util.getSubscriberId(requireContext()))
 
 
         val handler = Handler()
@@ -59,8 +70,10 @@ class NavDashboard : Fragment() {
                 val todayM = networkUsage.getUsage(Interval.today, NetworkType.MOBILE)
                 val todayW = networkUsage.getUsage(Interval.today, NetworkType.WIFI)
 
-                binding.wifiUsagesTv.text = "WiFi: " + Util.formatData(todayW.downloads, todayW.uploads)[2]
-                binding.dataUsagesTv.text = "Mobile: " + Util.formatData(todayM.downloads, todayM.uploads)[2]
+                binding.wifiUsagesTv.text =
+                    "WiFi: " + Util.formatData(todayW.downloads, todayW.uploads)[2]
+                binding.dataUsagesTv.text =
+                    "Mobile: " + Util.formatData(todayM.downloads, todayM.uploads)[2]
                 binding.apply {
                     totalSpeedTv.text = speeds[0].speed + "\n" + speeds[0].unit
                     downUsagesTv.text = "Down: " + speeds[1].speed + speeds[1].unit
@@ -140,8 +153,11 @@ class NavDashboard : Fragment() {
         binding.monthlyDataUsagesRv.layoutManager = LinearLayoutManager(requireContext())
         binding.monthlyDataUsagesRv.setHasFixedSize(true)
         binding.monthlyDataUsagesRv.adapter = dataUsagesAdapter
+
+        addUsageDataToFirestore(usagesDataList)
         return binding.root
     }
+
     private fun setupPermissions() {
         val permission = ContextCompat.checkSelfPermission(
             requireContext(), Manifest.permission.READ_PHONE_STATE
@@ -159,21 +175,20 @@ class NavDashboard : Fragment() {
     }
 
 
-
     /**private fun setupPermissions() {
-        val permission = ContextCompat.checkSelfPermission(
-            requireContext(), Manifest.permission.READ_PHONE_STATE
-        )
+    val permission = ContextCompat.checkSelfPermission(
+    requireContext(), Manifest.permission.READ_PHONE_STATE
+    )
 
-        if (permission != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(
-                requireActivity(), arrayOf(READ_PHONE_STATE), 34
-            )
-        }
+    if (permission != PackageManager.PERMISSION_GRANTED) {
+    ActivityCompat.requestPermissions(
+    requireActivity(), arrayOf(READ_PHONE_STATE), 34
+    )
+    }
 
-        if (checkUsagePermission()!= true) {
-            Toast.makeText(requireContext(), "My message", Toast.LENGTH_SHORT).show()
-        }
+    if (checkUsagePermission()!= true) {
+    Toast.makeText(requireContext(), "My message", Toast.LENGTH_SHORT).show()
+    }
 
 
 
@@ -196,6 +211,28 @@ class NavDashboard : Fragment() {
             return false
         }
         return true
+
+    }
+
+    private fun addUsageDataToFirestore(userData: ArrayList<UsagesData>) {
+
+        val userID = dataHiveAuth.currentUser
+        val dataHiveDB = Firebase.firestore
+
+        val userDataMap = userData.associateBy { it.date }
+
+
+
+        userID?.let{
+            val  currentUserUID = it.uid
+
+            for ((key, value) in userDataMap) {
+                dataHiveDB.collection("users").document(currentUserUID)
+                    .set(userDataMap, SetOptions.merge())
+                    .addOnSuccessListener { Log.d("Firestore DataHive", "Data written successfully") }
+                    .addOnFailureListener{e -> Log.w("Firestore DataHive","Error writing document",e)}
+            }
+        }
 
     }
 
