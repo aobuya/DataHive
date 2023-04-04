@@ -27,7 +27,8 @@ import dev.jahidhasanco.networkusage.*
 //import kotlinx.android.synthetic.main.activity_main.*
 
 import android.Manifest
-
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 
 
 class NavDashboard : Fragment() {
@@ -44,6 +45,18 @@ class NavDashboard : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentNavDashboardBinding.inflate(inflater, container, false)
         //(activity as AppCompatActivity).setSupportActionBar(binding.root.findViewById(R.id.toolbar))
+        //Load Ads
+        MobileAds.initialize(requireContext())
+        val adView = binding.adView
+        var adRequest = AdRequest.Builder()
+            .build()
+        adView.loadAd(adRequest)
+
+        //add2
+        val adView2 = binding.adView2
+        adRequest = AdRequest.Builder()
+            .build()
+        adView2.loadAd(adRequest)
 
 
         setupPermissions()

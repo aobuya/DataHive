@@ -13,6 +13,8 @@ import com.example.datahive.R
 import com.example.datahive.databinding.FragmentAppUsageBinding
 import com.example.datahive.databinding.FragmentNavProfileBinding
 import com.example.datahive.login.LogInActivity
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 
 import com.google.firebase.auth.FirebaseAuth
 
@@ -31,6 +33,12 @@ class NavProfile : Fragment() {
         _binding = FragmentNavProfileBinding.inflate(inflater, container, false)
         //(activity as AppCompatActivity).setSupportActionBar(binding.root.findViewById(R.id.toolbar))
         dataHiveAuth = FirebaseAuth.getInstance()
+        //Load Ads
+        MobileAds.initialize(requireContext())
+        val adView = binding.adView
+        val adRequest = AdRequest.Builder()
+            .build()
+        adView.loadAd(adRequest)
 
         binding.signOutButton.setOnClickListener {
             dataHiveAuth.signOut()
