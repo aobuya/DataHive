@@ -27,4 +27,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/bottom_nav" />
 
+
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

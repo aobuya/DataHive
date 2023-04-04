@@ -34,6 +34,10 @@
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
+
+
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -46,6 +50,14 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             app:animateNavigationIcon="true" />
+        <com.google.android.gms.ads.AdView
+            xmlns:ads="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/adView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            ads:adSize="BANNER"
+            ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
+        </com.google.android.gms.ads.AdView>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -56,28 +68,22 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:layout_dodgeInsetEdges="bottom">
 
-            <Spinner
-                android:id="@+id/date_spinner"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:entries="@array/date_options"
 
-                android:padding="10dp" />
 
             <Space
                 android:layout_width="20dp"
                 android:layout_height="wrap_content" />
 
-            <Spinner
-                android:id="@+id/connectivity_option"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:entries="@array/connectivity_option"
-                android:padding="10dp" />
+
 
         </LinearLayout>
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="visible"
+            />
 
 
         <androidx.recyclerview.widget.RecyclerView
@@ -85,6 +91,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:listitem="@layout/app_data_usage_item" />
+
     </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

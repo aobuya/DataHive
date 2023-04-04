@@ -2,9 +2,11 @@ package com.example.datahive.app_usage
 
 import android.graphics.drawable.Drawable
 
-data class AppDetails(
-    val name: String,
-    val icon: Drawable,
-    val dataUsage: Long
-)
+class AppDetails(val app: String, val icon: Drawable?, val totalDataUsage: Long) : Comparable<AppDetails> {
+
+    override fun compareTo(other: AppDetails): Int {
+        return totalDataUsage.compareTo(other.totalDataUsage)
+    }
+}
+
 

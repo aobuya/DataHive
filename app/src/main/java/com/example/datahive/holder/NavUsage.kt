@@ -13,15 +13,20 @@ import com.example.datahive.databinding.FragmentAppUsageBinding
 import android.app.usage.NetworkStatsManager
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.provider.Settings
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.datahive.app_usage.AppDataAdapter
 import com.example.datahive.app_usage.AppDetails
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -29,8 +34,11 @@ import kotlin.collections.ArrayList
 class NavUsage : Fragment(), SearchView.OnQueryTextListener {
     private var _binding: FragmentAppUsageBinding? = null
     private val binding get() = _binding!!
-    private var appDataUsageList = ArrayList<AppDetails>()    
+    private var appDataUsageList = ArrayList<AppDetails>()
     private lateinit var appDataAdapter: AppDataAdapter
+    private lateinit var progressBar: ProgressBar
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,8 +48,13 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
         _binding = FragmentAppUsageBinding.inflate(inflater, container, false)
         //(activity as AppCompatActivity).setSupportActionBar(binding.root.findViewById(R.id.toolbar))
 
-
         binding.appUsageSearchView.setOnQueryTextListener(this)
+        //Load Ads
+        MobileAds.initialize(requireContext())
+        val adView = binding.adView
+        val adRequest = AdRequest.Builder()
+            .build()
+        adView.loadAd(adRequest)
 
         return binding.root
     }
@@ -74,42 +87,56 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
     private fun requestUsageStatsPermission() {
         val intent = Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS)
         startActivity(intent)
-    } 
+    }
+
+
+
 
     private fun displayAppDataUsage() {
         val networkStatsManager =
             requireContext().getSystemService(Context.NETWORK_STATS_SERVICE) as NetworkStatsManager
         val packageManager = requireContext().packageManager
         val installedApps = packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
+        val progress = binding.progressBar
+        progress.visibility = View.VISIBLE
 
         for (appInfo in installedApps) {
-            val uid = appInfo.uid
-            val appName = appInfo.loadLabel(packageManager).toString()
-            val appIcon = appInfo.loadIcon(packageManager)
+            // Check if the app is not a system app
+            if (appInfo.flags and ApplicationInfo.FLAG_SYSTEM == 0) {
+                val uid = appInfo.uid
+                val appName = appInfo.loadLabel(packageManager).toString()
+                val appIcon = appInfo.loadIcon(packageManager)
 
-            try {
-                val networkStats = networkStatsManager.queryDetailsForUid(
-                    ConnectivityManager.TYPE_WIFI,
-                    null,
-                    0,
-                    System.currentTimeMillis(),
-                    uid
-                )
+                try {
+                    val networkStats = networkStatsManager.queryDetailsForUid(
+                        ConnectivityManager.TYPE_WIFI,
+                        null,
+                        0,
+                        System.currentTimeMillis(),
+                        uid
+                    )
 
-                var totalDataUsage = 0L
-                while (networkStats.hasNextBucket()) {
-                    val bucket = android.app.usage.NetworkStats.Bucket()
-                    networkStats.getNextBucket(bucket)
-                    totalDataUsage += bucket.rxBytes + bucket.txBytes
+                    var totalDataUsage = 0L
+                    while (networkStats.hasNextBucket()) {
+                        val bucket = android.app.usage.NetworkStats.Bucket()
+                        networkStats.getNextBucket(bucket)
+                        totalDataUsage += bucket.rxBytes + bucket.txBytes
+                    }
+
+                    val appDetails = AppDetails(appName, appIcon, totalDataUsage)
+                    appDataUsageList.add(appDetails)
+
+                } catch (e: Exception) {
+                    e.printStackTrace()
                 }
-
-                val appDetails = AppDetails(appName, appIcon, totalDataUsage)
-                appDataUsageList.add(appDetails)
-
-            } catch (e: Exception) {
-                e.printStackTrace()
             }
         }
+
+        // Sort the appDataUsageList by total data usage from largest to smallest
+        appDataUsageList = ArrayList(appDataUsageList.sortedByDescending { it.totalDataUsage })
+
+
+        progress.visibility = View.GONE
 
         val layoutManager = LinearLayoutManager(context)
         val appDataRecyclerView: RecyclerView = requireView().findViewById(R.id.listView)
@@ -117,29 +144,28 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
         appDataAdapter = AppDataAdapter(appDataUsageList)
         appDataRecyclerView.adapter = appDataAdapter
     }
-      private fun filterList(text: String) {
+
+    private fun filterList(text: String) {
+        val filteredList = ArrayList<AppDetails>()
         for (app in appDataUsageList) {
-            var filteredList = ArrayList<AppDetails>()
-            val appName = app.name
+            val appName = app.app
             if (appName.lowercase().contains(text.lowercase(Locale.getDefault()))) {
                 filteredList.add(app)
-
-                if (filteredList.isNotEmpty()) {
-
-                    appDataAdapter.setFilteredList(filteredList)
-
-                } else {
-                    Toast.makeText(requireContext(), "App not found", Toast.LENGTH_SHORT).show()
-                }
             }
         }
-    }
 
+        if (filteredList.isNotEmpty()) {
+            appDataAdapter.setFilteredList(filteredList)
+        } else {
+            //Toast.makeText(requireContext(), "App not found", Toast.LENGTH_SHORT).show()
+        }
+    }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
         if (query != null) {
             filterList(query)
         }
+
         return true
     }
 

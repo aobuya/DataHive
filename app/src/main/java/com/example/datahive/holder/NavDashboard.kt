@@ -33,6 +33,8 @@ import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.auth.User
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 
 
 class NavDashboard : Fragment() {
@@ -53,6 +55,18 @@ class NavDashboard : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentNavDashboardBinding.inflate(inflater, container, false)
         //(activity as AppCompatActivity).setSupportActionBar(binding.root.findViewById(R.id.toolbar))
+        //Load Ads
+        MobileAds.initialize(requireContext())
+        val adView = binding.adView
+        var adRequest = AdRequest.Builder()
+            .build()
+        adView.loadAd(adRequest)
+
+        //add2
+        val adView2 = binding.adView2
+        adRequest = AdRequest.Builder()
+            .build()
+        adView2.loadAd(adRequest)
 
         dataHiveAuth = FirebaseAuth.getInstance()
 
@@ -155,6 +169,7 @@ class NavDashboard : Fragment() {
         binding.monthlyDataUsagesRv.adapter = dataUsagesAdapter
 
         addUsageDataToFirestore(usagesDataList)
+
         return binding.root
     }
 
@@ -226,12 +241,12 @@ class NavDashboard : Fragment() {
         userID?.let{
             val  currentUserUID = it.uid
 
-            for ((key, value) in userDataMap) {
+            //for ((key, value) in userDataMap) {
                 dataHiveDB.collection("users").document(currentUserUID)
                     .set(userDataMap, SetOptions.merge())
                     .addOnSuccessListener { Log.d("Firestore DataHive", "Data written successfully") }
                     .addOnFailureListener{e -> Log.w("Firestore DataHive","Error writing document",e)}
-            }
+            //}
         }
 
     }

@@ -14,10 +14,10 @@ class AppDataAdapter(private var appDataList: List<AppDetails>) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(appDetails: AppDetails) {
-            binding.appNameTextView.text = appDetails.name
+            binding.appNameTextView.text = appDetails.app
             //binding.appIconImageView.setImageDrawable(appDetails.icon)
             //binding.appDataUsageTextView.text = "${appDetails.dataUsage / 1024 / 1024} MB"
-            val dataUsageMB = appDetails.dataUsage / 1024 / 1024.toDouble()
+            val dataUsageMB = appDetails.totalDataUsage / 1024 / 1024.toDouble()
 
             val dataUsageStr = if (dataUsageMB >= 1024) {
                 "%.2f GB".format(dataUsageMB / 1024)
@@ -27,21 +27,27 @@ class AppDataAdapter(private var appDataList: List<AppDetails>) :
             binding.appDataUsageTextView.text = dataUsageStr
 
             val appIconDrawable = appDetails.icon
-            val appIconBitmap = Bitmap.createBitmap(
-                appIconDrawable.intrinsicWidth,
-                appIconDrawable.intrinsicHeight,
-                Bitmap.Config.ARGB_8888
-            )
-            val canvas = Canvas(appIconBitmap)
-            appIconDrawable.setBounds(0, 0, canvas.width, canvas.height)
-            appIconDrawable.draw(canvas)
+            val appIconBitmap = appIconDrawable?.let {
+                Bitmap.createBitmap(
+                    it.intrinsicWidth,
+                    appIconDrawable.intrinsicHeight,
+                    Bitmap.Config.ARGB_8888
+                )
+            }
+            val canvas = appIconBitmap?.let { Canvas(it) }
+            if (canvas != null) {
+                appIconDrawable?.setBounds(0, 0, canvas.width, canvas.height)
+            }
+            if (canvas != null) {
+                appIconDrawable?.draw(canvas)
+            }
 
-            val scaledIcon = Bitmap.createScaledBitmap(appIconBitmap, 64, 64, false)
+            val scaledIcon = appIconBitmap?.let { Bitmap.createScaledBitmap(it, 64, 64, false) }
             binding.appIconImageView.setImageBitmap(scaledIcon)
 
         }
     }
-    
+
     fun setFilteredList(filteredList: ArrayList<AppDetails>) {
 
         this.appDataList = filteredList
