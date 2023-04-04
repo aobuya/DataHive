@@ -15,9 +15,18 @@
         android:src="@drawable/hive"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"/>
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-3940256099942544/6300978111"/>
     <Space
         android:layout_width="match_parent"
-        android:layout_height="180dp"/>
+        android:layout_height="100dp"/>
+
     <TextView
         android:id="@+id/lobby_screen_title"
         android:layout_width="match_parent"
@@ -157,5 +166,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="@string/sign_out"/>
+
 
 </LinearLayout>

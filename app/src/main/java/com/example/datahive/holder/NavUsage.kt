@@ -25,6 +25,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.datahive.app_usage.AppDataAdapter
 import com.example.datahive.app_usage.AppDetails
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -37,6 +39,7 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
     private lateinit var progressBar: ProgressBar
 
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -46,6 +49,12 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
         //(activity as AppCompatActivity).setSupportActionBar(binding.root.findViewById(R.id.toolbar))
 
         binding.appUsageSearchView.setOnQueryTextListener(this)
+        //Load Ads
+        MobileAds.initialize(requireContext())
+        val adView = binding.adView
+        val adRequest = AdRequest.Builder()
+            .build()
+        adView.loadAd(adRequest)
 
         return binding.root
     }

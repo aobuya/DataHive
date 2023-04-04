@@ -34,12 +34,14 @@
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/ln1"
         android:orientation="horizontal"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -58,6 +60,21 @@
                     android:orientation="vertical">
 
                     <LinearLayout
+                        android:layout_width="match_parent"
+                        android:orientation="vertical"
+                        android:layout_height="wrap_content">
+                        <com.google.android.gms.ads.AdView
+                            xmlns:ads="http://schemas.android.com/apk/res-auto"
+                            android:id="@+id/adView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            ads:adSize="BANNER"
+                            ads:adUnitId="ca-app-pub-3940256099942544/6300978111"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:id="@+id/linearLayout_top"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -65,6 +82,7 @@
                         android:layout_marginEnd="20dp"
                         android:layout_marginBottom="2dp"
                         app:layout_constraintTop_toTopOf="parent">
+
 
                         <TextView
                             android:layout_width="0dp"
@@ -322,6 +340,20 @@
                         android:layout_marginStart="20dp"
                         android:layout_marginEnd="20dp"
                         tools:listitem="@layout/item_daily_usage" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:orientation="vertical"
+                        android:layout_height="wrap_content">
+                        <com.google.android.gms.ads.AdView
+                            xmlns:ads="http://schemas.android.com/apk/res-auto"
+                            android:id="@+id/adView2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            ads:adSize="BANNER"
+                            ads:adUnitId="ca-app-pub-3940256099942544/6300978111"/>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
