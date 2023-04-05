@@ -13,7 +13,6 @@ class AppDataAdapter(private var appDataList: List<AppDetails>) :
     inner class AppDataViewHolder(private val binding: AppDataUsageItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-
         fun bind(appDetails: AppDetails) {
             binding.appNameTextView.text = appDetails.app
             //binding.appIconImageView.setImageDrawable(appDetails.icon)

@@ -68,4 +68,7 @@
         <item>Mobile</item>
     </string-array>
 
+    <!--Profile page-->
+    <string name="user">username</string>
+
 </resources>
