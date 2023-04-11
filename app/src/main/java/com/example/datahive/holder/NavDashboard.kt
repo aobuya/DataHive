@@ -233,16 +233,13 @@ class NavDashboard : Fragment() {
 
         val userID = dataHiveAuth.currentUser
         val dataHiveDB = Firebase.firestore
-
         val userDataMap = userData.associateBy { it.date }
 
-
-
         userID?.let{
-            val  currentUserUID = it.uid
+            val  currentUserUID = it.email
 
             //for ((key, value) in userDataMap) {
-                dataHiveDB.collection("users").document(currentUserUID)
+                dataHiveDB.collection("users").document(currentUserUID.toString())
                     .set(userDataMap, SetOptions.merge())
                     .addOnSuccessListener { Log.d("Firestore DataHive", "Data written successfully") }
                     .addOnFailureListener{e -> Log.w("Firestore DataHive","Error writing document",e)}

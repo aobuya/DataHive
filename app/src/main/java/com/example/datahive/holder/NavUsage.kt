@@ -23,6 +23,8 @@ import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.datahive.BottomSheetFragment
+import com.example.datahive.FilterBottomSheet
 import com.example.datahive.app_usage.AppDataAdapter
 import com.example.datahive.app_usage.AppDetails
 import com.google.android.gms.ads.AdRequest
@@ -47,7 +49,10 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
 
         _binding = FragmentAppUsageBinding.inflate(inflater, container, false)
         //(activity as AppCompatActivity).setSupportActionBar(binding.root.findViewById(R.id.toolbar))
-
+        //Fab
+        binding.fab.setOnClickListener {
+            showFilterSheet()
+        }
         binding.appUsageSearchView.setOnQueryTextListener(this)
         //Load Ads
         MobileAds.initialize(requireContext())
@@ -57,6 +62,11 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
         adView.loadAd(adRequest)
 
         return binding.root
+    }
+
+    private fun showFilterSheet() {
+        val filterSheet = FilterBottomSheet()
+        filterSheet.show(childFragmentManager, "BottomSheetDialog")
     }
 
     override fun onResume() {

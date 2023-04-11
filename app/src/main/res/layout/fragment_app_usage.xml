@@ -44,6 +44,8 @@
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+
+
         <androidx.appcompat.widget.SearchView
             android:id="@+id/app_usage_search_view"
             android:layout_width="match_parent"
@@ -57,6 +59,8 @@
             android:layout_height="wrap_content"
             ads:adSize="BANNER"
             ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
+
+
         </com.google.android.gms.ads.AdView>
 
         <LinearLayout
@@ -67,6 +71,8 @@
             android:paddingEnd="10dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:layout_dodgeInsetEdges="bottom">
+
+
 
 
 
@@ -93,5 +99,14 @@
             tools:listitem="@layout/app_data_usage_item" />
 
     </LinearLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:src="@drawable/filter"
+
+        app:fabSize="normal" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

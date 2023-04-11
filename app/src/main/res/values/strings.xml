@@ -58,14 +58,14 @@
     <string name="txt_config">Server configurations</string>
 
     <!--Spinner Items-->
-    <string-array name="date_options">
-        <item>Today</item>
-        <item>Yesterday</item>
-    </string-array>connectivity_option
-
-    <string-array name="connectivity_option">
-        <item>Wi-Fi</item>
+    <string-array name="network_options">
+        <item>Wifi</item>
         <item>Mobile</item>
+    </string-array>
+
+    <string-array name="app_options">
+        <item>System Apps</item>
+        <item>Installed Apps</item>
     </string-array>
 
     <!--Profile page-->
