@@ -61,6 +61,7 @@ class NavDashboard : Fragment() {
         var adRequest = AdRequest.Builder()
             .build()
         adView.loadAd(adRequest)
+        usagesDataList.clear()
 
         //add2
         val adView2 = binding.adView2
@@ -185,7 +186,7 @@ class NavDashboard : Fragment() {
         }
 
         if (checkUsagePermission() != true) {
-            Toast.makeText(requireContext(), "My message", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Permissions granted", Toast.LENGTH_SHORT).show()
         }
     }
 
