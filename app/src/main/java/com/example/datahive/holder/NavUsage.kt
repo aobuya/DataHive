@@ -18,6 +18,7 @@ import android.content.pm.PackageManager
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.provider.Settings
+import android.util.Log
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
@@ -25,20 +26,33 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.datahive.BottomSheetFragment
 import com.example.datahive.FilterBottomSheet
+import com.example.datahive.UsagesData
 import com.example.datahive.app_usage.AppDataAdapter
 import com.example.datahive.app_usage.AppDetails
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuth.*
+import com.google.firebase.firestore.SetOptions
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import java.util.*
 import kotlin.collections.ArrayList
+import dev.jahidhasanco.networkusage.*
+import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 
 
 class NavUsage : Fragment(), SearchView.OnQueryTextListener {
     private var _binding: FragmentAppUsageBinding? = null
     private val binding get() = _binding!!
+
     private var appDataUsageList = ArrayList<AppDetails>()
     private lateinit var appDataAdapter: AppDataAdapter
     private lateinit var progressBar: ProgressBar
+
+    private lateinit var dataHiveAuth : FirebaseAuth
 
 
 
@@ -53,6 +67,9 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
         binding.fab.setOnClickListener {
             showFilterSheet()
         }
+
+        dataHiveAuth = FirebaseAuth.getInstance()
+
         binding.appUsageSearchView.setOnQueryTextListener(this)
         //Load Ads
         MobileAds.initialize(requireContext())
@@ -108,6 +125,8 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
         val packageManager = requireContext().packageManager
         val installedApps = packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
         val progress = binding.progressBar
+        
+        val networkUsage = NetworkUsageManager(requireContext(), Util.getSubscriberId(requireContext()))
         progress.visibility = View.VISIBLE
 
         for (appInfo in installedApps) {
@@ -133,7 +152,9 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
                         totalDataUsage += bucket.rxBytes + bucket.txBytes
                     }
 
-                    val appDetails = AppDetails(appName, appIcon, totalDataUsage)
+                    val todayDataUsage = networkUsage.getUsage(Interval.today, NetworkType.ALL)
+
+                    val appDetails = AppDetails(appName, appIcon, totalDataUsage, todayDataUsage.toString())
                     appDataUsageList.add(appDetails)
 
                 } catch (e: Exception) {
@@ -153,6 +174,21 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
         appDataRecyclerView.layoutManager = layoutManager
         appDataAdapter = AppDataAdapter(appDataUsageList)
         appDataRecyclerView.adapter = appDataAdapter
+
+        addUsageDataToFirestore(appDataUsageList)
+
+
+        /*share appDataUsagelist with navdashboard fragment
+        val bundle = Bundle()
+        bundle.putStringArrayList("fromNavUsage",appDataUsageList)
+
+        val navUsageFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.dashboardFragment)
+        navUsageFragment?.let{
+            navUsageFragment.arguments = bundle
+        }
+        */
+
+
     }
 
     private fun filterList(text: String) {
@@ -171,6 +207,35 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
         }
     }
 
+    private fun addUsageDataToFirestore(usageData: ArrayList<AppDetails>) {
+        val getCurrentUser = dataHiveAuth.currentUser
+        val dataHiveDB = Firebase.firestore
+
+       usageData.forEach {app ->
+           app.icon = null
+       }
+
+        val userDataMap = usageData.associateBy { it.date }
+
+        getCurrentUser?.let {
+            val currentUserEmail = it.email.toString()
+
+            //for ((key, value) in userDataMap) {
+            dataHiveDB.collection("users").document(currentUserEmail)
+                .set(userDataMap, SetOptions.merge())
+                .addOnSuccessListener { Log.d("Firestore DataHive", "Data written successfully") }
+                .addOnFailureListener { e ->
+                    Log.w(
+                        "Firestore DataHive", "Error writing document", e
+                    )
+                }
+            //}
+        }
+
+
+
+    }
+
     override fun onQueryTextSubmit(query: String?): Boolean {
         if (query != null) {
             filterList(query)
@@ -186,5 +251,9 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
         return true
     }
 
+
+}
+
+private fun Bundle.putStringArrayList(s: String, appDataUsageList: ArrayList<AppDetails>) {
 
 }

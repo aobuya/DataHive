@@ -94,6 +94,7 @@ class RegisterActivity : AppCompatActivity() {
                             .show()
                         val intent = Intent(this, MainNavigation::class.java)
                         startActivity(intent)
+                        finish()
 
                     } else {
                         Toast.makeText(this, it.exception.toString(), Toast.LENGTH_SHORT).show()
