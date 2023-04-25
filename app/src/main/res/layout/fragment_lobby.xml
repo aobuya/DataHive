@@ -24,7 +24,7 @@
         android:text="@string/lobby_title"
         android:textSize="30sp"
         android:textStyle="bold"
-        android:textColor="@color/black"
+        android:textColor="@color/md_theme_light_scrim"
         android:gravity="center"
         />
     <Space

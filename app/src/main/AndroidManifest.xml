@@ -22,7 +22,7 @@
         android:icon="@drawable/hive"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.DataHive"
+        android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
             android:name=".holder.MainNavigation"
