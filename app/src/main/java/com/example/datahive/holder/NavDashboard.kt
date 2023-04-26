@@ -38,6 +38,10 @@ import com.google.firebase.ktx.Firebase
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 
 class NavDashboard : Fragment() {
@@ -225,13 +229,16 @@ class NavDashboard : Fragment() {
         val getCurrentUser = dataHiveAuth.currentUser
         val dataHiveDB = Firebase.firestore
 
+        val todayDate = getCurrentDateTime()
+        val todayDateInString = todayDate.toString("dd/M/yyyy")
+
         val userDataMap = userData.associateBy { it.date }
 
         getCurrentUser?.let {
             val currentUserEmail = it.email.toString()
 
             for (app in userDataMap) {
-                dataHiveDB.collection("users").document(currentUserEmail)
+                dataHiveDB.collection("users").document(currentUserEmail).collection("totalDataUsage").document(todayDateInString)
                     .set(userDataMap, SetOptions.merge())
                     .addOnSuccessListener {
                         Log.d(
@@ -246,5 +253,13 @@ class NavDashboard : Fragment() {
                     }
             }
         }
+    }
+    fun Date.toString(format: String, locale: Locale = Locale.getDefault()): String {
+        val formatter = SimpleDateFormat(format, locale)
+        return formatter.format(this)
+    }
+
+    fun getCurrentDateTime(): Date {
+        return Calendar.getInstance().time
     }
 }

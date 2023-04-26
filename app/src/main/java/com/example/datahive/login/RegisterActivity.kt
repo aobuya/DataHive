@@ -77,6 +77,7 @@ class RegisterActivity : AppCompatActivity() {
         binding.loginRedirect.setOnClickListener {
             val intent = Intent(this, LogInActivity::class.java)
             startActivity(intent)
+            finish()
         }
         //log in with google
         binding.btnGoogleSignUp.setOnClickListener {

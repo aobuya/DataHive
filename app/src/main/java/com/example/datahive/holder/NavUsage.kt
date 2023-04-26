@@ -42,6 +42,8 @@ import dev.jahidhasanco.networkusage.*
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
 
 
 class NavUsage : Fragment(), SearchView.OnQueryTextListener {
@@ -49,11 +51,11 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
     private val binding get() = _binding!!
 
     private var appDataUsageList = ArrayList<AppDetails>()
+    private var todayAppDataUsageList = ArrayList<AppDetails>()
     private lateinit var appDataAdapter: AppDataAdapter
     private lateinit var progressBar: ProgressBar
 
-    private lateinit var dataHiveAuth : FirebaseAuth
-
+    private lateinit var dataHiveAuth: FirebaseAuth
 
 
     override fun onCreateView(
@@ -117,16 +119,15 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
     }
 
 
-
-
     private fun displayAppDataUsage() {
         val networkStatsManager =
             requireContext().getSystemService(Context.NETWORK_STATS_SERVICE) as NetworkStatsManager
         val packageManager = requireContext().packageManager
         val installedApps = packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
         val progress = binding.progressBar
-        
-        val networkUsage = NetworkUsageManager(requireContext(), Util.getSubscriberId(requireContext()))
+
+        val networkUsage =
+            NetworkUsageManager(requireContext(), Util.getSubscriberId(requireContext()))
         progress.visibility = View.VISIBLE
 
         for (appInfo in installedApps) {
@@ -152,10 +153,21 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
                         totalDataUsage += bucket.rxBytes + bucket.txBytes
                     }
 
-                    val todayDataUsage = networkUsage.getUsage(Interval.today, NetworkType.ALL)
 
-                    val appDetails = AppDetails(appName, appIcon, totalDataUsage, todayDataUsage.toString())
+                    val appDetails =
+                        AppDetails(appName, appIcon, totalDataUsage)
                     appDataUsageList.add(appDetails)
+
+                    val todayDate = getCurrentDateTime()
+                    val todayDateInString = todayDate.toString("dd/M/yyyy")
+
+                    val todayAppDetails =
+                        AppDetails(appName, totalDataUsage = totalDataUsage, date = todayDateInString )
+                    todayAppDataUsageList.add(todayAppDetails)
+
+                    addUsageDataToFirestore(todayAppDataUsageList)
+
+
 
                 } catch (e: Exception) {
                     e.printStackTrace()
@@ -174,8 +186,6 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
         appDataRecyclerView.layoutManager = layoutManager
         appDataAdapter = AppDataAdapter(appDataUsageList)
         appDataRecyclerView.adapter = appDataAdapter
-
-        addUsageDataToFirestore(appDataUsageList)
 
 
         /*share appDataUsagelist with navdashboard fragment
@@ -211,9 +221,8 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
         val getCurrentUser = dataHiveAuth.currentUser
         val dataHiveDB = Firebase.firestore
 
-       usageData.forEach {app ->
-           app.icon = null
-       }
+        val todayDate = getCurrentDateTime()
+        val todayDateInString = todayDate.toString("dd/M/yyyy")
 
         val userDataMap = usageData.associateBy { it.date }
 
@@ -221,7 +230,7 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
             val currentUserEmail = it.email.toString()
 
             //for ((key, value) in userDataMap) {
-            dataHiveDB.collection("users").document(currentUserEmail)
+            dataHiveDB.collection("users").document(currentUserEmail).collection("todayDataUsage").document(todayDateInString.toString())
                 .set(userDataMap, SetOptions.merge())
                 .addOnSuccessListener { Log.d("Firestore DataHive", "Data written successfully") }
                 .addOnFailureListener { e ->
@@ -233,7 +242,15 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
         }
 
 
+    }
 
+    fun Date.toString(format: String, locale: Locale = Locale.getDefault()): String {
+        val formatter = SimpleDateFormat(format, locale)
+        return formatter.format(this)
+    }
+
+    fun getCurrentDateTime(): Date {
+        return Calendar.getInstance().time
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
