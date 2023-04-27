@@ -13,6 +13,7 @@ import com.example.datahive.R
 import com.example.datahive.databinding.FragmentAppUsageBinding
 import com.example.datahive.databinding.FragmentNavProfileBinding
 import com.example.datahive.login.LogInActivity
+import com.example.datahive.login.RegisterActivity
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 
@@ -33,6 +34,12 @@ class NavProfile : Fragment() {
         _binding = FragmentNavProfileBinding.inflate(inflater, container, false)
         //(activity as AppCompatActivity).setSupportActionBar(binding.root.findViewById(R.id.toolbar))
         dataHiveAuth = FirebaseAuth.getInstance()
+
+        if(dataHiveAuth.currentUser!!.isAnonymous) {
+            binding.signOutButton.visibility = View.GONE
+        }else{
+            binding.signUpRedirect.visibility = View.GONE
+        }
         //Load Ads
         MobileAds.initialize(requireContext())
         val adView = binding.adView
@@ -48,6 +55,13 @@ class NavProfile : Fragment() {
                 finishAffinity()
             }
 
+        }
+
+        binding.signUpRedirect.setOnClickListener {
+            requireActivity().run{
+                startActivity(Intent(this,RegisterActivity::class.java))
+                finishAffinity()
+            }
         }
         //open Bottomsheet for server configuration
         binding.cardConfig.setOnClickListener {

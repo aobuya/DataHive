@@ -162,12 +162,18 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
                     val todayDateInString = todayDate.toString("dd/M/yyyy")
 
                     val todayAppDetails =
-                        AppDetails(appName, totalDataUsage = totalDataUsage, date = todayDateInString )
+                        AppDetails(
+                            appName,
+                            totalDataUsage = totalDataUsage,
+                            date = todayDateInString
+                        )
                     todayAppDataUsageList.add(todayAppDetails)
 
-                    addUsageDataToFirestore(todayAppDataUsageList)
-
-
+                    if (!dataHiveAuth.currentUser!!.isAnonymous) {
+                        lifecycleScope.launch {
+                            addUsageDataToFirestore(todayAppDataUsageList)
+                        }
+                    }
 
                 } catch (e: Exception) {
                     e.printStackTrace()
@@ -230,17 +236,22 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
             val currentUserEmail = it.email.toString()
 
             //for ((key, value) in userDataMap) {
-            dataHiveDB.collection("users").document(currentUserEmail).collection("todayDataUsage").document(todayDateInString.toString())
+            dataHiveDB.collection("users").document(currentUserEmail)
+                .collection("todayDataUsage")
+                .document(todayDateInString.toString())
                 .set(userDataMap, SetOptions.merge())
-                .addOnSuccessListener { Log.d("Firestore DataHive", "Data written successfully") }
+                .addOnSuccessListener {
+                    Log.d(
+                        "Firestore DataHive",
+                        "Data written successfully"
+                    )
+                }
                 .addOnFailureListener { e ->
                     Log.w(
                         "Firestore DataHive", "Error writing document", e
                     )
                 }
-            //}
         }
-
 
     }
 

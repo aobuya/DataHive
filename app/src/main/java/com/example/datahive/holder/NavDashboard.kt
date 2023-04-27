@@ -162,8 +162,10 @@ class NavDashboard : Fragment() {
         binding.monthlyDataUsagesRv.setHasFixedSize(true)
         binding.monthlyDataUsagesRv.adapter = dataUsagesAdapter
 
-        lifecycleScope.launch {
-            addUsageDataToFirestore(usagesDataList)
+        if (!dataHiveAuth.currentUser!!.isAnonymous) {
+            lifecycleScope.launch {
+                addUsageDataToFirestore(usagesDataList)
+            }
         }
 
         return binding.root
@@ -234,11 +236,13 @@ class NavDashboard : Fragment() {
 
         val userDataMap = userData.associateBy { it.date }
 
+
         getCurrentUser?.let {
             val currentUserEmail = it.email.toString()
 
             for (app in userDataMap) {
-                dataHiveDB.collection("users").document(currentUserEmail).collection("totalDataUsage").document(todayDateInString)
+                dataHiveDB.collection("users").document(currentUserEmail)
+                    .collection("totalDataUsage").document(todayDateInString)
                     .set(userDataMap, SetOptions.merge())
                     .addOnSuccessListener {
                         Log.d(
@@ -254,6 +258,7 @@ class NavDashboard : Fragment() {
             }
         }
     }
+
     fun Date.toString(format: String, locale: Locale = Locale.getDefault()): String {
         val formatter = SimpleDateFormat(format, locale)
         return formatter.format(this)
