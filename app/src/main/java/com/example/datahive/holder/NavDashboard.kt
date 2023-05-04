@@ -37,6 +37,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -163,7 +164,7 @@ class NavDashboard : Fragment() {
         binding.monthlyDataUsagesRv.adapter = dataUsagesAdapter
 
         if (!dataHiveAuth.currentUser!!.isAnonymous) {
-            lifecycleScope.launch {
+            lifecycleScope.launch(Dispatchers.IO) {
                 addUsageDataToFirestore(usagesDataList)
             }
         }

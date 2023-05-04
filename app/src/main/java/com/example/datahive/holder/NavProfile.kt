@@ -1,5 +1,6 @@
 package com.example.datahive.holder
 
+import com.example.datahive.profile.ProfileModalBottomSheet
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -7,10 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import com.example.datahive.BottomSheetFragment
-import com.example.datahive.R
-import com.example.datahive.databinding.FragmentAppUsageBinding
 import com.example.datahive.databinding.FragmentNavProfileBinding
 import com.example.datahive.login.LogInActivity
 import com.example.datahive.login.RegisterActivity
@@ -24,7 +22,7 @@ class NavProfile : Fragment() {
 
     private var _binding: FragmentNavProfileBinding? = null
     private val binding get() = _binding!!
-    private lateinit var dataHiveAuth : FirebaseAuth
+    private lateinit var dataHiveAuth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,9 +33,9 @@ class NavProfile : Fragment() {
         //(activity as AppCompatActivity).setSupportActionBar(binding.root.findViewById(R.id.toolbar))
         dataHiveAuth = FirebaseAuth.getInstance()
 
-        if(dataHiveAuth.currentUser!!.isAnonymous) {
+        if (dataHiveAuth.currentUser!!.isAnonymous) {
             binding.signOutButton.visibility = View.GONE
-        }else{
+        } else {
             binding.signUpRedirect.visibility = View.GONE
         }
         //Load Ads
@@ -51,15 +49,15 @@ class NavProfile : Fragment() {
             dataHiveAuth.signOut()
 
             requireActivity().run {
-                startActivity(Intent(this,LogInActivity::class.java))
+                startActivity(Intent(this, LogInActivity::class.java))
                 finishAffinity()
             }
 
         }
 
         binding.signUpRedirect.setOnClickListener {
-            requireActivity().run{
-                startActivity(Intent(this,RegisterActivity::class.java))
+            requireActivity().run {
+                startActivity(Intent(this, RegisterActivity::class.java))
                 finishAffinity()
             }
         }
@@ -92,9 +90,20 @@ class NavProfile : Fragment() {
             }
         }
 
+        //toggle bottom sheet
+        binding.editProfileFab.setOnClickListener {
+            showProfileModalBottomSheet()
+        }
+
 
         return binding.root
     }
+
+    private fun showProfileModalBottomSheet() {
+        val modalBottomSheet = ProfileModalBottomSheet()
+        modalBottomSheet.show(requireActivity().supportFragmentManager, ProfileModalBottomSheet.TAG)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

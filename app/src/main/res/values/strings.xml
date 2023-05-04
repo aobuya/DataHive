@@ -28,6 +28,8 @@
     <string name="sign_up_with_google">Sign Up with Google</string>
     <string name="sign_in_with_google">Sign In with Google</string>
     <string name="datahive_web_client_id">240319580783-971ais510s91o54502ergibh2iaeo7mv.apps.googleusercontent.com</string>
+    <string name="update">UPDATE</string>
+    <string name="username">Username</string>
 
     <!--Getting started screen-->
     <string name="lobby_title">Welcome to Data Hive!</string>
@@ -40,7 +42,7 @@
     <string name="reset_email_btn">Reset password</string>
     <string name="reset_email_tx">Enter Password</string>
     <string name="reset_tag">Reset Password</string>
-    <string name="profile">Profile Page</string>
+    <string name="profile">Profile</string>
     <string name="sign_out">Sign out</string>
     <string name="report_tag">Send Report</string>
 
