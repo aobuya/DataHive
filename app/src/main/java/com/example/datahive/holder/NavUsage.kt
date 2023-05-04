@@ -41,6 +41,7 @@ import kotlin.collections.ArrayList
 import dev.jahidhasanco.networkusage.*
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
@@ -170,7 +171,7 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
                     todayAppDataUsageList.add(todayAppDetails)
 
                     if (!dataHiveAuth.currentUser!!.isAnonymous) {
-                        lifecycleScope.launch {
+                        lifecycleScope.launch(Dispatchers.IO) {
                             addUsageDataToFirestore(todayAppDataUsageList)
                         }
                     }
