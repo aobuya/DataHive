@@ -36,10 +36,10 @@ class AppDataAdapter(private var appDataList: List<AppDetails>) :
             }
             val canvas = appIconBitmap?.let { Canvas(it) }
             if (canvas != null) {
-                appIconDrawable?.setBounds(0, 0, canvas.width, canvas.height)
+                appIconDrawable.setBounds(0, 0, canvas.width, canvas.height)
             }
             if (canvas != null) {
-                appIconDrawable?.draw(canvas)
+                appIconDrawable.draw(canvas)
             }
 
             val scaledIcon = appIconBitmap?.let { Bitmap.createScaledBitmap(it, 64, 64, false) }

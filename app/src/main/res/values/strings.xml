@@ -25,11 +25,12 @@
     <string name="forgot_password">Forgot password? Click here to reset</string>
     <string name="cn_password">Confirm password</string>
     <string name="red_tag">Already have an account? Sign in here</string>
-    <string name="sign_up_with_google">Sign Up with Google</string>
     <string name="sign_in_with_google">Sign In with Google</string>
+    <string name="sign_up_with_google">Sign Up with Google</string>
     <string name="datahive_web_client_id">240319580783-971ais510s91o54502ergibh2iaeo7mv.apps.googleusercontent.com</string>
     <string name="update">UPDATE</string>
     <string name="username">Username</string>
+    <string name="create_an_account_first">Create an account first</string>
 
     <!--Getting started screen-->
     <string name="lobby_title">Welcome to Data Hive!</string>
