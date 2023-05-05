@@ -24,13 +24,13 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
             <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/chat_TopAppBar"
+                android:id="@+id/profile_TopAppBar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="@android:color/transparent"
                 android:elevation="0dp"
                 app:layout_collapseMode="pin"
-                app:title="@string/profile" />
+                app:title="@string/profile"/>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -97,10 +97,9 @@
                         android:id="@+id/email"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
                         android:layout_margin="8dp"
                         android:fontFamily="@font/asap_italic_variablefont_wdth_wght"
-                        android:text="@string/Register"
+                        android:text="@string/create_an_account_first"
                         android:textSize="12sp" />
 
                 </LinearLayout>

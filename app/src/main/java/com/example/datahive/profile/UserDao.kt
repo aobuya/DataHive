@@ -13,6 +13,6 @@ interface UserDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE )
     suspend fun addUserToRoomDB (user : User)
 
-    @Query("SELECT * FROM USER_TABLE ORDER BY uid ASC")
-    fun fetchUserData (): LiveData<List<User>>
+    @Query("SELECT * FROM USER_TABLE")
+    fun fetchUserName (): LiveData<List<User>>
 }
