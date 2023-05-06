@@ -25,6 +25,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.CommonStatusCodes
 import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.GoogleAuthProvider
 
 class RegisterActivity : AppCompatActivity() {
@@ -71,12 +72,18 @@ class RegisterActivity : AppCompatActivity() {
             val password = binding.etPassword.text.trim().toString().trim()
             val confirmPassword = binding.confirmPassword.text.trim().toString().trim()
 
+            //check user type
+            if(dataHiveAuth.currentUser!!.isAnonymous) {
+                signUpAnonymousUser(email, password, confirmPassword)
+            }else{
             signUpUser(email, password, confirmPassword)
+            }
         }
         //login if already registered
         binding.loginRedirect.setOnClickListener {
             val intent = Intent(this, LogInActivity::class.java)
             startActivity(intent)
+            finish()
         }
         //log in with google
         binding.btnGoogleSignUp.setOnClickListener {
@@ -90,10 +97,12 @@ class RegisterActivity : AppCompatActivity() {
             if (password == confirmPassword) {
                 dataHiveAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
                     if (it.isSuccessful) {
+                        dataHiveAuth.signInWithEmailAndPassword(email, password)
                         Toast.makeText(this, "Account created successfully", Toast.LENGTH_SHORT)
                             .show()
                         val intent = Intent(this, MainNavigation::class.java)
                         startActivity(intent)
+                        finish()
 
                     } else {
                         Toast.makeText(this, it.exception.toString(), Toast.LENGTH_SHORT).show()
@@ -108,6 +117,39 @@ class RegisterActivity : AppCompatActivity() {
         }
 
 
+    }
+
+    private fun signUpAnonymousUser(email: String, password: String, confirmPassword: String) {
+        if (email.isNotEmpty() && password.isNotEmpty() && confirmPassword.isNotEmpty()) {
+            if (password == confirmPassword) {
+                val credential = EmailAuthProvider.getCredential(email, password)
+
+                dataHiveAuth.currentUser!!.linkWithCredential(credential)
+                    .addOnCompleteListener(this) { task ->
+                        if (task.isSuccessful) {
+                            Log.d(TAG, "linkWithCredential:success")
+                            Toast.makeText(this, "Account created successfully",Toast.LENGTH_SHORT).show()
+                            val intent = Intent(this, MainNavigation::class.java)
+                            startActivity(intent)
+                            finish()
+
+                        } else {
+                            Log.w(TAG, "linkWithCredential:failure", task.exception)
+                            Toast.makeText(
+                                this,
+                                task.exception.toString(),
+                                Toast.LENGTH_SHORT,
+                            ).show()
+                        }
+                    }
+
+            } else {
+                Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show()
+            }
+
+        } else {
+            Toast.makeText(this, "Email and password cannot be empty", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun signUpUserWithGoogle() {
@@ -155,10 +197,15 @@ class RegisterActivity : AppCompatActivity() {
                                     } else {
                                         // If sign in fails, display a message to the user.
                                         Log.w(TAG, "signInWithCredential:failure", task.exception)
-                                        Toast.makeText(this, "Error! please try again",Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(
+                                            this,
+                                            "Error! please try again",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
                                     }
                                 }
                         }
+
                         else -> {
                             // Shouldn't happen.
                             Log.d(TAG, "No ID token!")

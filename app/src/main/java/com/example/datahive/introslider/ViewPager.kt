@@ -41,17 +41,17 @@ class ViewPager : Fragment() {
 
         when (viewPager2.currentItem) {
             0 -> {
-                wormDotsIndicator.setDotIndicatorColor(R.color.black)
-                wormDotsIndicator.setStrokeDotsIndicatorColor(R.color.black)
+                wormDotsIndicator.setDotIndicatorColor(R.color.md_theme_light_scrim)
+                wormDotsIndicator.setStrokeDotsIndicatorColor(R.color.md_theme_light_scrim)
             }
 
             1 -> {
-                wormDotsIndicator.setDotIndicatorColor(R.color.bee_yellow)
-                wormDotsIndicator.setStrokeDotsIndicatorColor(R.color.bee_yellow)
+                wormDotsIndicator.setDotIndicatorColor(R.color.seed)
+                wormDotsIndicator.setStrokeDotsIndicatorColor(R.color.seed)
             }
             2 -> {
-                wormDotsIndicator.setDotIndicatorColor(R.color.black)
-                wormDotsIndicator.setStrokeDotsIndicatorColor(R.color.bee_yellow)
+                wormDotsIndicator.setDotIndicatorColor(R.color.md_theme_light_scrim)
+                wormDotsIndicator.setStrokeDotsIndicatorColor(R.color.seed)
             }
 
         }

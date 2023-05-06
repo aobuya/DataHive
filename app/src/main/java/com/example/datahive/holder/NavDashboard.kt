@@ -28,6 +28,8 @@ import dev.jahidhasanco.networkusage.*
 import android.Manifest
 import android.content.ContentValues.TAG
 import android.util.Log
+import androidx.lifecycle.lifecycleScope
+import com.example.datahive.app_usage.AppDetails
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.auth.User
@@ -35,6 +37,12 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 
 class NavDashboard : Fragment() {
@@ -49,8 +57,7 @@ class NavDashboard : Fragment() {
 
     @SuppressLint("HardwareIds")
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentNavDashboardBinding.inflate(inflater, container, false)
@@ -58,14 +65,13 @@ class NavDashboard : Fragment() {
         //Load Ads
         MobileAds.initialize(requireContext())
         val adView = binding.adView
-        var adRequest = AdRequest.Builder()
-            .build()
+        var adRequest = AdRequest.Builder().build()
         adView.loadAd(adRequest)
+        usagesDataList.clear()
 
         //add2
         val adView2 = binding.adView2
-        adRequest = AdRequest.Builder()
-            .build()
+        adRequest = AdRequest.Builder().build()
         adView2.loadAd(adRequest)
 
         dataHiveAuth = FirebaseAuth.getInstance()
@@ -74,7 +80,6 @@ class NavDashboard : Fragment() {
 
         val networkUsage =
             NetworkUsageManager(requireContext(), Util.getSubscriberId(requireContext()))
-
 
         val handler = Handler()
         val runnableCode = object : Runnable {
@@ -111,14 +116,10 @@ class NavDashboard : Fragment() {
             usagesDataList.add(
                 UsagesData(
                     Util.formatData(
-                        last30DaysMobile[i].downloads,
-                        last30DaysMobile[i].uploads
-                    )[2],
-                    Util.formatData(
-                        last30DaysWIFI[i].downloads,
-                        last30DaysWIFI[i].uploads
-                    )[2],
-                    last30DaysWIFI[i].date
+                        last30DaysMobile[i].downloads, last30DaysMobile[i].uploads
+                    )[2], Util.formatData(
+                        last30DaysWIFI[i].downloads, last30DaysWIFI[i].uploads
+                    )[2], last30DaysWIFI[i].date
                 )
             )
         }
@@ -142,25 +143,19 @@ class NavDashboard : Fragment() {
         usagesDataList.add(
             UsagesData(
                 Util.formatData(
-                    last7DaysTotalMobile.downloads,
-                    last7DaysTotalMobile.uploads
-                )[2],
-                Util.formatData(
-                    last7DaysTotalWIFI.downloads,
-                    last7DaysTotalWIFI.uploads
-                )[2],
-                "Last 7 Days"
+                    last7DaysTotalMobile.downloads, last7DaysTotalMobile.uploads
+                )[2], Util.formatData(
+                    last7DaysTotalWIFI.downloads, last7DaysTotalWIFI.uploads
+                )[2], "Last 7 Days"
             )
         )
 
         binding.wifiDataThisMonth.text = Util.formatData(
-            last30DaysTotalWIFI.downloads,
-            last30DaysTotalWIFI.uploads
+            last30DaysTotalWIFI.downloads, last30DaysTotalWIFI.uploads
         )[2]
 
         binding.mobileDataThisMonth.text = Util.formatData(
-            last30DaysTotalMobile.downloads,
-            last30DaysTotalMobile.uploads
+            last30DaysTotalMobile.downloads, last30DaysTotalMobile.uploads
         )[2]
 
         dataUsagesAdapter = DataUsagesAdapter(usagesDataList)
@@ -168,7 +163,11 @@ class NavDashboard : Fragment() {
         binding.monthlyDataUsagesRv.setHasFixedSize(true)
         binding.monthlyDataUsagesRv.adapter = dataUsagesAdapter
 
-        addUsageDataToFirestore(usagesDataList)
+        if (!dataHiveAuth.currentUser!!.isAnonymous) {
+            lifecycleScope.launch(Dispatchers.IO) {
+                addUsageDataToFirestore(usagesDataList)
+            }
+        }
 
         return binding.root
     }
@@ -185,7 +184,7 @@ class NavDashboard : Fragment() {
         }
 
         if (checkUsagePermission() != true) {
-            Toast.makeText(requireContext(), "My message", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Permissions granted", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -215,8 +214,7 @@ class NavDashboard : Fragment() {
         val appOps = context?.getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
         val mode = context?.let {
             appOps.checkOpNoThrow(
-                "android:get_usage_stats", Process.myUid(),
-                it.packageName
+                "android:get_usage_stats", Process.myUid(), it.packageName
             )
         }
         val granted = mode == AppOpsManager.MODE_ALLOWED
@@ -231,21 +229,43 @@ class NavDashboard : Fragment() {
 
     private fun addUsageDataToFirestore(userData: ArrayList<UsagesData>) {
 
-        val userID = dataHiveAuth.currentUser
+        val getCurrentUser = dataHiveAuth.currentUser
         val dataHiveDB = Firebase.firestore
+
+        val todayDate = getCurrentDateTime()
+        val todayDateInString = todayDate.toString("dd/M/yyyy")
+
         val userDataMap = userData.associateBy { it.date }
 
-        userID?.let{
-            val  currentUserUID = it.email
 
-            //for ((key, value) in userDataMap) {
-                dataHiveDB.collection("users").document(currentUserUID.toString())
+        getCurrentUser?.let {
+            val currentUserEmail = it.email.toString()
+
+            for (app in userDataMap) {
+                dataHiveDB.collection("users").document(currentUserEmail)
+                    .collection("totalDataUsage").document(todayDateInString)
                     .set(userDataMap, SetOptions.merge())
-                    .addOnSuccessListener { Log.d("Firestore DataHive", "Data written successfully") }
-                    .addOnFailureListener{e -> Log.w("Firestore DataHive","Error writing document",e)}
-            //}
+                    .addOnSuccessListener {
+                        Log.d(
+                            "Firestore DataHive",
+                            "Data written successfully"
+                        )
+                    }
+                    .addOnFailureListener { e ->
+                        Log.w(
+                            "Firestore DataHive", "Error writing document", e
+                        )
+                    }
+            }
         }
-
     }
 
+    fun Date.toString(format: String, locale: Locale = Locale.getDefault()): String {
+        val formatter = SimpleDateFormat(format, locale)
+        return formatter.format(this)
+    }
+
+    fun getCurrentDateTime(): Date {
+        return Calendar.getInstance().time
+    }
 }

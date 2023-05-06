@@ -23,21 +23,14 @@
             app:layout_collapseMode="pin"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fitsSystemWindows="true"
-                android:scaleType="fitEnd"
-                android:src="@drawable/profile" />
-
             <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/chat_TopAppBar"
+                android:id="@+id/profile_TopAppBar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="@android:color/transparent"
                 android:elevation="0dp"
                 app:layout_collapseMode="pin"
-                app:title="@string/profile" />
+                app:title="@string/profile"/>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -48,10 +41,19 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
+            android:id="@+id/profile_details"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="240dp"
+                android:layout_gravity="start"
+                android:fitsSystemWindows="true"
+                android:src="@drawable/profile" />
 
             <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/adView"
@@ -63,15 +65,46 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="100dp" />
-
-            <Space
-                android:layout_width="match_parent"
                 android:layout_height="6dp" />
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="6dp" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_email"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="8dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_margin="8dp"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/baseline_email_24" />
+
+                    <TextView
+                        android:id="@+id/email"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:fontFamily="@font/asap_italic_variablefont_wdth_wght"
+                        android:text="@string/create_an_account_first"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
 
 
             <androidx.cardview.widget.CardView
@@ -193,7 +226,28 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:text="@string/sign_out" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/signUpRedirect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:text="@string/Register" />
         </LinearLayout>
+
     </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/edit_profile_fab"
+        style="?attr/floatingActionButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:src="@drawable/baseline_edit_24">
+
+    </com.google.android.material.floatingactionbutton.FloatingActionButton>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
