@@ -10,7 +10,6 @@
         android:id="@+id/dashboard_AppBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="?attr/colorPrimary"
         android:fitsSystemWindows="true"
         app:liftOnScroll="true">
 
@@ -18,19 +17,18 @@
             style="?attr/collapsingToolbarLayoutMediumStyle"
             android:layout_width="match_parent"
             android:layout_height="?attr/collapsingToolbarLayoutMediumSize"
-            app:contentScrim="?attr/colorPrimary"
             app:expandedTitleGravity="bottom"
             app:layout_collapseMode="pin"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
             <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/chat_TopAppBar"
+                android:id="@+id/appUsage_TopAppBar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
                 android:elevation="0dp"
                 app:layout_collapseMode="pin"
-                app:title="@string/top_apps"/>
+                app:title="@string/top_apps"
+                app:menu="@menu/app_usage_menu"/>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -45,13 +43,6 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
-
-        <androidx.appcompat.widget.SearchView
-            android:id="@+id/app_usage_search_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            app:animateNavigationIcon="true" />
         <com.google.android.gms.ads.AdView
             xmlns:ads="http://schemas.android.com/apk/res-auto"
             android:id="@+id/adView"
