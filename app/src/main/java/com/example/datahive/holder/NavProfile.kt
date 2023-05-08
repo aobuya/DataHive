@@ -122,6 +122,15 @@ class NavProfile : Fragment() {
         modalBottomSheet.show(requireActivity().supportFragmentManager, ProfileModalBottomSheet.TAG)
     }
 
+    override fun onResume() {
+        super.onResume()
+        dataHiveUserViewModel.readAllData.observe(viewLifecycleOwner) { user_table ->
+            user_table.forEach {
+                binding.profileTopAppBar.title = it.username
+            }
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
