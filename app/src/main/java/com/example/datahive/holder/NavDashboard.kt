@@ -92,7 +92,7 @@ class NavDashboard : Fragment() {
                 binding.wifiUsagesTv.text =
                     "WiFi: " + Util.formatData(todayW.downloads, todayW.uploads)[2]
                 binding.dataUsagesTv.text =
-                    "Mobile: " + Util.formatData(todayM.downloads, todayM.uploads)[2]
+                    "Data: " + Util.formatData(todayM.downloads, todayM.uploads)[2]
                 binding.apply {
                     totalSpeedTv.text = speeds[0].speed + "\n" + speeds[0].unit
                     downUsagesTv.text = "Down: " + speeds[1].speed + speeds[1].unit
