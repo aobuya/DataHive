@@ -59,7 +59,7 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
     private var todayAppDataUsageList = ArrayList<AppDetails>()
     private lateinit var appDataAdapter: AppDataAdapter
     private lateinit var progressBar: ProgressBar
-    //private lateinit var menu: Menu
+    private lateinit var menu: Menu
 
     private lateinit var dataHiveAuth: FirebaseAuth
 
@@ -90,11 +90,8 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
         binding.appUsageTopAppBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.app_usage_search_view -> {
-                   // searchView.setOnQueryTextListener(this)
-
                     true
                 }
-
                 else -> false
             }
         }
@@ -122,6 +119,15 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
             requestUsageStatsPermission()
         }
     }
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        this.menu = menu
+        val inflater: MenuInflater = requireActivity().menuInflater
+        inflater.inflate(R.menu.app_usage_menu, menu)
+        val searchItem = menu.findItem(R.id.app_usage_search_view)
+        val searchView = searchItem.actionView as SearchView
+        searchView.setOnQueryTextListener(this)
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -289,8 +295,6 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
     fun getCurrentDateTime(): Date {
         return Calendar.getInstance().time
     }
-
-
     override fun onQueryTextSubmit(query: String?): Boolean {
         if (query != null) {
             filterList(query)
@@ -305,4 +309,5 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
         }
         return true
     }
+
 }
