@@ -90,9 +90,9 @@ class NavDashboard : Fragment() {
                 val todayW = networkUsage.getUsage(Interval.today, NetworkType.WIFI)
 
                 binding.wifiUsagesTv.text =
-                    "WiFi: " + Util.formatData(todayW.downloads, todayW.uploads)[2]
+                    Util.formatData(todayW.downloads, todayW.uploads)[2]
                 binding.dataUsagesTv.text =
-                    "Data: " + Util.formatData(todayM.downloads, todayM.uploads)[2]
+                    Util.formatData(todayM.downloads, todayM.uploads)[2]
                 binding.apply {
                     totalSpeedTv.text = speeds[0].speed + "\n" + speeds[0].unit
                     downUsagesTv.text = "Down: " + speeds[1].speed + speeds[1].unit

@@ -48,7 +48,8 @@
     <string name="report_tag">Send Report</string>
 
     <!--Network Library-->
-    <string name="full_month_data_usages">This Month\'s Data Usages</string>
+    <string name="full_month_data_usages">This Month</string>
+    <string name="today_data_usage">Today</string>
     <string name="wifi">WiFI</string>
     <string name="mobile">Mobile</string>
     <string name="last_30_days">Last 30 Days</string>
