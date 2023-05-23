@@ -26,7 +26,7 @@
                 android:id="@+id/profile_TopAppBar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="@android:color/transparent"
+                android:background="@android:color/background_light"
                 android:elevation="0dp"
                 app:layout_collapseMode="pin"
                 app:title="@string/profile"/>
@@ -182,6 +182,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_margin="8dp"
+                android:visibility="gone"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="8dp">
 
@@ -204,6 +205,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="8dp"
+
                         android:fontFamily="@font/asap_italic_variablefont_wdth_wght"
                         android:text="@string/txt_config"
                         android:textSize="12sp" />
