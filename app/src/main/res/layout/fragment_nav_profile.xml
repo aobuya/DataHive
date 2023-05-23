@@ -184,6 +184,7 @@
                 android:layout_margin="8dp"
                 android:visibility="gone"
                 app:cardCornerRadius="8dp"
+                android:visibility="gone"
                 app:cardElevation="8dp">
 
                 <LinearLayout
@@ -226,6 +227,7 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
+
                 android:text="@string/sign_out" />
 
             <com.google.android.material.button.MaterialButton
