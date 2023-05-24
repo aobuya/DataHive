@@ -87,14 +87,7 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
         dataHiveAuth = FirebaseAuth.getInstance()
 
         //search view
-        binding.appUsageTopAppBar.setOnMenuItemClickListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.app_usage_search_view -> {
-                    true
-                }
-                else -> false
-            }
-        }
+        binding.appUsageSearchView.setOnQueryTextListener(this)
 
         //Load Ads
         MobileAds.initialize(requireContext())
@@ -119,14 +112,14 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
             requestUsageStatsPermission()
         }
     }
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+    /*override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         this.menu = menu
         val inflater: MenuInflater = requireActivity().menuInflater
         inflater.inflate(R.menu.app_usage_menu, menu)
         val searchItem = menu.findItem(R.id.app_usage_search_view)
         val searchView = searchItem.actionView as SearchView
         searchView.setOnQueryTextListener(this)
-    }
+    }*/
 
 
     override fun onDestroyView() {

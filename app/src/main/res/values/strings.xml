@@ -3,12 +3,12 @@
     <!-- Onboarding screens -->
     <string name="TODO">TODO</string>
     <string name="logo_description">DataHive Logo</string>
-    <string name="first_screen_title_text">Set your goals</string>
-    <string name="first_screen_description_text">Define what you want to achieve and set measurable targets</string>
-    <string name="second_screen_title_text">Add Data</string>
-    <string name="second_description_text">Input your data manually or connect your device for automatic tracking</string>
-    <string name="third_screen_title_text">Track Progress</string>
-    <string name="third_screen_description_text">Check out charts and graphs to monitor your progress</string>
+    <string name="first_screen_title_text">Monitor Your Usage</string>
+    <string name="first_screen_description_text">Stay informed about how much data you\'re using on both mobile and Wi-Fi networks.</string>
+    <string name="second_screen_title_text">Real-Time Data Tracking</string>
+    <string name="second_description_text">Get instant updates on your data consumption to help you make informed decisions.</string>
+    <string name="third_screen_title_text">Usage History</string>
+    <string name="third_screen_description_text">Review your past data usage patterns and identify trends over time.</string>
     <string name="skip">Skip</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -33,8 +33,8 @@
     <string name="create_an_account_first">Create an account first</string>
 
     <!--Getting started screen-->
-    <string name="lobby_title">Welcome to Data Hive!</string>
-    <string name="lobby_description">Never Miss a Beat. Stay on Track with Personalized Data Insights</string>
+    <string name="lobby_title">Welcome to DataHive!</string>
+    <string name="lobby_description">Stay in control and effortlessly track how you consume data, ensuring you make the most of your plans and avoid any surprises.</string>
     <string name="lobby_button">Get Started</string>
 
     <string name="dataUsage">Data Usage</string>

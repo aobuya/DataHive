@@ -10,7 +10,6 @@
         android:id="@+id/dashboard_AppBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         app:liftOnScroll="true">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
@@ -184,7 +183,6 @@
                 android:layout_margin="8dp"
                 android:visibility="gone"
                 app:cardCornerRadius="8dp"
-                android:visibility="gone"
                 app:cardElevation="8dp">
 
                 <LinearLayout
