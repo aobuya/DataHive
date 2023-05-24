@@ -10,7 +10,7 @@
         android:id="@+id/dashboard_AppBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/seed"
+
         android:fitsSystemWindows="true"
         app:liftOnScroll="true">
 
@@ -18,16 +18,17 @@
             style="?attr/collapsingToolbarLayoutMediumStyle"
             android:layout_width="match_parent"
             android:layout_height="?attr/collapsingToolbarLayoutMediumSize"
-            app:contentScrim="@color/seed"
             app:expandedTitleGravity="bottom"
             app:layout_collapseMode="pin"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+
+        >
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/chat_TopAppBar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="@color/seed"
+
                 android:elevation="0dp"
                 app:layout_collapseMode="pin"
                 app:title="@string/app_name" />
