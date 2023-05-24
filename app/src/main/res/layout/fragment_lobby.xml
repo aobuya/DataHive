@@ -13,10 +13,10 @@
         android:layout_height="100dp"
         android:src="@drawable/hive"
         android:layout_gravity="center"
-        android:layout_marginTop="120dp"/>
+        android:layout_marginTop="280dp"/>
     <Space
         android:layout_width="match_parent"
-        android:layout_height="180dp"/>
+        android:layout_height="60dp"/>
     <TextView
         android:id="@+id/lobby_screen_title"
         android:layout_width="match_parent"

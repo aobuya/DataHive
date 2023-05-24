@@ -93,12 +93,12 @@ class NavDashboard : Fragment() {
                     Util.formatData(todayW.downloads, todayW.uploads)[2]
                 binding.dataUsagesTv.text =
                     Util.formatData(todayM.downloads, todayM.uploads)[2]
-                binding.apply {
+                /*binding.apply {
                     totalSpeedTv.text = speeds[0].speed + "\n" + speeds[0].unit
                     downUsagesTv.text = "Down: " + speeds[1].speed + speeds[1].unit
                     upUsagesTv.text = "Up: " + speeds[2].speed + speeds[2].unit
 
-                }
+                }*/
                 handler.postDelayed(this, 1000)
             }
         }

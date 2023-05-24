@@ -10,9 +10,7 @@
         android:id="@+id/dashboard_AppBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:fitsSystemWindows="true"
-        android:background="@color/seed"
         app:liftOnScroll="true">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
@@ -22,22 +20,14 @@
             app:expandedTitleGravity="bottom"
             app:layout_collapseMode="pin"
 
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-
-        >
-
-            android:background="@color/seed"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
-
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/chat_TopAppBar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-
                 android:elevation="0dp"
                 app:layout_collapseMode="pin"
-                android:background="@color/seed"
                 app:title="@string/app_name"
                 app:titleTextAppearance="?attr/textAppearanceTitleLarge" />
         </com.google.android.material.appbar.CollapsingToolbarLayout>
@@ -183,13 +173,14 @@
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="20dp"
+                        android:layout_marginBottom="10dp"
                         android:fontFamily="@font/asap_variablefont_wdthwght"
                         android:text="@string/today_data_usage"
                         android:textAppearance="?attr/textAppearanceTitleLarge"
                         android:textColor="@color/md_theme_light_onSurface" />
 
 
-                    <TextView
+                    <!--<TextView
                         android:id="@+id/totalSpeedTv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -197,7 +188,7 @@
                         android:padding="6dp"
                         android:textAppearance="?attr/textAppearanceTitleSmall"
                         android:textColor="@color/md_theme_light_onSurface"
-                        tools:ignore="SmallSp,Suspicious0dp" />
+                        tools:ignore="SmallSp,Suspicious0dp" />-->
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -210,39 +201,45 @@
                             style="?attr/materialCardViewFilledStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="4dp">
+                            android:layout_margin="8dp">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:orientation="horizontal"
-                                android:padding="16dp">
+                                android:padding="16dp"
+                                android:layout_margin="6dp">
 
                                 <ImageView
                                     android:layout_width="50dp"
                                     android:layout_height="50dp"
                                     android:src="@drawable/wifi" />
-
                                 <LinearLayout
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="match_parent"
                                     android:orientation="vertical">
-
                                     <TextView
-                                        android:id="@+id/wifiUsagesTv"
+                                        android:id="@+id/wifi_label"
                                         android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="match_parent"
                                         android:layout_weight="1"
                                         android:fontFamily="@font/asap_variablefont_wdthwght"
                                         android:gravity="center_vertical"
                                         android:maxLines="1"
-                                        android:padding="6dp"
-                                        android:text="WiFi: 0 Kib"
-                                        android:textAppearance="?attr/textAppearanceTitleMedium"
-                                        android:textColor="@color/md_theme_light_onSurface"
-                                        tools:ignore="NestedWeights" />
-
+                                        android:text="WiFi:"
+                                        android:textAppearance="?attr/textAppearanceTitleLarge"/>
                                     <TextView
+                                        android:id="@+id/wifiUsagesTv"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/asap_variablefont_wdthwght"
+                                        android:gravity="center_vertical"
+                                        android:maxLines="1"
+                                        android:text="0 Kib"
+                                        android:textAppearance="?attr/textAppearanceTitleMedium" />
+
+                                    <!-- <TextView
                                         android:id="@+id/upUsagesTv"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
@@ -251,8 +248,8 @@
                                         android:gravity="center_vertical"
                                         android:padding="6dp"
                                         android:text="15kb"
-                                        android:textAppearance="?attr/textAppearanceTitleSmall" />
-                                </LinearLayout>
+                                        android:textAppearance="?attr/textAppearanceTitleSmall" />-->
+                                        </LinearLayout>
                             </LinearLayout>
 
                         </com.google.android.material.card.MaterialCardView>
@@ -261,24 +258,33 @@
                             style="?attr/materialCardViewFilledStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="4dp">
+                            android:layout_margin="8dp">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:orientation="horizontal"
-                                android:padding="16dp">
+                                android:padding="16dp"
+                                android:layout_margin="6dp">
 
                                 <ImageView
                                     android:layout_width="50dp"
                                     android:layout_height="50dp"
                                     android:src="@drawable/mobile_data" />
-
-                                <LinearLayout
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+                                <TextView
+                                    android:id="@+id/data_label"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="vertical">
-
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/asap_variablefont_wdthwght"
+                                    android:gravity="center_vertical"
+                                    android:maxLines="1"
+                                    android:text="Mobile:"
+                                    android:textAppearance="?attr/textAppearanceTitleLarge"/>
                                     <TextView
                                         android:id="@+id/dataUsagesTv"
                                         android:layout_width="wrap_content"
@@ -287,11 +293,10 @@
                                         android:fontFamily="@font/asap_variablefont_wdthwght"
                                         android:gravity="center_vertical"
                                         android:maxLines="1"
-                                        android:padding="6dp"
-                                        android:text="Data: 0 Kib"
+                                        android:text="0 Kib"
                                         android:textAppearance="?attr/textAppearanceTitleMedium" />
 
-                                    <TextView
+                                    <!-- <TextView
                                         android:id="@+id/downUsagesTv"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
@@ -301,8 +306,8 @@
                                         android:padding="6dp"
                                         android:text="15kb"
                                         android:textAppearance="?attr/textAppearanceTitleSmall"
-                                        android:textColor="@color/md_theme_light_onSurface" />
-                                </LinearLayout>
+                                        android:textColor="@color/md_theme_light_onSurface" />-->
+                            </LinearLayout>
                             </LinearLayout>
                         </com.google.android.material.card.MaterialCardView>
                     </LinearLayout>
