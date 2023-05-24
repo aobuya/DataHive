@@ -19,9 +19,12 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.provider.Settings
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.get
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.datahive.BottomSheetFragment
@@ -41,6 +44,7 @@ import kotlin.collections.ArrayList
 import dev.jahidhasanco.networkusage.*
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.lifecycleScope
+import com.example.datahive.app_usage.ActionItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -55,6 +59,7 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
     private var todayAppDataUsageList = ArrayList<AppDetails>()
     private lateinit var appDataAdapter: AppDataAdapter
     private lateinit var progressBar: ProgressBar
+    private lateinit var menu: Menu
 
     private lateinit var dataHiveAuth: FirebaseAuth
 
@@ -66,6 +71,14 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
 
         _binding = FragmentAppUsageBinding.inflate(inflater, container, false)
         //(activity as AppCompatActivity).setSupportActionBar(binding.root.findViewById(R.id.toolbar))
+
+        //inflate menu
+        /*val menu = menu.getItem(R.menu.app_usage_menu)
+        val inflater: MenuInflater = requireActivity().menuInflater
+        inflater.inflate(R.menu.app_usage_menu, this.menu)
+        val searchItem = menu.findItem(R.id.app_usage_search_view)
+        val searchView = searchItem.actionView as SearchView*/
+
         //Fab
         binding.fab.setOnClickListener {
             showFilterSheet()
@@ -73,7 +86,16 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
 
         dataHiveAuth = FirebaseAuth.getInstance()
 
-        binding.appUsageSearchView.setOnQueryTextListener(this)
+        //search view
+        binding.appUsageTopAppBar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.app_usage_search_view -> {
+                    true
+                }
+                else -> false
+            }
+        }
+
         //Load Ads
         MobileAds.initialize(requireContext())
         val adView = binding.adView
@@ -97,6 +119,15 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
             requestUsageStatsPermission()
         }
     }
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        this.menu = menu
+        val inflater: MenuInflater = requireActivity().menuInflater
+        inflater.inflate(R.menu.app_usage_menu, menu)
+        val searchItem = menu.findItem(R.id.app_usage_search_view)
+        val searchView = searchItem.actionView as SearchView
+        searchView.setOnQueryTextListener(this)
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -264,7 +295,6 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
     fun getCurrentDateTime(): Date {
         return Calendar.getInstance().time
     }
-
     override fun onQueryTextSubmit(query: String?): Boolean {
         if (query != null) {
             filterList(query)
@@ -279,10 +309,5 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
         }
         return true
     }
-
-
-}
-
-private fun Bundle.putStringArrayList(s: String, appDataUsageList: ArrayList<AppDetails>) {
 
 }

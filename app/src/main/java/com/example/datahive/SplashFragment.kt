@@ -48,7 +48,7 @@ class SplashFragment : Fragment() {
                 findNavController().navigate(R.id.action_splashFragment_to_viewPager)
 
             }
-        }, 2000)
+        }, 1000)
         return binding.root
 
     }

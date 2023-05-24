@@ -36,8 +36,7 @@ class ViewPager : Fragment() {
         viewPager2.adapter = adapter
         wormDotsIndicator.attachTo(viewPager2)
 
-        /*TODO
-            Change dot indicator colors based on current screen
+        /*
 
         when (viewPager2.currentItem) {
             0 -> {

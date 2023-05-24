@@ -15,7 +15,7 @@ import com.example.datahive.databinding.FragmentFirstScreenBinding
 
 class FirstScreen : Fragment() {
 
-    private var _binding: FragmentFirstScreenBinding? = null
+    private var _binding: com.example.datahive.databinding.FragmentFirstScreenBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
