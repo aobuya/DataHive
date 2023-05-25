@@ -157,7 +157,7 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
 
         for (appInfo in installedApps) {
             // Check if the app is not a system app
-            if (appInfo.flags and ApplicationInfo.FLAG_SYSTEM == 0) {
+            //if (appInfo.flags and ApplicationInfo.FLAG_SYSTEM == 0) {
                 val uid = appInfo.uid
                 val appName = appInfo.loadLabel(packageManager).toString()
                 val appIcon = appInfo.loadIcon(packageManager)
@@ -203,7 +203,7 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
-            }
+            //}
         }
 
         // Sort the appDataUsageList by total data usage from largest to smallest
