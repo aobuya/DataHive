@@ -44,6 +44,7 @@
     <string name="reset_email_tx">Enter Password</string>
     <string name="reset_tag">Reset Password</string>
     <string name="profile">Profile</string>
+    <string name="system_apps">System Apps</string>
     <string name="sign_out">Sign out</string>
     <string name="report_tag">Send Report</string>
 

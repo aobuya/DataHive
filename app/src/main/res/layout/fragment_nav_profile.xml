@@ -10,6 +10,7 @@
         android:id="@+id/dashboard_AppBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
         app:liftOnScroll="true">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
@@ -27,7 +28,8 @@
                 android:layout_height="?attr/actionBarSize"
                 android:elevation="0dp"
                 app:layout_collapseMode="pin"
-                app:title="@string/profile"/>
+                app:title="@string/system_apps"
+                app:menu="@menu/profile_menu"/>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -44,14 +46,6 @@
             android:orientation="vertical"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="240dp"
-                android:layout_gravity="start"
-                android:fitsSystemWindows="true"
-                android:src="@drawable/profile" />
-
             <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/adView"
                 android:layout_width="match_parent"
@@ -59,195 +53,7 @@
                 android:layout_margin="10dp"
                 ads:adSize="BANNER"
                 ads:adUnitId="ca-app-pub-3940256099942544/6300978111" />
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="6dp" />
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="6dp" />
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/card_email"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_margin="8dp"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="8dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_margin="8dp"
-                        android:adjustViewBounds="true"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/baseline_email_24" />
-
-                    <TextView
-                        android:id="@+id/email"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
-                        android:fontFamily="@font/asap_italic_variablefont_wdth_wght"
-                        android:text="@string/create_an_account_first"
-                        android:textSize="12sp" />
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/card_report"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_margin="8dp"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="8dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_margin="8dp"
-                        android:adjustViewBounds="true"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/hive" />
-
-                    <TextView
-                        android:id="@+id/report_btn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-
-                        android:layout_margin="8dp"
-                        android:fontFamily="@font/asap_italic_variablefont_wdth_wght"
-                        android:text="@string/report_tag"
-                        android:textSize="12sp" />
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/card_support"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_margin="8dp"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="8dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_margin="8dp"
-                        android:adjustViewBounds="true"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/baseline_person_24" />
-
-                    <TextView
-                        android:id="@+id/pass_redirect"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
-                        android:fontFamily="@font/asap_italic_variablefont_wdth_wght"
-                        android:text="@string/support_tag"
-                        android:textSize="12sp" />
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/card_config"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_margin="8dp"
-                android:visibility="gone"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="8dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_margin="8dp"
-                        android:adjustViewBounds="true"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/outline_settings_24" />
-
-                    <TextView
-                        android:id="@+id/txt_configure"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
-
-                        android:fontFamily="@font/asap_italic_variablefont_wdth_wght"
-                        android:text="@string/txt_config"
-                        android:textSize="12sp" />
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="18dp" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/signOutButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-
-                android:text="@string/sign_out" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/signUpRedirect"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:text="@string/Register" />
-        </LinearLayout>
+            </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/edit_profile_fab"
-        style="?attr/floatingActionButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        android:src="@drawable/baseline_edit_24">
-
-    </com.google.android.material.floatingactionbutton.FloatingActionButton>
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

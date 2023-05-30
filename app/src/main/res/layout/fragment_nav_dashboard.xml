@@ -22,13 +22,14 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
             <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/chat_TopAppBar"
+                android:id="@+id/dashboard_topAppBar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:elevation="0dp"
                 app:layout_collapseMode="pin"
                 app:title="@string/app_name"
-                app:titleTextAppearance="?attr/textAppearanceTitleLarge" />
+                app:menu="@menu/profile_menu"
+                app:titleTextAppearance="?attr/textAppearanceTitleLarge"/>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
