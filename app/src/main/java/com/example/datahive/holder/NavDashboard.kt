@@ -28,8 +28,10 @@ import dev.jahidhasanco.networkusage.*
 import android.Manifest
 import android.content.ContentValues.TAG
 import android.util.Log
+import androidx.fragment.app.commit
 import androidx.lifecycle.lifecycleScope
 import com.example.datahive.app_usage.AppDetails
+import com.example.datahive.profile.ProfileFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.auth.User
@@ -76,6 +78,21 @@ class NavDashboard : Fragment() {
 
         dataHiveAuth = FirebaseAuth.getInstance()
 
+        binding.dashboardTopAppBar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.profile -> {
+                    requireActivity().supportFragmentManager.beginTransaction()
+                        .setReorderingAllowed(true)
+                        .replace(R.id.nav_host_fragment, ProfileFragment()).addToBackStack(null)
+                        .commit()
+                    true
+                }
+
+                else -> false
+
+            }
+        }
+
         setupPermissions()
 
         val networkUsage =
@@ -89,11 +106,8 @@ class NavDashboard : Fragment() {
                 val todayM = networkUsage.getUsage(Interval.today, NetworkType.MOBILE)
                 val todayW = networkUsage.getUsage(Interval.today, NetworkType.WIFI)
 
-                binding.wifiUsagesTv.text =
-                    Util.formatData(todayW.downloads, todayW.uploads)[2]
-                binding.dataUsagesTv.text =
-                    Util.formatData(todayM.downloads, todayM.uploads)[2]
-                /*binding.apply {
+                binding.wifiUsagesTv.text = Util.formatData(todayW.downloads, todayW.uploads)[2]
+                binding.dataUsagesTv.text = Util.formatData(todayM.downloads, todayM.uploads)[2]/*binding.apply {
                     totalSpeedTv.text = speeds[0].speed + "\n" + speeds[0].unit
                     downUsagesTv.text = "Down: " + speeds[1].speed + speeds[1].unit
                     upUsagesTv.text = "Up: " + speeds[2].speed + speeds[2].unit
@@ -244,14 +258,11 @@ class NavDashboard : Fragment() {
             for (app in userDataMap) {
                 dataHiveDB.collection("users").document(currentUserEmail)
                     .collection("totalDataUsage").document(todayDateInString)
-                    .set(userDataMap, SetOptions.merge())
-                    .addOnSuccessListener {
+                    .set(userDataMap, SetOptions.merge()).addOnSuccessListener {
                         Log.d(
-                            "Firestore DataHive",
-                            "Data written successfully"
+                            "Firestore DataHive", "Data written successfully"
                         )
-                    }
-                    .addOnFailureListener { e ->
+                    }.addOnFailureListener { e ->
                         Log.w(
                             "Firestore DataHive", "Error writing document", e
                         )

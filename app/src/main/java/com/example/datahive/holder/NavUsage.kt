@@ -45,6 +45,7 @@ import dev.jahidhasanco.networkusage.*
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.lifecycleScope
 import com.example.datahive.app_usage.ActionItem
+import com.example.datahive.profile.ProfileFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -65,8 +66,7 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
 
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
 
         _binding = FragmentAppUsageBinding.inflate(inflater, container, false)
@@ -92,9 +92,22 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
         //Load Ads
         MobileAds.initialize(requireContext())
         val adView = binding.adView
-        val adRequest = AdRequest.Builder()
-            .build()
+        val adRequest = AdRequest.Builder().build()
         adView.loadAd(adRequest)
+
+        binding.appUsageTopAppBar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.profile -> {
+                    requireActivity().supportFragmentManager.beginTransaction()
+                        .setReorderingAllowed(true)
+                        .replace(R.id.nav_host_fragment, ProfileFragment()).addToBackStack(null)
+                        .commit()
+                    true
+                }
+
+                else -> false
+            }
+        }
 
         return binding.root
     }
@@ -111,8 +124,7 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
         } else {
             requestUsageStatsPermission()
         }
-    }
-    /*override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+    }/*override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         this.menu = menu
         val inflater: MenuInflater = requireActivity().menuInflater
         inflater.inflate(R.menu.app_usage_menu, menu)
@@ -131,9 +143,7 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
         val appOpsManager =
             requireContext().getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
         val mode = appOpsManager.checkOpNoThrow(
-            "android:get_usage_stats",
-            android.os.Process.myUid(),
-            requireContext().packageName
+            "android:get_usage_stats", android.os.Process.myUid(), requireContext().packageName
         )
         return mode == AppOpsManager.MODE_ALLOWED
     }
@@ -158,51 +168,43 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
         for (appInfo in installedApps) {
             // Check if the app is not a system app
             //if (appInfo.flags and ApplicationInfo.FLAG_SYSTEM == 0) {
-                val uid = appInfo.uid
-                val appName = appInfo.loadLabel(packageManager).toString()
-                val appIcon = appInfo.loadIcon(packageManager)
+            val uid = appInfo.uid
+            val appName = appInfo.loadLabel(packageManager).toString()
+            val appIcon = appInfo.loadIcon(packageManager)
 
-                try {
-                    val networkStats = networkStatsManager.queryDetailsForUid(
-                        ConnectivityManager.TYPE_WIFI,
-                        null,
-                        0,
-                        System.currentTimeMillis(),
-                        uid
-                    )
+            try {
+                val networkStats = networkStatsManager.queryDetailsForUid(
+                    ConnectivityManager.TYPE_WIFI, null, 0, System.currentTimeMillis(), uid
+                )
 
-                    var totalDataUsage = 0L
-                    while (networkStats.hasNextBucket()) {
-                        val bucket = android.app.usage.NetworkStats.Bucket()
-                        networkStats.getNextBucket(bucket)
-                        totalDataUsage += bucket.rxBytes + bucket.txBytes
-                    }
-
-
-                    val appDetails =
-                        AppDetails(appName, appIcon, totalDataUsage)
-                    appDataUsageList.add(appDetails)
-
-                    val todayDate = getCurrentDateTime()
-                    val todayDateInString = todayDate.toString("dd/M/yyyy")
-
-                    val todayAppDetails =
-                        AppDetails(
-                            appName,
-                            totalDataUsage = totalDataUsage,
-                            date = todayDateInString
-                        )
-                    todayAppDataUsageList.add(todayAppDetails)
-
-                    if (!dataHiveAuth.currentUser!!.isAnonymous) {
-                        lifecycleScope.launch(Dispatchers.IO) {
-                            addUsageDataToFirestore(todayAppDataUsageList)
-                        }
-                    }
-
-                } catch (e: Exception) {
-                    e.printStackTrace()
+                var totalDataUsage = 0L
+                while (networkStats.hasNextBucket()) {
+                    val bucket = android.app.usage.NetworkStats.Bucket()
+                    networkStats.getNextBucket(bucket)
+                    totalDataUsage += bucket.rxBytes + bucket.txBytes
                 }
+
+
+                val appDetails = AppDetails(appName, appIcon, totalDataUsage)
+                appDataUsageList.add(appDetails)
+
+                val todayDate = getCurrentDateTime()
+                val todayDateInString = todayDate.toString("dd/M/yyyy")
+
+                val todayAppDetails = AppDetails(
+                    appName, totalDataUsage = totalDataUsage, date = todayDateInString
+                )
+                todayAppDataUsageList.add(todayAppDetails)
+
+                if (!dataHiveAuth.currentUser!!.isAnonymous) {
+                    lifecycleScope.launch(Dispatchers.IO) {
+                        addUsageDataToFirestore(todayAppDataUsageList)
+                    }
+                }
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
             //}
         }
 
@@ -261,17 +263,13 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
             val currentUserEmail = it.email.toString()
 
             //for ((key, value) in userDataMap) {
-            dataHiveDB.collection("users").document(currentUserEmail)
-                .collection("todayDataUsage")
-                .document(todayDateInString.toString())
-                .set(userDataMap, SetOptions.merge())
+            dataHiveDB.collection("users").document(currentUserEmail).collection("todayDataUsage")
+                .document(todayDateInString.toString()).set(userDataMap, SetOptions.merge())
                 .addOnSuccessListener {
                     Log.d(
-                        "Firestore DataHive",
-                        "Data written successfully"
+                        "Firestore DataHive", "Data written successfully"
                     )
-                }
-                .addOnFailureListener { e ->
+                }.addOnFailureListener { e ->
                     Log.w(
                         "Firestore DataHive", "Error writing document", e
                     )
@@ -288,6 +286,7 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
     fun getCurrentDateTime(): Date {
         return Calendar.getInstance().time
     }
+
     override fun onQueryTextSubmit(query: String?): Boolean {
         if (query != null) {
             filterList(query)
