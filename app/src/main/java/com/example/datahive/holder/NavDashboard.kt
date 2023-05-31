@@ -82,7 +82,6 @@ class NavDashboard : Fragment() {
             when(menuItem.itemId) {
                 R.id.profile -> {
                     findNavController().navigate(R.id.action_dashboardFragment_to_profileFragment)
-
                     true
                 }else -> false
             }
