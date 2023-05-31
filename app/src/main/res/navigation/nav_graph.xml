@@ -14,7 +14,7 @@
             android:id="@+id/action_dashboardFragment_to_profileFragment"
             app:destination="@id/profileFragment"
             app:popUpTo="@id/dashboardFragment"
-            app:popUpToInclusive="false" />
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
