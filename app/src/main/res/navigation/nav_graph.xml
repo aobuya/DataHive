@@ -13,14 +13,14 @@
 
     <fragment
         android:id="@+id/appUsageFragment"
-        android:name="com.example.datahive.holder.NavUsage"
+        android:name="com.example.datahive.holder.NavInstalled"
         android:label="App Usage"
-        tools:layout="@layout/fragment_nav_profile" />
+        tools:layout="@layout/fragment_nav_system" />
 
     <fragment
-        android:id="@+id/profileFragment"
-        android:name="com.example.datahive.holder.NavProfile"
+        android:id="@+id/systemFragment"
+        android:name="com.example.datahive.holder.NavSystem"
         android:label="Profile"
-        tools:layout="@layout/fragment_nav_profile" />
+        tools:layout="@layout/fragment_nav_system" />
 
 </navigation>

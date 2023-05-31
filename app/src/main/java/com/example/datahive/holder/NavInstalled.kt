@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.datahive.R
 import com.example.datahive.databinding.FragmentAppUsageBinding
@@ -16,43 +15,27 @@ import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
 import android.provider.Settings
-import android.util.Log
 import android.view.Menu
-import android.view.MenuInflater
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
-import androidx.core.view.get
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.datahive.BottomSheetFragment
 import com.example.datahive.FilterBottomSheet
-import com.example.datahive.UsagesData
 import com.example.datahive.app_usage.AppDataAdapter
 import com.example.datahive.app_usage.AppDetails
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuth.*
-import com.google.firebase.firestore.SetOptions
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 import java.util.*
 import kotlin.collections.ArrayList
 import dev.jahidhasanco.networkusage.*
-import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.lifecycleScope
-import com.example.datahive.app_usage.ActionItem
 import com.example.datahive.profile.ProfileFragment
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
 
 
-class NavUsage : Fragment(), SearchView.OnQueryTextListener {
+class NavInstalled : Fragment(), SearchView.OnQueryTextListener {
     private var _binding: FragmentAppUsageBinding? = null
     private val binding get() = _binding!!
 
@@ -70,14 +53,7 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
     ): View? {
 
         _binding = FragmentAppUsageBinding.inflate(inflater, container, false)
-        //(activity as AppCompatActivity).setSupportActionBar(binding.root.findViewById(R.id.toolbar))
 
-        //inflate menu
-        /*val menu = menu.getItem(R.menu.app_usage_menu)
-        val inflater: MenuInflater = requireActivity().menuInflater
-        inflater.inflate(R.menu.app_usage_menu, this.menu)
-        val searchItem = menu.findItem(R.id.app_usage_search_view)
-        val searchView = searchItem.actionView as SearchView*/
 
         //Fab
         binding.fab.setOnClickListener {
@@ -167,7 +143,7 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
 
         for (appInfo in installedApps) {
             // Check if the app is not a system app
-            //if (appInfo.flags and ApplicationInfo.FLAG_SYSTEM == 0) {
+            if (appInfo.flags and ApplicationInfo.FLAG_SYSTEM == 0) {
             val uid = appInfo.uid
             val appName = appInfo.loadLabel(packageManager).toString()
             val appIcon = appInfo.loadIcon(packageManager)
@@ -196,16 +172,12 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
                 )
                 todayAppDataUsageList.add(todayAppDetails)
 
-                if (!dataHiveAuth.currentUser!!.isAnonymous) {
-                    lifecycleScope.launch(Dispatchers.IO) {
-                        addUsageDataToFirestore(todayAppDataUsageList)
-                    }
-                }
+
 
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-            //}
+            }
         }
 
         // Sort the appDataUsageList by total data usage from largest to smallest
@@ -219,17 +191,6 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
         appDataRecyclerView.layoutManager = layoutManager
         appDataAdapter = AppDataAdapter(appDataUsageList)
         appDataRecyclerView.adapter = appDataAdapter
-
-
-        /*share appDataUsagelist with navdashboard fragment
-        val bundle = Bundle()
-        bundle.putStringArrayList("fromNavUsage",appDataUsageList)
-
-        val navUsageFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.dashboardFragment)
-        navUsageFragment?.let{
-            navUsageFragment.arguments = bundle
-        }
-        */
 
 
     }
@@ -250,33 +211,7 @@ class NavUsage : Fragment(), SearchView.OnQueryTextListener {
         }
     }
 
-    private fun addUsageDataToFirestore(usageData: ArrayList<AppDetails>) {
-        val getCurrentUser = dataHiveAuth.currentUser
-        val dataHiveDB = Firebase.firestore
 
-        val todayDate = getCurrentDateTime()
-        val todayDateInString = todayDate.toString("dd/M/yyyy")
-
-        val userDataMap = usageData.associateBy { it.date }
-
-        getCurrentUser?.let {
-            val currentUserEmail = it.email.toString()
-
-            //for ((key, value) in userDataMap) {
-            dataHiveDB.collection("users").document(currentUserEmail).collection("todayDataUsage")
-                .document(todayDateInString.toString()).set(userDataMap, SetOptions.merge())
-                .addOnSuccessListener {
-                    Log.d(
-                        "Firestore DataHive", "Data written successfully"
-                    )
-                }.addOnFailureListener { e ->
-                    Log.w(
-                        "Firestore DataHive", "Error writing document", e
-                    )
-                }
-        }
-
-    }
 
     fun Date.toString(format: String, locale: Locale = Locale.getDefault()): String {
         val formatter = SimpleDateFormat(format, locale)

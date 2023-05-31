@@ -9,11 +9,12 @@
     <item
         android:id="@+id/appUsageFragment"
         android:icon="@drawable/baseline_data_usage_24"
-        android:title="App Usage" />
+        android:title="Installed apps" />
 
     <item
-        android:id="@+id/profileFragment"
+        android:id="@+id/systemFragment"
         android:icon="@drawable/baseline_person_24"
-        android:title="Profile" />
+        android:title="System Apps" />
+
 
 </menu>
