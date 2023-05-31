@@ -20,6 +20,7 @@ import android.view.Menu
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.datahive.FilterBottomSheet
@@ -43,7 +44,6 @@ class NavInstalled : Fragment(), SearchView.OnQueryTextListener {
     private var todayAppDataUsageList = ArrayList<AppDetails>()
     private lateinit var appDataAdapter: AppDataAdapter
     private lateinit var progressBar: ProgressBar
-    private lateinit var menu: Menu
 
     private lateinit var dataHiveAuth: FirebaseAuth
 
@@ -74,10 +74,7 @@ class NavInstalled : Fragment(), SearchView.OnQueryTextListener {
         binding.appUsageTopAppBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.profile -> {
-                    requireActivity().supportFragmentManager.beginTransaction()
-                        .setReorderingAllowed(true)
-                        .replace(R.id.nav_host_fragment, ProfileFragment()).addToBackStack(null)
-                        .commit()
+                    findNavController().navigate(R.id.action_appUsageFragment_to_profileFragment)
                     true
                 }
 
