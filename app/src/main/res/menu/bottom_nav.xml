@@ -16,5 +16,4 @@
         android:icon="@drawable/baseline_person_24"
         android:title="System Apps" />
 
-
 </menu>
