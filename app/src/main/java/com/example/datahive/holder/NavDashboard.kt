@@ -29,6 +29,8 @@ import android.Manifest
 import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.datahive.app_usage.AppDetails
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.SetOptions
@@ -76,6 +78,16 @@ class NavDashboard : Fragment() {
 
         dataHiveAuth = FirebaseAuth.getInstance()
 
+        binding.dashboardTopAppBar.setOnMenuItemClickListener { menuItem ->
+            when(menuItem.itemId) {
+                R.id.profile -> {
+                    findNavController().navigate(R.id.action_dashboardFragment_to_profileFragment)
+
+                    true
+                }else -> false
+            }
+        }
+
         setupPermissions()
 
         val networkUsage =
@@ -84,8 +96,8 @@ class NavDashboard : Fragment() {
         val handler = Handler()
         val runnableCode = object : Runnable {
             override fun run() {
-                val now = networkUsage.getUsageNow(NetworkType.ALL)
-                val speeds = NetSpeed.calculateSpeed(now.timeTaken, now.downloads, now.uploads)
+                //val now = networkUsage.getUsageNow(NetworkType.ALL)
+                //val speeds = NetSpeed.calculateSpeed(now.timeTaken, now.downloads, now.uploads)
                 val todayM = networkUsage.getUsage(Interval.today, NetworkType.MOBILE)
                 val todayW = networkUsage.getUsage(Interval.today, NetworkType.WIFI)
 
@@ -163,11 +175,11 @@ class NavDashboard : Fragment() {
         binding.monthlyDataUsagesRv.setHasFixedSize(true)
         binding.monthlyDataUsagesRv.adapter = dataUsagesAdapter
 
-        if (!dataHiveAuth.currentUser!!.isAnonymous) {
+        /*if (!dataHiveAuth.currentUser!!.isAnonymous) {
             lifecycleScope.launch(Dispatchers.IO) {
                 addUsageDataToFirestore(usagesDataList)
             }
-        }
+        }*/
 
         return binding.root
     }
@@ -210,7 +222,7 @@ class NavDashboard : Fragment() {
 
     }
 
-    private fun addUsageDataToFirestore(userData: ArrayList<UsagesData>) {
+    /*private fun addUsageDataToFirestore(userData: ArrayList<UsagesData>) {
 
         val getCurrentUser = dataHiveAuth.currentUser
         val dataHiveDB = Firebase.firestore
@@ -250,5 +262,5 @@ class NavDashboard : Fragment() {
 
     fun getCurrentDateTime(): Date {
         return Calendar.getInstance().time
-    }
+    }*/
 }

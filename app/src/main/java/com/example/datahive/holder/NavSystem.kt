@@ -17,6 +17,7 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.datahive.FilterBottomSheet
@@ -74,10 +75,7 @@ class NavSystem : Fragment(), SearchView.OnQueryTextListener {
         binding.profileTopAppBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.profile -> {
-                    requireActivity().supportFragmentManager.beginTransaction()
-                        .setReorderingAllowed(true)
-                        .replace(R.id.nav_host_fragment, ProfileFragment()).addToBackStack(null)
-                        .commit()
+                    findNavController().navigate(R.id.action_systemFragment_to_profileFragment)
                     true
                 }
                 else -> false
