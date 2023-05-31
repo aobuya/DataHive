@@ -69,11 +69,6 @@
                             ads:adUnitId="ca-app-pub-3940256099942544/6300978111" />
 
                     </LinearLayout>
-
-
-
-
-
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -85,25 +80,6 @@
                         android:text="@string/today_data_usage"
                         android:textAppearance="?attr/textAppearanceTitleLarge"
                         android:textColor="@color/md_theme_light_onSurface" />
-                    <!-- <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginEnd="20dp"
-                        android:background="@color/black" /> -->
-
-
-                    <!--<TextView
-                        android:id="@+id/totalSpeedTv"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:padding="6dp"
-                        android:textAppearance="?attr/textAppearanceTitleSmall"
-                        android:textColor="@color/md_theme_light_onSurface"
-                        tools:ignore="SmallSp,Suspicious0dp" />-->
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -153,17 +129,6 @@
                                         android:maxLines="1"
                                         android:text="0 Kib"
                                         android:textAppearance="?attr/textAppearanceTitleSmall" />
-
-                                    <!-- <TextView
-                                        android:id="@+id/upUsagesTv"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_weight="1"
-                                        android:fontFamily="@font/asap_variablefont_wdthwght"
-                                        android:gravity="center_vertical"
-                                        android:padding="6dp"
-                                        android:text="15kb"
-                                        android:textAppearance="?attr/textAppearanceTitleSmall" />-->
                                         </LinearLayout>
                             </LinearLayout>
 
@@ -210,30 +175,71 @@
                                         android:maxLines="1"
                                         android:text="0 Kib"
                                         android:textAppearance="?attr/textAppearanceTitleSmall" />
-
-                                    <!-- <TextView
-                                        android:id="@+id/downUsagesTv"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_weight="1"
-                                        android:fontFamily="@font/asap_variablefont_wdthwght"
-                                        android:gravity="center_vertical"
-                                        android:padding="6dp"
-                                        android:text="15kb"
-                                        android:textAppearance="?attr/textAppearanceTitleSmall"
-                                        android:textColor="@color/md_theme_light_onSurface" />-->
                             </LinearLayout>
                             </LinearLayout>
                         </com.google.android.material.card.MaterialCardView>
                     </LinearLayout>
-                    <View
+                    <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="10dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
+                        android:layout_marginTop="10dp"
                         android:layout_marginEnd="20dp"
-                        android:background="@color/black" />
+                        android:layout_marginBottom="10dp"
+                        android:fontFamily="@font/asap_variablefont_wdthwght"
+                        android:text="Last 7 days"
+                        android:textAppearance="?attr/textAppearanceTitleLarge"
+                        android:textColor="@color/md_theme_light_onSurface" />
+                    <com.google.android.material.card.MaterialCardView
+                        style="?attr/materialCardViewFilledStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:layout_gravity="center">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="8dp">
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:padding="8dp">
+                                <ImageView
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:src="@drawable/mobile_data"/>
+                                <TextView
+                                    android:id="@+id/last_7_days_mobile"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textAppearance="?attr/textAppearanceTitleLarge"
+                                    android:padding="8dp"/>
+
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:padding="8dp">
+                                <ImageView
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:src="@drawable/wifi"/>
+                                <TextView
+                                    android:id="@+id/last_7_days_wifi"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textAppearance="?attr/textAppearanceTitleLarge"
+                                    android:padding="8dp"/>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
                     <LinearLayout
                         android:id="@+id/linearLayout_top"
                         android:layout_width="match_parent"

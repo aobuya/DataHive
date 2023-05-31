@@ -63,7 +63,6 @@ class NavDashboard : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentNavDashboardBinding.inflate(inflater, container, false)
-        //(activity as AppCompatActivity).setSupportActionBar(binding.root.findViewById(R.id.toolbar))
         //Load Ads
         MobileAds.initialize(requireContext())
         val adView = binding.adView
@@ -95,8 +94,6 @@ class NavDashboard : Fragment() {
         val handler = Handler()
         val runnableCode = object : Runnable {
             override fun run() {
-                //val now = networkUsage.getUsageNow(NetworkType.ALL)
-                //val speeds = NetSpeed.calculateSpeed(now.timeTaken, now.downloads, now.uploads)
                 val todayM = networkUsage.getUsage(Interval.today, NetworkType.MOBILE)
                 val todayW = networkUsage.getUsage(Interval.today, NetworkType.WIFI)
 
@@ -104,12 +101,6 @@ class NavDashboard : Fragment() {
                     Util.formatData(todayW.downloads, todayW.uploads)[2]
                 binding.dataUsagesTv.text =
                     Util.formatData(todayM.downloads, todayM.uploads)[2]
-                /*binding.apply {
-                    totalSpeedTv.text = speeds[0].speed + "\n" + speeds[0].unit
-                    downUsagesTv.text = "Down: " + speeds[1].speed + speeds[1].unit
-                    upUsagesTv.text = "Up: " + speeds[2].speed + speeds[2].unit
-
-                }*/
                 handler.postDelayed(this, 1000)
             }
         }
@@ -168,17 +159,14 @@ class NavDashboard : Fragment() {
         binding.mobileDataThisMonth.text = Util.formatData(
             last30DaysTotalMobile.downloads, last30DaysTotalMobile.uploads
         )[2]
+        binding.last7DaysMobile.text = Util.formatData(last7DaysTotalMobile.uploads, last7DaysTotalMobile.downloads)[2]
+        binding.last7DaysWifi.text = Util.formatData(last7DaysTotalWIFI.uploads, last7DaysTotalWIFI.downloads)[2]
+
 
         dataUsagesAdapter = DataUsagesAdapter(usagesDataList)
         binding.monthlyDataUsagesRv.layoutManager = LinearLayoutManager(requireContext())
         binding.monthlyDataUsagesRv.setHasFixedSize(true)
         binding.monthlyDataUsagesRv.adapter = dataUsagesAdapter
-
-        /*if (!dataHiveAuth.currentUser!!.isAnonymous) {
-            lifecycleScope.launch(Dispatchers.IO) {
-                addUsageDataToFirestore(usagesDataList)
-            }
-        }*/
 
         return binding.root
     }
@@ -203,8 +191,6 @@ class NavDashboard : Fragment() {
 
 
     private fun checkUsagePermission(): Any {
-        //val appOps = requireContext().getSystemService(APP_OPS_SERVICE) as AppOpsManager
-        //var mode = 0
         val appOps = context?.getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
         val mode = context?.let {
             appOps.checkOpNoThrow(
@@ -220,46 +206,4 @@ class NavDashboard : Fragment() {
         return true
 
     }
-
-    /*private fun addUsageDataToFirestore(userData: ArrayList<UsagesData>) {
-
-        val getCurrentUser = dataHiveAuth.currentUser
-        val dataHiveDB = Firebase.firestore
-
-        val todayDate = getCurrentDateTime()
-        val todayDateInString = todayDate.toString("dd/M/yyyy")
-
-        val userDataMap = userData.associateBy { it.date }
-
-
-        getCurrentUser?.let {
-            val currentUserEmail = it.email.toString()
-
-            for (app in userDataMap) {
-                dataHiveDB.collection("users").document(currentUserEmail)
-                    .collection("totalDataUsage").document(todayDateInString)
-                    .set(userDataMap, SetOptions.merge())
-                    .addOnSuccessListener {
-                        Log.d(
-                            "Firestore DataHive",
-                            "Data written successfully"
-                        )
-                    }
-                    .addOnFailureListener { e ->
-                        Log.w(
-                            "Firestore DataHive", "Error writing document", e
-                        )
-                    }
-            }
-        }
-    }
-
-    fun Date.toString(format: String, locale: Locale = Locale.getDefault()): String {
-        val formatter = SimpleDateFormat(format, locale)
-        return formatter.format(this)
-    }
-
-    fun getCurrentDateTime(): Date {
-        return Calendar.getInstance().time
-    }*/
 }
