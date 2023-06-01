@@ -53,7 +53,6 @@
         android:id="@+id/pass_redirect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/asap_italic_variablefont_wdth_wght"
         android:text="@string/red_tag"
         android:textSize="17sp"
         android:layout_marginStart="25dp"

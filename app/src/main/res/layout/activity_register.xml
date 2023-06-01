@@ -38,7 +38,7 @@
         android:background="@drawable/et_custom"
         android:padding="15dp"
         android:inputType="textEmailAddress"
-        android:fontFamily="@font/asap_variablefont_wdthwght"
+
         android:layout_above="@id/et_password"
         android:textSize="15sp" />
 
@@ -104,7 +104,6 @@
         android:id="@+id/login_redirect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/asap_italic_variablefont_wdth_wght"
         android:text="@string/red_tag"
         android:textSize="17sp"
         android:textColor="@color/seed"

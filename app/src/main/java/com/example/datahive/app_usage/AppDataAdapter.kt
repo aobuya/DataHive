@@ -15,8 +15,7 @@ class AppDataAdapter(private var appDataList: List<AppDetails>) :
 
         fun bind(appDetails: AppDetails) {
             binding.appNameTextView.text = appDetails.app
-            //binding.appIconImageView.setImageDrawable(appDetails.icon)
-            //binding.appDataUsageTextView.text = "${appDetails.dataUsage / 1024 / 1024} MB"
+
             val dataUsageMB = appDetails.totalDataUsage / 1024 / 1024.toDouble()
 
             val dataUsageStr = if (dataUsageMB >= 1024) {

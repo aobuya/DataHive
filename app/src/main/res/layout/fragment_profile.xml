@@ -95,7 +95,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="8dp"
-                        android:fontFamily="@font/asap_italic_variablefont_wdth_wght"
+
                         android:text="@string/create_an_account_first"
                         android:textSize="12sp" />
 
@@ -132,7 +132,7 @@
                         android:layout_height="wrap_content"
 
                         android:layout_margin="8dp"
-                        android:fontFamily="@font/asap_italic_variablefont_wdth_wght"
+
                         android:text="@string/report_tag"
                         android:textSize="12sp" />
 
@@ -167,7 +167,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="8dp"
-                        android:fontFamily="@font/asap_italic_variablefont_wdth_wght"
                         android:text="@string/support_tag"
                         android:textSize="12sp" />
 
@@ -203,8 +202,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="8dp"
-
-                        android:fontFamily="@font/asap_italic_variablefont_wdth_wght"
                         android:text="@string/txt_config"
                         android:textSize="12sp" />
 

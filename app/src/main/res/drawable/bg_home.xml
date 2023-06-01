@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Blue background shape -->
+    <item android:gravity="top">
+        <shape android:shape="rectangle">
+            <solid android:color="#4287f5" />
+        </shape>
+    </item>
+
+    <!-- Remaining portion shape -->
+    <item android:gravity="bottom">
+        <shape android:shape="rectangle">
+            <solid android:color="#4287f5" />
+        </shape>
+    </item>
+</layer-list>
+
+
+
+
+
+

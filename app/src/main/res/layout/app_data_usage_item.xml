@@ -28,7 +28,7 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="16dp"
             android:layout_toEndOf="@id/app_icon_image_view"
-            android:fontFamily="@font/asap_variablefont_wdthwght"
+
             android:text="App Name"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -40,7 +40,6 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginStart="16dp"
-            android:fontFamily="@font/asap_variablefont_wdthwght"
             android:text="0 KB"
             android:textSize="16sp" />
 
