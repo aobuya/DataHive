@@ -16,19 +16,13 @@
                 android:layout_margin="2dp"
                 android:layout_height="wrap_content"
                 android:maxEms="20"
-
                 android:padding="5dp"
                 android:text="Date" />
-
-
-
-
 
         <TextView
             android:id="@+id/mobile_data"
             android:layout_weight="1"
             android:background="@drawable/custom_text"
-            android:fontFamily="@font/asap_variablefont_wdthwght"
             android:layout_width="0dp"
             android:layout_margin="2dp"
             android:maxEms="20"
@@ -41,7 +35,6 @@
             android:id="@+id/wifi_data"
             android:layout_weight="1"
             android:background="@drawable/custom_text"
-            android:fontFamily="@font/asap_variablefont_wdthwght"
             android:layout_width="0dp"
             android:layout_margin="2dp"
             android:maxEms="20"
