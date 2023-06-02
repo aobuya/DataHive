@@ -56,5 +56,6 @@
         android:text="@string/red_tag"
         android:textSize="17sp"
         android:layout_marginStart="25dp"
-        android:layout_marginBottom="50dp"/>
+        />
+
 </LinearLayout>

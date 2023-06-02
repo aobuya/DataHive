@@ -76,14 +76,16 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="20dp"
                         android:text="@string/today_data_usage"
-                        android:textAppearance="?attr/textAppearanceTitleLarge"
-                        android:textColor="@color/md_theme_light_onSurface" />
+                        android:textSize="15dp"
+                         />
 
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:orientation="vertical"
-                            android:layout_margin="8dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginStart="8dp"
                             android:layout_height="wrap_content">
 
 
@@ -97,6 +99,8 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:layout_margin="8dp"
+                                    app:cardElevation="4dp"
+                                    app:cardUseCompatPadding="true"
                                     app:cardCornerRadius="8dp">
 
                                     <LinearLayout
@@ -121,7 +125,7 @@
                                             android:gravity="center_vertical"
                                             android:maxLines="1"
                                             android:text="WiFi"
-                                            android:textAppearance="?attr/textAppearanceTitleMedium"/>
+                                            />
                                         <TextView
                                             android:id="@+id/wifiUsagesTv"
                                             android:layout_width="wrap_content"
@@ -130,7 +134,7 @@
                                             android:gravity="center_vertical"
                                             android:maxLines="1"
                                             android:text="0 Kib"
-                                            android:textAppearance="?attr/textAppearanceTitleSmall" />
+                                             />
 
                                     </LinearLayout>
 
@@ -141,6 +145,8 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:layout_margin="8dp"
+                                    app:cardElevation="4dp"
+                                    app:cardUseCompatPadding="true"
                                     app:cardCornerRadius="8dp">
 
                                     <LinearLayout
@@ -166,16 +172,14 @@
                                             android:gravity="center_vertical"
                                             android:maxLines="1"
                                             android:text="Mobile"
-                                            android:textAppearance="?attr/textAppearanceTitleMedium"/>
+                                            />
                                         <TextView
                                             android:id="@+id/dataUsagesTv"
                                             android:layout_width="wrap_content"
                                             android:layout_height="match_parent"
                                             android:layout_weight="1"
                                             android:maxLines="1"
-                                            android:text="0 Kib"
-
-                                            android:textAppearance="?attr/textAppearanceTitleSmall" />
+                                            android:text="0 Kib" />
 
                                     </LinearLayout>
 
@@ -190,20 +194,18 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
-                        android:layout_marginTop="10dp"
+
                         android:layout_marginEnd="20dp"
-                        android:layout_marginBottom="10dp"
 
                         android:text="Last 7 days"
-                        android:textAppearance="?attr/textAppearanceTitleLarge"
-                        android:textColor="@color/md_theme_light_onSurface" />
+                        android:textSize="15dp"
+                         />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:orientation="vertical"
-                            android:layout_margin="8dp"
+                            android:layout_margin="4dp"
                             android:layout_height="wrap_content">
-
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -215,6 +217,8 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:layout_margin="8dp"
+                                    app:cardElevation="4dp"
+                                    app:cardUseCompatPadding="true"
                                     app:cardCornerRadius="8dp">
 
                                     <LinearLayout
@@ -231,14 +235,16 @@
                                             android:scaleType="centerCrop"
 
                                             android:adjustViewBounds="true" />
+                                        <TextView
+                                            android:text="WiFi"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            />
 
                                         <TextView
                                             android:id="@+id/last_7_days_wifi"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-
-                                            android:textAppearance="?attr/textAppearanceTitleSmall"
-
                                             />
 
                                     </LinearLayout>
@@ -250,6 +256,8 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:layout_margin="8dp"
+                                    app:cardElevation="4dp"
+                                    app:cardUseCompatPadding="true"
                                     app:cardCornerRadius="8dp">
 
                                     <LinearLayout
@@ -266,13 +274,16 @@
                                             android:src="@drawable/mobile_data"
                                             android:scaleType="centerCrop"
                                             android:adjustViewBounds="true" />
+                                        <TextView
+                                            android:text="Mobile"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            />
 
                                         <TextView
                                             android:id="@+id/last_7_days_mobile"
                                             android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-
-                                            android:textAppearance="?attr/textAppearanceTitleSmall" />
+                                            android:layout_height="wrap_content" />
 
                                     </LinearLayout>
 
@@ -386,10 +397,10 @@
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="20dp"
-
+                        android:textSize="15dp"
+                        android:textStyle="bold"
                         android:text="@string/full_month_data_usages"
-                        android:textAppearance="?attr/textAppearanceTitleLarge"
-                        android:textColor="@color/md_theme_light_onSurface" />
+                         />
 
                     <LinearLayout
                         android:layout_width="match_parent"

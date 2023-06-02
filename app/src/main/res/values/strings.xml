@@ -79,5 +79,6 @@
     <string name="toc_text">Community Standards and legal Policies</string>
     <string name="toc_text_toc">Terms Of Service</string>
     <string name="privacy_policy">Privacy Policy</string>
+    <string name="toc_reads">Please refer to our Terms and Policies</string>
 
 </resources>
