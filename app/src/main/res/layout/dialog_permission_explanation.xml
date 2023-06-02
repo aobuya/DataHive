@@ -9,22 +9,27 @@
         android:layout_height="wrap_content"
         android:text="Usage Stats Permission"
         android:textSize="18sp"
+        android:gravity="center"
+        android:layout_margin="8dp"
         android:textStyle="bold" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="8dp"
         android:text="This app requires access to your usage statistics to provide accurate data tracking. Granting this permission will allow the app to monitor your device's usage." />
 
     <Button
         android:id="@+id/btnGrantPermission"
-        android:layout_width="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Grant Permission" />
 
     <Button
         android:id="@+id/btnCancel"
-        android:layout_width="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Cancel" />
 
