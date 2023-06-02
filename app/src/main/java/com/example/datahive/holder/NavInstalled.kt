@@ -81,14 +81,18 @@ class NavInstalled : Fragment(), SearchView.OnQueryTextListener {
             }
         }
 
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         // Display permission explanation dialog if permission is not granted
         if (!hasUsageStatsPermission()) {
             showUsageStatsPermissionDialog()
         } else {
             displayAppDataUsage()
         }
-
-        return binding.root
     }
 
     private fun showFilterSheet() {
@@ -242,3 +246,4 @@ class NavInstalled : Fragment(), SearchView.OnQueryTextListener {
         }
     }
 }
+
