@@ -8,6 +8,7 @@ import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.net.ConnectivityManager
+import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import androidx.fragment.app.Fragment
@@ -35,8 +36,10 @@ import com.google.android.gms.ads.MobileAds
 import com.google.firebase.auth.FirebaseAuth
 import dev.jahidhasanco.networkusage.NetworkUsageManager
 import dev.jahidhasanco.networkusage.Util
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -49,27 +52,26 @@ class NavSystem : Fragment(), SearchView.OnQueryTextListener {
     private val binding get() = _binding!!
 
     private var appDataUsageList = ArrayList<AppDetails>()
-    private var todayAppDataUsageList = ArrayList<AppDetails>()
+    //private var todayAppDataUsageList = ArrayList<AppDetails>()
     private lateinit var appDataAdapter: AppDataAdapter
 
-    private lateinit var progressBar: ProgressBar
-    private lateinit var menu: Menu
-
     private lateinit var dataHiveAuth: FirebaseAuth
-    private lateinit var usageStatsPermissionDialog: AlertDialog
+    private var usageStatsPermissionDialog: AlertDialog? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-
         _binding = FragmentNavSystemBinding.inflate(inflater, container, false)
+
+        // Fab
+
 
         dataHiveAuth = FirebaseAuth.getInstance()
 
-        //search view
+        // Search view
         binding.appUsageSearchView.setOnQueryTextListener(this)
 
-        //Load Ads
+        // Load Ads
         MobileAds.initialize(requireContext())
         val adView = binding.adView
         val adRequest = AdRequest.Builder().build()
@@ -95,15 +97,7 @@ class NavSystem : Fragment(), SearchView.OnQueryTextListener {
         if (!hasUsageStatsPermission()) {
             showUsageStatsPermissionDialog()
         } else {
-            displayAppDataUsage()
-        }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-        if (::usageStatsPermissionDialog.isInitialized && usageStatsPermissionDialog.isShowing) {
-            usageStatsPermissionDialog.dismiss()
+            loadAppDataUsage()
         }
     }
 
@@ -124,16 +118,16 @@ class NavSystem : Fragment(), SearchView.OnQueryTextListener {
         val btnGrantPermission = dialogView.findViewById<Button>(R.id.btnGrantPermission)
         btnGrantPermission.setOnClickListener {
             requestUsageStatsPermission()
-            usageStatsPermissionDialog.dismiss()
+            usageStatsPermissionDialog?.dismiss()
         }
 
         val btnCancel = dialogView.findViewById<Button>(R.id.btnCancel)
         btnCancel.setOnClickListener {
-            usageStatsPermissionDialog.dismiss()
+            usageStatsPermissionDialog?.dismiss()
             // Handle permission denial (e.g., show error message)
         }
 
-        usageStatsPermissionDialog.show()
+        usageStatsPermissionDialog?.show()
     }
 
     private fun hasUsageStatsPermission(): Boolean {
@@ -152,16 +146,32 @@ class NavSystem : Fragment(), SearchView.OnQueryTextListener {
         startActivity(intent)
     }
 
-    private fun displayAppDataUsage() {
+    private fun loadAppDataUsage() {
+        val progress = binding.progressBar
+        progress.visibility = View.VISIBLE
+
+        CoroutineScope(Dispatchers.IO).launch {
+            val installedApps = getInstalledApplications()
+            val appDataUsageList = getAppDataUsage(installedApps)
+
+            withContext(Dispatchers.Main) {
+                this@NavSystem.appDataUsageList = appDataUsageList
+                updateAppDataAdapter()
+                progress.visibility = View.GONE
+            }
+        }
+    }
+
+    private suspend fun getInstalledApplications(): List<ApplicationInfo> = withContext(Dispatchers.IO) {
+        val packageManager = requireContext().packageManager
+        packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
+    }
+
+    private suspend fun getAppDataUsage(installedApps: List<ApplicationInfo>): ArrayList<AppDetails> = withContext(Dispatchers.IO) {
         val networkStatsManager =
             requireContext().getSystemService(Context.NETWORK_STATS_SERVICE) as NetworkStatsManager
         val packageManager = requireContext().packageManager
-        val installedApps = packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
-        val progress = binding.progressBar
-
-        val networkUsage =
-            NetworkUsageManager(requireContext(), Util.getSubscriberId(requireContext()))
-        progress.visibility = View.VISIBLE
+        val appDataList = ArrayList<AppDetails>()
 
         for (appInfo in installedApps) {
             // Check if the app is a system app
@@ -176,40 +186,35 @@ class NavSystem : Fragment(), SearchView.OnQueryTextListener {
                     )
 
                     var totalDataUsage = 0L
-                    val bucket = NetworkStats.Bucket()
                     while (networkStats.hasNextBucket()) {
+                        val bucket = android.app.usage.NetworkStats.Bucket()
                         networkStats.getNextBucket(bucket)
                         totalDataUsage += bucket.rxBytes + bucket.txBytes
                     }
 
                     val appDetails = AppDetails(appName, appIcon, totalDataUsage)
-                    appDataUsageList.add(appDetails)
-
-                    val todayDate = getCurrentDateTime()
-                    val todayDateInString = todayDate.toString("dd/M/yyyy")
-
-                    val todayAppDetails = AppDetails(
-                        appName, totalDataUsage = totalDataUsage, date = todayDateInString
-                    )
-                    todayAppDataUsageList.add(todayAppDetails)
-
-
+                    appDataList.add(appDetails)
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
             }
         }
 
-        // Sort the appDataUsageList by total data usage from largest to smallest
-        appDataUsageList = ArrayList(appDataUsageList.sortedByDescending { it.totalDataUsage })
+        appDataList.sortByDescending { it.totalDataUsage }
+        appDataList
+    }
 
-        progress.visibility = View.GONE
-
+    private fun updateAppDataAdapter() {
         val layoutManager = LinearLayoutManager(context)
-        val appDataRecyclerView: RecyclerView = requireView().findViewById(R.id.listViewsystem)
+        val appDataRecyclerView: RecyclerView = binding.listViewsystem
         appDataRecyclerView.layoutManager = layoutManager
-        appDataAdapter = AppDataAdapter(appDataUsageList)
-        appDataRecyclerView.adapter = appDataAdapter
+
+        if (!::appDataAdapter.isInitialized) {
+            appDataAdapter = AppDataAdapter(appDataUsageList)
+            appDataRecyclerView.adapter = appDataAdapter
+        } else {
+            appDataAdapter.notifyDataSetChanged()
+        }
     }
 
     private fun filterList(text: String) {
@@ -228,12 +233,12 @@ class NavSystem : Fragment(), SearchView.OnQueryTextListener {
         }
     }
 
-    private fun Date.toString(format: String, locale: Locale = Locale.getDefault()): String {
+    fun Date.toString(format: String, locale: Locale = Locale.getDefault()): String {
         val formatter = SimpleDateFormat(format, locale)
         return formatter.format(this)
     }
 
-    private fun getCurrentDateTime(): Date {
+    fun getCurrentDateTime(): Date {
         return Calendar.getInstance().time
     }
 
@@ -249,6 +254,12 @@ class NavSystem : Fragment(), SearchView.OnQueryTextListener {
             filterList(query)
         }
         return true
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+        usageStatsPermissionDialog?.dismiss()
     }
 }
 

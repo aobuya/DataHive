@@ -29,6 +29,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.datahive.FilterBottomSheet
 import com.example.datahive.app_usage.AppDataAdapter
 import com.example.datahive.app_usage.AppDetails
+import com.example.datahive.databinding.FragmentNavSystemBinding
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.google.firebase.auth.FirebaseAuth
@@ -36,15 +37,20 @@ import java.util.*
 import kotlin.collections.ArrayList
 import dev.jahidhasanco.networkusage.*
 import com.example.datahive.profile.ProfileFragment
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 
 
 class NavInstalled : Fragment(), SearchView.OnQueryTextListener {
-    private var _binding: FragmentAppUsageBinding? = null
+
+    private var _binding: FragmentNavSystemBinding? = null
     private val binding get() = _binding!!
 
     private var appDataUsageList = ArrayList<AppDetails>()
-    private var todayAppDataUsageList = ArrayList<AppDetails>()
+    //private var todayAppDataUsageList = ArrayList<AppDetails>()
     private lateinit var appDataAdapter: AppDataAdapter
 
     private lateinit var dataHiveAuth: FirebaseAuth
@@ -53,28 +59,24 @@ class NavInstalled : Fragment(), SearchView.OnQueryTextListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentAppUsageBinding.inflate(inflater, container, false)
+        _binding = FragmentNavSystemBinding.inflate(inflater, container, false)
 
-        //Fab
-        binding.fab.setOnClickListener {
-            showFilterSheet()
-        }
 
         dataHiveAuth = FirebaseAuth.getInstance()
 
-        //search view
+        // Search view
         binding.appUsageSearchView.setOnQueryTextListener(this)
 
-        //Load Ads
+        // Load Ads
         MobileAds.initialize(requireContext())
         val adView = binding.adView
         val adRequest = AdRequest.Builder().build()
         adView.loadAd(adRequest)
 
-        binding.appUsageTopAppBar.setOnMenuItemClickListener { menuItem ->
+        binding.profileTopAppBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.profile -> {
-                    findNavController().navigate(R.id.action_appUsageFragment_to_profileFragment)
+                    findNavController().navigate(R.id.action_systemFragment_to_profileFragment)
                     true
                 }
                 else -> false
@@ -91,7 +93,7 @@ class NavInstalled : Fragment(), SearchView.OnQueryTextListener {
         if (!hasUsageStatsPermission()) {
             showUsageStatsPermissionDialog()
         } else {
-            displayAppDataUsage()
+            loadAppDataUsage()
         }
     }
 
@@ -118,7 +120,7 @@ class NavInstalled : Fragment(), SearchView.OnQueryTextListener {
         val btnCancel = dialogView.findViewById<Button>(R.id.btnCancel)
         btnCancel.setOnClickListener {
             usageStatsPermissionDialog?.dismiss()
-            // Handle permission denial (e.g., show error message)
+
         }
 
         usageStatsPermissionDialog?.show()
@@ -140,62 +142,73 @@ class NavInstalled : Fragment(), SearchView.OnQueryTextListener {
         startActivity(intent)
     }
 
-    private fun displayAppDataUsage() {
+    private fun loadAppDataUsage() {
+        val progress = binding.progressBar
+        progress.visibility = View.VISIBLE
+
+        CoroutineScope(Dispatchers.IO).launch {
+            val installedApps = getInstalledApplications()
+            appDataUsageList = getAppDataUsage(installedApps)
+
+            withContext(Dispatchers.Main) {
+                updateAppDataAdapter()
+                progress.visibility = View.GONE
+            }
+        }
+    }
+
+    private suspend fun getInstalledApplications(): List<ApplicationInfo> = withContext(Dispatchers.IO) {
+        val packageManager = requireContext().packageManager
+        packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
+    }
+
+    private suspend fun getAppDataUsage(installedApps: List<ApplicationInfo>): ArrayList<AppDetails> = withContext(Dispatchers.IO) {
         val networkStatsManager =
             requireContext().getSystemService(Context.NETWORK_STATS_SERVICE) as NetworkStatsManager
         val packageManager = requireContext().packageManager
-        val installedApps = packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
-        val progress = binding.progressBar
-
-        val networkUsage = NetworkUsageManager(requireContext(), Util.getSubscriberId(requireContext()))
-        progress.visibility = View.VISIBLE
+        val appDataList = ArrayList<AppDetails>()
 
         for (appInfo in installedApps) {
-            // Check if the app is not a system app
+            // Check if the app is an installed app
             if (appInfo.flags and ApplicationInfo.FLAG_SYSTEM == 0) {
                 val uid = appInfo.uid
                 val appName = appInfo.loadLabel(packageManager).toString()
                 val appIcon = appInfo.loadIcon(packageManager)
-
                 try {
                     val networkStats = networkStatsManager.queryDetailsForUid(
                         ConnectivityManager.TYPE_WIFI, null, 0, System.currentTimeMillis(), uid
                     )
 
                     var totalDataUsage = 0L
-                    val bucket = NetworkStats.Bucket()
                     while (networkStats.hasNextBucket()) {
+                        val bucket = android.app.usage.NetworkStats.Bucket()
                         networkStats.getNextBucket(bucket)
                         totalDataUsage += bucket.rxBytes + bucket.txBytes
                     }
 
                     val appDetails = AppDetails(appName, appIcon, totalDataUsage)
-                    appDataUsageList.add(appDetails)
-
-                    val todayDate = getCurrentDateTime()
-                    val todayDateInString = todayDate.toString("dd/M/yyyy")
-
-                    val todayAppDetails = AppDetails(
-                        appName, totalDataUsage = totalDataUsage, date = todayDateInString
-                    )
-                    todayAppDataUsageList.add(todayAppDetails)
-
+                    appDataList.add(appDetails)
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
             }
         }
 
-        // Sort the appDataUsageList by total data usage from largest to smallest
-        appDataUsageList = ArrayList(appDataUsageList.sortedByDescending { it.totalDataUsage })
+        appDataList.sortByDescending { it.totalDataUsage }
+        appDataList
+    }
 
-        progress.visibility = View.GONE
-
+    private fun updateAppDataAdapter() {
         val layoutManager = LinearLayoutManager(context)
-        val appDataRecyclerView: RecyclerView = requireView().findViewById(R.id.listView)
+        val appDataRecyclerView: RecyclerView = binding.listViewsystem
         appDataRecyclerView.layoutManager = layoutManager
-        appDataAdapter = AppDataAdapter(appDataUsageList)
-        appDataRecyclerView.adapter = appDataAdapter
+
+        if (!::appDataAdapter.isInitialized) {
+            appDataAdapter = AppDataAdapter(appDataUsageList)
+            appDataRecyclerView.adapter = appDataAdapter
+        } else {
+            appDataAdapter.notifyDataSetChanged()
+        }
     }
 
     private fun filterList(text: String) {
@@ -243,4 +256,5 @@ class NavInstalled : Fragment(), SearchView.OnQueryTextListener {
         usageStatsPermissionDialog?.dismiss()
     }
 }
+
 

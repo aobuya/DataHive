@@ -28,6 +28,7 @@ import dev.jahidhasanco.networkusage.*
 import android.Manifest
 import android.content.ContentValues.TAG
 import android.util.Log
+import android.widget.Button
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
@@ -40,8 +41,10 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -190,7 +193,7 @@ class NavDashboard : Fragment() {
             }
         } else {
             if (checkUsagePermission()) {
-                Toast.makeText(requireContext(), "Permissions granted", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(requireContext(), "Permissions granted", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -247,46 +250,12 @@ class NavDashboard : Fragment() {
                     Toast.makeText(requireContext(), "Permissions granted", Toast.LENGTH_SHORT).show()
                 }
             } else {
-                // Handle denied permission case
+                Toast.makeText(requireContext(), "Permissions not granted", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    // ...
+
 }
 
-    /*private fun setupPermissions() {
-        val permission = ContextCompat.checkSelfPermission(
-            requireContext(), Manifest.permission.READ_PHONE_STATE
-        )
 
-        if (permission != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(
-                requireActivity(), arrayOf(Manifest.permission.READ_PHONE_STATE), 34
-            )
-        }
-
-        if (checkUsagePermission() != true) {
-            Toast.makeText(requireContext(), "Permissions granted", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-
-
-
-    private fun checkUsagePermission(): Any {
-        val appOps = context?.getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
-        val mode = context?.let {
-            appOps.checkOpNoThrow(
-                "android:get_usage_stats", Process.myUid(), it.packageName
-            )
-        }
-        val granted = mode == AppOpsManager.MODE_ALLOWED
-        if (!granted) {
-            val intent = Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS)
-            startActivity(intent)
-            return false
-        }
-        return true
-
-    }}*/
