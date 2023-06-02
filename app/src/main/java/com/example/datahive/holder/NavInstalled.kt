@@ -48,7 +48,7 @@ class NavInstalled : Fragment(), SearchView.OnQueryTextListener {
     private lateinit var appDataAdapter: AppDataAdapter
 
     private lateinit var dataHiveAuth: FirebaseAuth
-    private lateinit var usageStatsPermissionDialog: AlertDialog
+    private var usageStatsPermissionDialog: AlertDialog? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -112,16 +112,16 @@ class NavInstalled : Fragment(), SearchView.OnQueryTextListener {
         val btnGrantPermission = dialogView.findViewById<Button>(R.id.btnGrantPermission)
         btnGrantPermission.setOnClickListener {
             requestUsageStatsPermission()
-            usageStatsPermissionDialog.dismiss()
+            usageStatsPermissionDialog?.dismiss()
         }
 
         val btnCancel = dialogView.findViewById<Button>(R.id.btnCancel)
         btnCancel.setOnClickListener {
-            usageStatsPermissionDialog.dismiss()
+            usageStatsPermissionDialog?.dismiss()
             // Handle permission denial (e.g., show error message)
         }
 
-        usageStatsPermissionDialog.show()
+        usageStatsPermissionDialog?.show()
     }
 
     private fun hasUsageStatsPermission(): Boolean {
@@ -198,7 +198,6 @@ class NavInstalled : Fragment(), SearchView.OnQueryTextListener {
         appDataRecyclerView.adapter = appDataAdapter
     }
 
-
     private fun filterList(text: String) {
         val filteredList = ArrayList<AppDetails>()
         for (app in appDataUsageList) {
@@ -241,9 +240,7 @@ class NavInstalled : Fragment(), SearchView.OnQueryTextListener {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        if (usageStatsPermissionDialog.isShowing) {
-            usageStatsPermissionDialog.dismiss()
-        }
+        usageStatsPermissionDialog?.dismiss()
     }
 }
 

@@ -102,6 +102,9 @@ class NavSystem : Fragment(), SearchView.OnQueryTextListener {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        if (::usageStatsPermissionDialog.isInitialized && usageStatsPermissionDialog.isShowing) {
+            usageStatsPermissionDialog.dismiss()
+        }
     }
 
     private fun showFilterSheet() {
