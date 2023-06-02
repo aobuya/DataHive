@@ -28,6 +28,7 @@ import dev.jahidhasanco.networkusage.*
 import android.Manifest
 import android.content.ContentValues.TAG
 import android.util.Log
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -55,6 +56,7 @@ class NavDashboard : Fragment() {
     private var usagesDataList = ArrayList<UsagesData>()
 
     private lateinit var dataHiveAuth: FirebaseAuth
+    private val PERMISSION_REQUEST_CODE = 34
 
 
     @SuppressLint("HardwareIds")
@@ -177,6 +179,88 @@ class NavDashboard : Fragment() {
         )
 
         if (permission != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(
+                    requireActivity(),
+                    Manifest.permission.READ_PHONE_STATE
+                )
+            ) {
+                showPermissionExplanationDialog()
+            } else {
+                requestPermission()
+            }
+        } else {
+            if (checkUsagePermission()) {
+                Toast.makeText(requireContext(), "Permissions granted", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun showPermissionExplanationDialog() {
+        val dialog = AlertDialog.Builder(requireContext())
+            .setTitle("Permission Required")
+            .setMessage("The app requires access to read phone state for tracking data usages. Please grant the permission.")
+            .setPositiveButton("Grant Permission") { _, _ ->
+                requestPermission()
+            }
+            .setNegativeButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .create()
+
+        dialog.show()
+    }
+
+    private fun requestPermission() {
+        ActivityCompat.requestPermissions(
+            requireActivity(),
+            arrayOf(Manifest.permission.READ_PHONE_STATE),
+            PERMISSION_REQUEST_CODE
+        )
+    }
+
+    private fun checkUsagePermission(): Boolean {
+        val appOps = context?.getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
+        val mode = context?.let {
+            appOps.checkOpNoThrow(
+                AppOpsManager.OPSTR_GET_USAGE_STATS,
+                Process.myUid(),
+                it.packageName
+            )
+        }
+        val granted = mode == AppOpsManager.MODE_ALLOWED
+        if (!granted) {
+            val intent = Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS)
+            startActivity(intent)
+            return false
+        }
+        return true
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        if (requestCode == PERMISSION_REQUEST_CODE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (checkUsagePermission()) {
+                    Toast.makeText(requireContext(), "Permissions granted", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                // Handle denied permission case
+            }
+        }
+    }
+
+    // ...
+}
+
+    /*private fun setupPermissions() {
+        val permission = ContextCompat.checkSelfPermission(
+            requireContext(), Manifest.permission.READ_PHONE_STATE
+        )
+
+        if (permission != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(
                 requireActivity(), arrayOf(Manifest.permission.READ_PHONE_STATE), 34
             )
@@ -205,5 +289,4 @@ class NavDashboard : Fragment() {
         }
         return true
 
-    }
-}
+    }}*/

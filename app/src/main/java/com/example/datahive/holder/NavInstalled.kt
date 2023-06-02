@@ -1,6 +1,7 @@
 package com.example.datahive.holder
 
 import android.app.AppOpsManager
+import android.app.usage.NetworkStats
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,8 +18,10 @@ import android.content.pm.PackageManager
 import android.net.ConnectivityManager
 import android.provider.Settings
 import android.view.Menu
+import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -43,17 +46,14 @@ class NavInstalled : Fragment(), SearchView.OnQueryTextListener {
     private var appDataUsageList = ArrayList<AppDetails>()
     private var todayAppDataUsageList = ArrayList<AppDetails>()
     private lateinit var appDataAdapter: AppDataAdapter
-    private lateinit var progressBar: ProgressBar
 
     private lateinit var dataHiveAuth: FirebaseAuth
-
+    private lateinit var usageStatsPermissionDialog: AlertDialog
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-
         _binding = FragmentAppUsageBinding.inflate(inflater, container, false)
-
 
         //Fab
         binding.fab.setOnClickListener {
@@ -77,9 +77,15 @@ class NavInstalled : Fragment(), SearchView.OnQueryTextListener {
                     findNavController().navigate(R.id.action_appUsageFragment_to_profileFragment)
                     true
                 }
-
                 else -> false
             }
+        }
+
+        // Display permission explanation dialog if permission is not granted
+        if (!hasUsageStatsPermission()) {
+            showUsageStatsPermissionDialog()
+        } else {
+            displayAppDataUsage()
         }
 
         return binding.root
@@ -90,33 +96,37 @@ class NavInstalled : Fragment(), SearchView.OnQueryTextListener {
         filterSheet.show(childFragmentManager, "BottomSheetDialog")
     }
 
-    override fun onResume() {
-        super.onResume()
-        if (hasUsageStatsPermission()) {
-            displayAppDataUsage()
-        } else {
+    private fun showUsageStatsPermissionDialog() {
+        val dialogView = LayoutInflater.from(requireContext())
+            .inflate(R.layout.dialog_permission_explanation, null)
+
+        val builder = AlertDialog.Builder(requireContext())
+            .setView(dialogView)
+            .setCancelable(false)
+        usageStatsPermissionDialog = builder.create()
+
+        val btnGrantPermission = dialogView.findViewById<Button>(R.id.btnGrantPermission)
+        btnGrantPermission.setOnClickListener {
             requestUsageStatsPermission()
+            usageStatsPermissionDialog.dismiss()
         }
-    }/*override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        this.menu = menu
-        val inflater: MenuInflater = requireActivity().menuInflater
-        inflater.inflate(R.menu.app_usage_menu, menu)
-        val searchItem = menu.findItem(R.id.app_usage_search_view)
-        val searchView = searchItem.actionView as SearchView
-        searchView.setOnQueryTextListener(this)
-    }*/
 
+        val btnCancel = dialogView.findViewById<Button>(R.id.btnCancel)
+        btnCancel.setOnClickListener {
+            usageStatsPermissionDialog.dismiss()
+            // Handle permission denial (e.g., show error message)
+        }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+        usageStatsPermissionDialog.show()
     }
 
     private fun hasUsageStatsPermission(): Boolean {
         val appOpsManager =
             requireContext().getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
         val mode = appOpsManager.checkOpNoThrow(
-            "android:get_usage_stats", android.os.Process.myUid(), requireContext().packageName
+            AppOpsManager.OPSTR_GET_USAGE_STATS,
+            android.os.Process.myUid(),
+            requireContext().packageName
         )
         return mode == AppOpsManager.MODE_ALLOWED
     }
@@ -126,7 +136,6 @@ class NavInstalled : Fragment(), SearchView.OnQueryTextListener {
         startActivity(intent)
     }
 
-
     private fun displayAppDataUsage() {
         val networkStatsManager =
             requireContext().getSystemService(Context.NETWORK_STATS_SERVICE) as NetworkStatsManager
@@ -134,52 +143,47 @@ class NavInstalled : Fragment(), SearchView.OnQueryTextListener {
         val installedApps = packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
         val progress = binding.progressBar
 
-        val networkUsage =
-            NetworkUsageManager(requireContext(), Util.getSubscriberId(requireContext()))
+        val networkUsage = NetworkUsageManager(requireContext(), Util.getSubscriberId(requireContext()))
         progress.visibility = View.VISIBLE
 
         for (appInfo in installedApps) {
             // Check if the app is not a system app
             if (appInfo.flags and ApplicationInfo.FLAG_SYSTEM == 0) {
-            val uid = appInfo.uid
-            val appName = appInfo.loadLabel(packageManager).toString()
-            val appIcon = appInfo.loadIcon(packageManager)
+                val uid = appInfo.uid
+                val appName = appInfo.loadLabel(packageManager).toString()
+                val appIcon = appInfo.loadIcon(packageManager)
 
-            try {
-                val networkStats = networkStatsManager.queryDetailsForUid(
-                    ConnectivityManager.TYPE_WIFI, null, 0, System.currentTimeMillis(), uid
-                )
+                try {
+                    val networkStats = networkStatsManager.queryDetailsForUid(
+                        ConnectivityManager.TYPE_WIFI, null, 0, System.currentTimeMillis(), uid
+                    )
 
-                var totalDataUsage = 0L
-                while (networkStats.hasNextBucket()) {
-                    val bucket = android.app.usage.NetworkStats.Bucket()
-                    networkStats.getNextBucket(bucket)
-                    totalDataUsage += bucket.rxBytes + bucket.txBytes
+                    var totalDataUsage = 0L
+                    val bucket = NetworkStats.Bucket()
+                    while (networkStats.hasNextBucket()) {
+                        networkStats.getNextBucket(bucket)
+                        totalDataUsage += bucket.rxBytes + bucket.txBytes
+                    }
+
+                    val appDetails = AppDetails(appName, appIcon, totalDataUsage)
+                    appDataUsageList.add(appDetails)
+
+                    val todayDate = getCurrentDateTime()
+                    val todayDateInString = todayDate.toString("dd/M/yyyy")
+
+                    val todayAppDetails = AppDetails(
+                        appName, totalDataUsage = totalDataUsage, date = todayDateInString
+                    )
+                    todayAppDataUsageList.add(todayAppDetails)
+
+                } catch (e: Exception) {
+                    e.printStackTrace()
                 }
-
-
-                val appDetails = AppDetails(appName, appIcon, totalDataUsage)
-                appDataUsageList.add(appDetails)
-
-                val todayDate = getCurrentDateTime()
-                val todayDateInString = todayDate.toString("dd/M/yyyy")
-
-                val todayAppDetails = AppDetails(
-                    appName, totalDataUsage = totalDataUsage, date = todayDateInString
-                )
-                todayAppDataUsageList.add(todayAppDetails)
-
-
-
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
             }
         }
 
         // Sort the appDataUsageList by total data usage from largest to smallest
         appDataUsageList = ArrayList(appDataUsageList.sortedByDescending { it.totalDataUsage })
-
 
         progress.visibility = View.GONE
 
@@ -188,9 +192,8 @@ class NavInstalled : Fragment(), SearchView.OnQueryTextListener {
         appDataRecyclerView.layoutManager = layoutManager
         appDataAdapter = AppDataAdapter(appDataUsageList)
         appDataRecyclerView.adapter = appDataAdapter
-
-
     }
+
 
     private fun filterList(text: String) {
         val filteredList = ArrayList<AppDetails>()
@@ -208,8 +211,6 @@ class NavInstalled : Fragment(), SearchView.OnQueryTextListener {
         }
     }
 
-
-
     fun Date.toString(format: String, locale: Locale = Locale.getDefault()): String {
         val formatter = SimpleDateFormat(format, locale)
         return formatter.format(this)
@@ -223,7 +224,6 @@ class NavInstalled : Fragment(), SearchView.OnQueryTextListener {
         if (query != null) {
             filterList(query)
         }
-
         return true
     }
 
@@ -234,4 +234,11 @@ class NavInstalled : Fragment(), SearchView.OnQueryTextListener {
         return true
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+        if (usageStatsPermissionDialog.isShowing) {
+            usageStatsPermissionDialog.dismiss()
+        }
+    }
 }
