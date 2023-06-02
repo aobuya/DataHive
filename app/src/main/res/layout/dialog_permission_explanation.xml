@@ -1,36 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="8dp">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:gravity="center"
         android:text="Usage Stats Permission"
         android:textSize="18sp"
-        android:gravity="center"
-        android:layout_margin="8dp"
         android:textStyle="bold" />
 
     <TextView
+        android:id="@+id/disclaimer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:text="This app requires access to your usage statistics to provide accurate data tracking. Granting this permission will allow the app to monitor your device's usage." />
+        android:text="@string/accept_toc"/>
 
-    <Button
-        android:id="@+id/btnGrantPermission"
-        android:layout_margin="8dp"
+    <CheckBox
+        android:id="@+id/checkbox_accept"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="@string/accept" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnGrantPermission"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
         android:text="Grant Permission" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnCancel"
-        android:layout_margin="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="8dp"
         android:text="Cancel" />
 
 </LinearLayout>

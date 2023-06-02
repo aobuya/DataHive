@@ -80,5 +80,8 @@
     <string name="toc_text_toc">Terms Of Service</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="toc_reads">Please refer to our Terms and Policies</string>
+    <string name="accept">Accept Terms and Conditions</string>
+    <string name="accept_toc">Please take the time to read through these Policies, Terms and Conditions carefully. If you have any questions or concerns, feel free to contact our support team. By clicking "Accept" below, you signify that you have read, understood, and agreed to be bound by these Terms and Conditions.</string>
+
 
 </resources>
