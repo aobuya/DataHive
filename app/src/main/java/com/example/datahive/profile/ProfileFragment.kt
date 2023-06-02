@@ -9,13 +9,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.example.datahive.BottomSheetFragment
-import com.example.datahive.R
+
 import com.example.datahive.databinding.FragmentProfileBinding
 import com.example.datahive.login.LogInActivity
 import com.example.datahive.login.RegisterActivity
+import com.example.datahive.termsofservice.PrivacyPolicy
+import com.example.datahive.termsofservice.TOC
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.google.firebase.auth.FirebaseAuth
+
+
 
 class ProfileFragment : Fragment() {
 
@@ -26,6 +30,8 @@ class ProfileFragment : Fragment() {
     private lateinit var dataHiveUserViewModel: UserViewModel
 
 
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -33,8 +39,12 @@ class ProfileFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
 
+
         dataHiveAuth = FirebaseAuth.getInstance()
         dataHiveUserViewModel = ViewModelProvider(this)[UserViewModel::class.java]
+
+
+
 
         dataHiveUserViewModel.readAllData.observe(viewLifecycleOwner) { user_table ->
             user_table.forEach {
@@ -102,6 +112,18 @@ class ProfileFragment : Fragment() {
             if (intent.resolveActivity(requireContext().packageManager) != null) {
                 startActivity(intent)
             }
+        }
+        //TOS
+        binding.cardStandards.setOnClickListener{
+            val intent = Intent(requireContext(), TOC::class.java)
+            startActivity(intent)
+
+        }
+        //POC
+        binding.cardStandards2.setOnClickListener{
+            val intent = Intent(requireContext(), PrivacyPolicy::class.java)
+            startActivity(intent)
+
         }
 
         //toggle bottom sheet

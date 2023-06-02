@@ -50,7 +50,7 @@
 
     <!--Network Library-->
     <string name="full_month_data_usages">This Month</string>
-    <string name="today_data_usage">DATA USAGE TODAY</string>
+    <string name="today_data_usage">Data Usage Today</string>
     <string name="wifi">WiFI</string>
     <string name="mobile">Mobile</string>
     <string name="last_30_days">Last 30 Days</string>
@@ -76,5 +76,8 @@
     <!--Profile page-->
     <string name="user">username</string>
     <string name="last_7_days">LAST 7 DAYS</string>
+    <string name="toc_text">Community Standards and legal Policies</string>
+    <string name="toc_text_toc">Terms Of Service</string>
+    <string name="privacy_policy">Privacy Policy</string>
 
 </resources>
