@@ -21,7 +21,7 @@ import com.google.firebase.auth.FirebaseAuth
 
 
 
-class ProfileFragment : Fragment() {
+class ProfileFragment : Fragment(), ProfileModalBottomSheet.WriteToRoomDBListener {
 
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
@@ -43,13 +43,11 @@ class ProfileFragment : Fragment() {
         dataHiveAuth = FirebaseAuth.getInstance()
         dataHiveUserViewModel = ViewModelProvider(this)[UserViewModel::class.java]
 
-
-
-
-        dataHiveUserViewModel.readAllData.observe(viewLifecycleOwner) { user_table ->
+        dataHiveUserViewModel.readAllData.observe(viewLifecycleOwner) {user_table ->
             user_table.forEach {
                 binding.profileTopAppBar.title = it.username
             }
+
         }
 
         val isUserAnonymous = dataHiveAuth.currentUser!!.isAnonymous
@@ -130,16 +128,17 @@ class ProfileFragment : Fragment() {
         binding.editProfileFab.setOnClickListener {
             showProfileModalBottomSheet()
         }
+
         return binding.root
     }
 
     private fun showProfileModalBottomSheet() {
         val modalBottomSheet = ProfileModalBottomSheet()
+        modalBottomSheet.setDataWriteListener(this)
         modalBottomSheet.show(requireActivity().supportFragmentManager, ProfileModalBottomSheet.TAG)
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onDataWritten(data: User) {
         dataHiveUserViewModel.readAllData.observe(viewLifecycleOwner) { user_table ->
             user_table.forEach {
                 binding.profileTopAppBar.title = it.username

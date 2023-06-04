@@ -63,9 +63,6 @@ class NavSystem : Fragment(), SearchView.OnQueryTextListener {
     ): View? {
         _binding = FragmentNavSystemBinding.inflate(inflater, container, false)
 
-        // Fab
-
-
         dataHiveAuth = FirebaseAuth.getInstance()
 
         // Search view
@@ -87,65 +84,10 @@ class NavSystem : Fragment(), SearchView.OnQueryTextListener {
             }
         }
 
+        loadAppDataUsage()
+
         return binding.root
     }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        // Display permission explanation dialog if permission is not granted
-        if (!hasUsageStatsPermission()) {
-            showUsageStatsPermissionDialog()
-        } else {
-            loadAppDataUsage()
-        }
-    }
-
-    private fun showFilterSheet() {
-        val filterSheet = FilterBottomSheet()
-        filterSheet.show(childFragmentManager, "BottomSheetDialog")
-    }
-
-    private fun showUsageStatsPermissionDialog() {
-        val dialogView = LayoutInflater.from(requireContext())
-            .inflate(R.layout.dialog_permission_explanation, null)
-
-        val builder = AlertDialog.Builder(requireContext())
-            .setView(dialogView)
-            .setCancelable(false)
-        usageStatsPermissionDialog = builder.create()
-
-        val btnGrantPermission = dialogView.findViewById<Button>(R.id.btnGrantPermission)
-        btnGrantPermission.setOnClickListener {
-            requestUsageStatsPermission()
-            usageStatsPermissionDialog?.dismiss()
-        }
-
-        val btnCancel = dialogView.findViewById<Button>(R.id.btnCancel)
-        btnCancel.setOnClickListener {
-            usageStatsPermissionDialog?.dismiss()
-            // Handle permission denial (e.g., show error message)
-        }
-
-        usageStatsPermissionDialog?.show()
-    }
-
-    private fun hasUsageStatsPermission(): Boolean {
-        val appOpsManager =
-            requireContext().getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
-        val mode = appOpsManager.checkOpNoThrow(
-            AppOpsManager.OPSTR_GET_USAGE_STATS,
-            android.os.Process.myUid(),
-            requireContext().packageName
-        )
-        return mode == AppOpsManager.MODE_ALLOWED
-    }
-
-    private fun requestUsageStatsPermission() {
-        val intent = Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS)
-        startActivity(intent)
-    }
-
     private fun loadAppDataUsage() {
         val progress = binding.progressBar
         progress.visibility = View.VISIBLE
@@ -232,16 +174,6 @@ class NavSystem : Fragment(), SearchView.OnQueryTextListener {
             //Toast.makeText(requireContext(), "App not found", Toast.LENGTH_SHORT).show()
         }
     }
-
-    fun Date.toString(format: String, locale: Locale = Locale.getDefault()): String {
-        val formatter = SimpleDateFormat(format, locale)
-        return formatter.format(this)
-    }
-
-    fun getCurrentDateTime(): Date {
-        return Calendar.getInstance().time
-    }
-
     override fun onQueryTextSubmit(query: String?): Boolean {
         if (query != null) {
             filterList(query)
@@ -259,7 +191,6 @@ class NavSystem : Fragment(), SearchView.OnQueryTextListener {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        usageStatsPermissionDialog?.dismiss()
     }
 }
 

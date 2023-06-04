@@ -50,10 +50,10 @@
         android:layout_width="match_parent"
         android:layout_height="6dp"/>
     <TextView
-        android:id="@+id/pass_redirect"
+        android:id="@+id/register_redirect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/red_tag"
+        android:text="@string/create_account"
         android:textSize="17sp"
         android:layout_marginStart="25dp"
         />

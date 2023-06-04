@@ -66,9 +66,9 @@ class LobbyFragment : Fragment() {
                 finish()
             }
         }
-        binding.passRedirect.setOnClickListener {
+        binding.registerRedirect.setOnClickListener {
             requireActivity().run {
-                startActivity(Intent(this, LogInActivity::class.java))
+                startActivity(Intent(this, RegisterActivity::class.java))
                 finish()
             }
         }
