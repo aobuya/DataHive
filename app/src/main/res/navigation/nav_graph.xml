@@ -9,44 +9,18 @@
         android:id="@+id/dashboardFragment"
         android:name="com.example.datahive.holder.NavDashboard"
         android:label="Dashboard"
-        tools:layout="@layout/fragment_nav_dashboard" >
-        <action
-            android:id="@+id/action_dashboardFragment_to_profileFragment"
-            app:destination="@id/profileFragment"
-            app:popUpTo="@id/dashboardFragment"
-            app:popUpToInclusive="true"
-            app:popUpToSaveState="true" />
-    </fragment>
+        tools:layout="@layout/fragment_nav_dashboard" />
 
     <fragment
         android:id="@+id/appUsageFragment"
         android:name="com.example.datahive.holder.NavInstalled"
         android:label="App Usage"
-        tools:layout="@layout/fragment_nav_system" >
-        <action
-            android:id="@+id/action_appUsageFragment_to_profileFragment"
-            app:destination="@id/profileFragment"
-            app:popUpTo="@id/appUsageFragment"
-            app:popUpToInclusive="true"
-            app:popUpToSaveState="true" />
-    </fragment>
+        tools:layout="@layout/fragment_nav_system" />
 
     <fragment
         android:id="@+id/systemFragment"
         android:name="com.example.datahive.holder.NavSystem"
         android:label="Profile"
-        tools:layout="@layout/fragment_nav_system" >
-        <action
-            android:id="@+id/action_systemFragment_to_profileFragment"
-            app:destination="@id/profileFragment"
-            app:popUpTo="@id/systemFragment"
-            app:popUpToInclusive="true"
-            app:popUpToSaveState="true" />
-    </fragment>
-    <fragment
-        android:id="@+id/profileFragment"
-        android:name="com.example.datahive.profile.ProfileFragment"
-        android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_nav_system" />
 
 </navigation>

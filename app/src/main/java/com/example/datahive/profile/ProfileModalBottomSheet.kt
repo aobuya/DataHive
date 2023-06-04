@@ -72,7 +72,7 @@ class ProfileModalBottomSheet : BottomSheetDialogFragment() {
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
 
-        insertToRoomDB(username = "${binding.profileUsername.text}")
+        insertToRoomDB(binding.profileUsername.text?.trim().toString().trim())
 
     }
 }

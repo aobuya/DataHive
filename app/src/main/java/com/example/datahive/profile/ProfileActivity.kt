@@ -2,15 +2,16 @@ package com.example.datahive.profile
 
 import android.content.Intent
 import android.net.Uri
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.view.WindowCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.example.datahive.BottomSheetFragment
-
-import com.example.datahive.databinding.FragmentProfileBinding
+import com.example.datahive.R
+import com.example.datahive.databinding.ActivityProfileBinding
 import com.example.datahive.login.LogInActivity
 import com.example.datahive.login.RegisterActivity
 import com.example.datahive.termsofservice.PrivacyPolicy
@@ -19,31 +20,22 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.google.firebase.auth.FirebaseAuth
 
+class ProfileActivity : AppCompatActivity(), ProfileModalBottomSheet.WriteToRoomDBListener {
 
-
-class ProfileFragment : Fragment(), ProfileModalBottomSheet.WriteToRoomDBListener {
-
-    private var _binding: FragmentProfileBinding? = null
-    private val binding get() = _binding!!
-
+    private lateinit var binding: ActivityProfileBinding
     private lateinit var dataHiveAuth: FirebaseAuth
     private lateinit var dataHiveUserViewModel: UserViewModel
 
-
-
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        _binding = FragmentProfileBinding.inflate(inflater, container, false)
-
-
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        binding = ActivityProfileBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
         dataHiveAuth = FirebaseAuth.getInstance()
         dataHiveUserViewModel = ViewModelProvider(this)[UserViewModel::class.java]
 
-        dataHiveUserViewModel.readAllData.observe(viewLifecycleOwner) {user_table ->
+        dataHiveUserViewModel.readAllData.observe(this) {user_table ->
             user_table.forEach {
                 binding.profileTopAppBar.title = it.username
             }
@@ -62,31 +54,24 @@ class ProfileFragment : Fragment(), ProfileModalBottomSheet.WriteToRoomDBListene
             binding.signUpRedirect.visibility = View.GONE
         }
         //Load Ads
-        MobileAds.initialize(requireContext())
+        MobileAds.initialize(this)
         val adView = binding.adView
         val adRequest = AdRequest.Builder().build()
         adView.loadAd(adRequest)
 
         binding.signOutButton.setOnClickListener {
             dataHiveAuth.signOut()
-
-            requireActivity().run {
                 startActivity(Intent(this, LogInActivity::class.java))
                 finishAffinity()
-            }
-
         }
 
         binding.signUpRedirect.setOnClickListener {
-            requireActivity().run {
                 startActivity(Intent(this, RegisterActivity::class.java))
-                finishAffinity()
-            }
         }
         //open Bottomsheet for server configuration
         binding.cardConfig.setOnClickListener {
             val bottomSheetFragment = BottomSheetFragment()
-            bottomSheetFragment.show(childFragmentManager, "BottomSheetDialog")
+            bottomSheetFragment.show(this.supportFragmentManager, "BottomSheetDialog")
         }
         //open the Gmail and send a report
         binding.cardReport.setOnClickListener {
@@ -95,7 +80,7 @@ class ProfileFragment : Fragment(), ProfileModalBottomSheet.WriteToRoomDBListene
                 putExtra(Intent.EXTRA_EMAIL, arrayOf("datahive07@gmail.com"))
                 putExtra(Intent.EXTRA_SUBJECT, "DataHive - Report")
             }
-            if (intent.resolveActivity(requireContext().packageManager) != null) {
+            if (intent.resolveActivity(this.packageManager) != null) {
                 startActivity(intent)
             }
 
@@ -107,19 +92,19 @@ class ProfileFragment : Fragment(), ProfileModalBottomSheet.WriteToRoomDBListene
                 putExtra(Intent.EXTRA_EMAIL, arrayOf("datahive07@gmail.com"))
                 putExtra(Intent.EXTRA_SUBJECT, "DataHive - Support")
             }
-            if (intent.resolveActivity(requireContext().packageManager) != null) {
+            if (intent.resolveActivity(this.packageManager) != null) {
                 startActivity(intent)
             }
         }
         //TOS
         binding.cardStandards.setOnClickListener{
-            val intent = Intent(requireContext(), TOC::class.java)
+            val intent = Intent(this, TOC::class.java)
             startActivity(intent)
 
         }
         //POC
         binding.cardStandards2.setOnClickListener{
-            val intent = Intent(requireContext(), PrivacyPolicy::class.java)
+            val intent = Intent(this, PrivacyPolicy::class.java)
             startActivity(intent)
 
         }
@@ -129,24 +114,18 @@ class ProfileFragment : Fragment(), ProfileModalBottomSheet.WriteToRoomDBListene
             showProfileModalBottomSheet()
         }
 
-        return binding.root
     }
-
     private fun showProfileModalBottomSheet() {
         val modalBottomSheet = ProfileModalBottomSheet()
         modalBottomSheet.setDataWriteListener(this)
-        modalBottomSheet.show(requireActivity().supportFragmentManager, ProfileModalBottomSheet.TAG)
+        modalBottomSheet.show(this.supportFragmentManager, ProfileModalBottomSheet.TAG)
     }
 
     override fun onDataWritten(data: User) {
-        dataHiveUserViewModel.readAllData.observe(viewLifecycleOwner) { user_table ->
+        dataHiveUserViewModel.readAllData.observe(this) { user_table ->
             user_table.forEach {
                 binding.profileTopAppBar.title = it.username
             }
         }
-    }
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

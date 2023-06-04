@@ -34,6 +34,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.datahive.app_usage.AppDetails
+import com.example.datahive.profile.ProfileActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.auth.User
@@ -85,7 +86,9 @@ class NavDashboard : Fragment() {
         binding.dashboardTopAppBar.setOnMenuItemClickListener { menuItem ->
             when(menuItem.itemId) {
                 R.id.profile -> {
-                    findNavController().navigate(R.id.action_dashboardFragment_to_profileFragment)
+                    requireActivity().run {
+                        startActivity(Intent(this, ProfileActivity::class.java))
+                    }
                     true
                 }else -> false
             }
