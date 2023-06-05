@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.example.datahive.SplashFragment"
+        android:name="com.datahiveorg.datahive.SplashFragment"
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash" >
         <action
@@ -23,7 +23,7 @@
     </fragment>
     <fragment
         android:id="@+id/viewPager"
-        android:name="com.example.datahive.introslider.ViewPager"
+        android:name="com.datahiveorg.datahive.introslider.ViewPager"
         android:label="fragment_view_pager"
         tools:layout="@layout/fragment_view_pager" >
         <action
@@ -34,7 +34,7 @@
     </fragment>
     <fragment
         android:id="@+id/LobbyFragment"
-        android:name="com.example.datahive.introslider.LobbyFragment"
+        android:name="com.datahiveorg.datahive.introslider.LobbyFragment"
         android:label="fragment_Lobby"
         tools:layout="@layout/fragment_lobby" />
 </navigation>

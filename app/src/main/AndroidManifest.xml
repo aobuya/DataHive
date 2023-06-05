@@ -27,9 +27,6 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
-            android:name=".profile.ProfileActivity"
-            android:exported="false" />
-        <activity
             android:name=".termsofservice.PrivacyPolicy"
             android:exported="false" />
         <activity
