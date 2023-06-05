@@ -42,6 +42,9 @@ android {
         languageVersion.set(JavaLanguageVersion.of(17))
     }
 }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
     buildFeatures {
         viewBinding = true
     }

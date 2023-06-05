@@ -20,6 +20,8 @@ import com.datahiveorg.datahive.app_usage.AppDataAdapter
 import com.datahiveorg.datahive.app_usage.AppDetails
 import com.datahiveorg.datahive.databinding.FragmentNavSystemBinding
 import android.R
+import android.content.Intent
+import com.datahiveorg.datahive.profile.ProfileActivity
 import com.google.android.gms.ads.MobileAds
 import com.google.firebase.auth.FirebaseAuth
 import java.util.*
@@ -63,7 +65,10 @@ class NavInstalled : Fragment(), SearchView.OnQueryTextListener {
         binding.profileTopAppBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 com.datahiveorg.datahive.R.id.profile -> {
-                    findNavController().navigate(com.datahiveorg.datahive.R.id.action_systemFragment_to_profileFragment)
+                    requireActivity().run {
+                        startActivity(Intent(this, ProfileActivity::class.java))
+                        finishAffinity()
+                    }
                     true
                 }
                 else -> false

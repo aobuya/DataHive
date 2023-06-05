@@ -2,6 +2,7 @@ package com.datahiveorg.datahive.holder
 
 import android.app.usage.NetworkStatsManager
 import android.content.Context
+import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.net.ConnectivityManager
@@ -30,6 +31,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.Locale
 import com.datahiveorg.datahive.R
+import com.datahiveorg.datahive.login.RegisterActivity
+import com.datahiveorg.datahive.profile.ProfileActivity
 
 
 class NavSystem : Fragment(), SearchView.OnQueryTextListener {
@@ -63,7 +66,10 @@ class NavSystem : Fragment(), SearchView.OnQueryTextListener {
         binding.profileTopAppBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.profile -> {
-                    findNavController().navigate(R.id.action_systemFragment_to_profileFragment)
+                    requireActivity().run {
+                        startActivity(Intent(this, ProfileActivity::class.java))
+                        finishAffinity()
+                    }
                     true
                 }
                 else -> false

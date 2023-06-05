@@ -30,6 +30,7 @@ import com.datahiveorg.datahive.databinding.FragmentNavDashboardBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.android.gms.ads.MobileAds
 import android.R
+import com.datahiveorg.datahive.profile.ProfileActivity
 
 
 class NavDashboard : Fragment() {
@@ -66,7 +67,10 @@ class NavDashboard : Fragment() {
         binding.dashboardTopAppBar.setOnMenuItemClickListener { menuItem ->
             when(menuItem.itemId) {
                 com.datahiveorg.datahive.R.id.profile -> {
-                    findNavController().navigate(com.datahiveorg.datahive.R.id.action_systemFragment_to_profileFragment)
+                    requireActivity().run {
+                        startActivity(Intent(this, ProfileActivity::class.java))
+                        finishAffinity()
+                    }
                     true
                 }else -> false
             }
