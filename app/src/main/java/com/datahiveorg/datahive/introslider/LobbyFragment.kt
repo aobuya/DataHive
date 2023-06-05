@@ -108,8 +108,8 @@ class LobbyFragment : Fragment() {
         val tocDisclaimer = dialogView.findViewById<TextView>(R.id.disclaimer)
         val tocDisclaimerText = getString(R.string.accept_toc)
 
-        val clickableWords = mapOf("Policies" to "https://docs.google.com/document/d/e/2PACX-1vRI8RxsVvMPgSwZNjOgLP-SqX8GSOEVns4tqN4YQjeWsHzPuU48TKwihhncudN8VZ3TDHlqypUlFpCM/pub", 
-            "Terms and Conditions" to "https://docs.google.com/document/d/e/2PACX-1vSlKXV0YEAjKjj41HJBGbZEgwNgHWosibhwRjOtzvFff6a3caJ1M0EYTtdxUTUCk42_P0eOSwf_LUHX/pub?embedded=true")
+        val clickableWords = mapOf("Policies" to "https://datahive-b0d2a.web.app/#policies",
+            "Terms and Conditions" to "https://datahive-b0d2a.web.app/#toc")
 
         val spannableString = SpannableString(tocDisclaimerText)
 
