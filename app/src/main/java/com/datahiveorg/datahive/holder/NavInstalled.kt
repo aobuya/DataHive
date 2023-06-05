@@ -33,13 +33,13 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 
-
 class NavInstalled : Fragment(), SearchView.OnQueryTextListener {
 
     private var _binding: FragmentNavSystemBinding? = null
     private val binding get() = _binding!!
 
     private var appDataUsageList = ArrayList<AppDetails>()
+
     //private var todayAppDataUsageList = ArrayList<AppDetails>()
     private lateinit var appDataAdapter: AppDataAdapter
 
@@ -67,10 +67,11 @@ class NavInstalled : Fragment(), SearchView.OnQueryTextListener {
                 com.datahiveorg.datahive.R.id.profile -> {
                     requireActivity().run {
                         startActivity(Intent(this, ProfileActivity::class.java))
-                        finishAffinity()
+
                     }
                     true
                 }
+
                 else -> false
             }
         }
@@ -100,46 +101,48 @@ class NavInstalled : Fragment(), SearchView.OnQueryTextListener {
         }
     }
 
-    private suspend fun getInstalledApplications(): List<ApplicationInfo> = withContext(Dispatchers.IO) {
-        val packageManager = requireContext().packageManager
-        packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
-    }
-
-    private suspend fun getAppDataUsage(installedApps: List<ApplicationInfo>): ArrayList<AppDetails> = withContext(Dispatchers.IO) {
-        val networkStatsManager =
-            requireContext().getSystemService(Context.NETWORK_STATS_SERVICE) as NetworkStatsManager
-        val packageManager = requireContext().packageManager
-        val appDataList = ArrayList<AppDetails>()
-
-        for (appInfo in installedApps) {
-            // Check if the app is an installed app
-            if (appInfo.flags and ApplicationInfo.FLAG_SYSTEM == 0) {
-                val uid = appInfo.uid
-                val appName = appInfo.loadLabel(packageManager).toString()
-                val appIcon = appInfo.loadIcon(packageManager)
-                try {
-                    val networkStats = networkStatsManager.queryDetailsForUid(
-                        ConnectivityManager.TYPE_WIFI, null, 0, System.currentTimeMillis(), uid
-                    )
-
-                    var totalDataUsage = 0L
-                    while (networkStats.hasNextBucket()) {
-                        val bucket = android.app.usage.NetworkStats.Bucket()
-                        networkStats.getNextBucket(bucket)
-                        totalDataUsage += bucket.rxBytes + bucket.txBytes
-                    }
-
-                    val appDetails = AppDetails(appName, appIcon, totalDataUsage)
-                    appDataList.add(appDetails)
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            }
+    private suspend fun getInstalledApplications(): List<ApplicationInfo> =
+        withContext(Dispatchers.IO) {
+            val packageManager = requireContext().packageManager
+            packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
         }
 
-        appDataList.sortByDescending { it.totalDataUsage }
-        appDataList
-    }
+    private suspend fun getAppDataUsage(installedApps: List<ApplicationInfo>): ArrayList<AppDetails> =
+        withContext(Dispatchers.IO) {
+            val networkStatsManager =
+                requireContext().getSystemService(Context.NETWORK_STATS_SERVICE) as NetworkStatsManager
+            val packageManager = requireContext().packageManager
+            val appDataList = ArrayList<AppDetails>()
+
+            for (appInfo in installedApps) {
+                // Check if the app is an installed app
+                if (appInfo.flags and ApplicationInfo.FLAG_SYSTEM == 0) {
+                    val uid = appInfo.uid
+                    val appName = appInfo.loadLabel(packageManager).toString()
+                    val appIcon = appInfo.loadIcon(packageManager)
+                    try {
+                        val networkStats = networkStatsManager.queryDetailsForUid(
+                            ConnectivityManager.TYPE_WIFI, null, 0, System.currentTimeMillis(), uid
+                        )
+
+                        var totalDataUsage = 0L
+                        while (networkStats.hasNextBucket()) {
+                            val bucket = android.app.usage.NetworkStats.Bucket()
+                            networkStats.getNextBucket(bucket)
+                            totalDataUsage += bucket.rxBytes + bucket.txBytes
+                        }
+
+                        val appDetails = AppDetails(appName, appIcon, totalDataUsage)
+                        appDataList.add(appDetails)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+            }
+
+            appDataList.sortByDescending { it.totalDataUsage }
+            appDataList
+        }
 
     private fun updateAppDataAdapter() {
         val layoutManager = LinearLayoutManager(context)
@@ -169,6 +172,7 @@ class NavInstalled : Fragment(), SearchView.OnQueryTextListener {
             //Toast.makeText(requireContext(), "App not found", Toast.LENGTH_SHORT).show()
         }
     }
+
     override fun onQueryTextSubmit(query: String?): Boolean {
         if (query != null) {
             filterList(query)

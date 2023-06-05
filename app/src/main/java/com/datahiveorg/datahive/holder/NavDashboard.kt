@@ -69,7 +69,6 @@ class NavDashboard : Fragment() {
                 com.datahiveorg.datahive.R.id.profile -> {
                     requireActivity().run {
                         startActivity(Intent(this, ProfileActivity::class.java))
-                        finishAffinity()
                     }
                     true
                 }else -> false

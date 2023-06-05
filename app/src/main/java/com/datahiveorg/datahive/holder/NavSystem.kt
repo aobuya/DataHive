@@ -68,7 +68,6 @@ class NavSystem : Fragment(), SearchView.OnQueryTextListener {
                 R.id.profile -> {
                     requireActivity().run {
                         startActivity(Intent(this, ProfileActivity::class.java))
-                        finishAffinity()
                     }
                     true
                 }
