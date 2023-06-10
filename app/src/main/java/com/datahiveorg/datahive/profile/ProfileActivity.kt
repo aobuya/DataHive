@@ -19,6 +19,7 @@ import com.datahiveorg.datahive.login.LogInActivity
 import com.datahiveorg.datahive.login.RegisterActivity
 import com.datahiveorg.datahive.termsofservice.PrivacyPolicy
 import com.datahiveorg.datahive.termsofservice.TOC
+import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.google.firebase.auth.FirebaseAuth
 
@@ -60,9 +61,9 @@ class ProfileActivity : AppCompatActivity(), ProfileModalBottomSheet.WriteToRoom
         }
         //Load Ads
         MobileAds.initialize(this)
-        /**val adView = binding.adView
+        val adView = binding.adView
         val adRequest = AdRequest.Builder().build()
-        adView.loadAd(adRequest)**/
+        adView.loadAd(adRequest)
 
         binding.signOutButton.setOnClickListener {
             dataHiveAuth.signOut()

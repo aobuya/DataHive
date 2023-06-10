@@ -54,6 +54,15 @@
 
             <!--Ad unit here-->
 
+            <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/adView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                ads:adSize="BANNER"
+                ads:adUnitId="ca-app-pub-4108486324709922/3888774277" />
+
+
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="6dp" />

@@ -33,7 +33,7 @@ class TOC : AppCompatActivity() {
                 }
             }
         }
-        binding.webView.loadUrl("https://docs.google.com/document/d/e/2PACX-1vSlKXV0YEAjKjj41HJBGbZEgwNgHWosibhwRjOtzvFff6a3caJ1M0EYTtdxUTUCk42_P0eOSwf_LUHX/pub?embedded=true")
+        binding.webView.loadUrl("https://datahive-b0d2a.web.app/")
         binding.webView.webViewClient = WebViewClient()
 
 

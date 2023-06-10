@@ -31,7 +31,7 @@ class PrivacyPolicy : AppCompatActivity() {
                 }
             }
         }
-        binding.webView.loadUrl("https://docs.google.com/document/d/e/2PACX-1vRI8RxsVvMPgSwZNjOgLP-SqX8GSOEVns4tqN4YQjeWsHzPuU48TKwihhncudN8VZ3TDHlqypUlFpCM/pub")
+        binding.webView.loadUrl("https://datahive-b0d2a.web.app/")
         binding.webView.webViewClient = WebViewClient()
     }
 }

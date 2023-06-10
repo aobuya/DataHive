@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".holder.NavSystem">
+    tools:context=".holder.NavInstalled">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/dashboard_AppBarLayout"
@@ -64,7 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             ads:adSize="BANNER"
-            ads:adUnitId="ca-app-pub-4108486324709922/9209367805" />
+            ads:adUnitId="ca-app-pub-4108486324709922/8012632367" />
 
 
         <LinearLayout

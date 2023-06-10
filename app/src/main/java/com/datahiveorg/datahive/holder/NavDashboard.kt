@@ -31,6 +31,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.android.gms.ads.MobileAds
 import android.R
 import com.datahiveorg.datahive.profile.ProfileActivity
+import com.google.android.gms.ads.AdRequest
 
 
 class NavDashboard : Fragment() {
@@ -52,7 +53,7 @@ class NavDashboard : Fragment() {
         _binding = FragmentNavDashboardBinding.inflate(inflater, container, false)
         //Load Ads
         MobileAds.initialize(requireContext())
-        /**val adView = binding.adView
+        val adView = binding.adView
         var adRequest = AdRequest.Builder().build()
         adView.loadAd(adRequest)
         usagesDataList.clear()
@@ -60,7 +61,7 @@ class NavDashboard : Fragment() {
         //add2
         val adView2 = binding.adView2
         adRequest = AdRequest.Builder().build()
-        adView2.loadAd(adRequest)**/
+        adView2.loadAd(adRequest)
 
         dataHiveAuth = FirebaseAuth.getInstance()
 

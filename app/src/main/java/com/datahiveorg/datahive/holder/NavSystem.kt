@@ -33,6 +33,7 @@ import java.util.Locale
 import com.datahiveorg.datahive.R
 import com.datahiveorg.datahive.login.RegisterActivity
 import com.datahiveorg.datahive.profile.ProfileActivity
+import com.google.android.gms.ads.AdRequest
 
 
 class NavSystem : Fragment(), SearchView.OnQueryTextListener {
@@ -59,9 +60,9 @@ class NavSystem : Fragment(), SearchView.OnQueryTextListener {
 
         // Load Ads
         MobileAds.initialize(requireContext())
-        /**val adView = binding.adView
+        val adView = binding.adView
         val adRequest = AdRequest.Builder().build()
-        adView.loadAd(adRequest)**/
+        adView.loadAd(adRequest)
 
         binding.profileTopAppBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
