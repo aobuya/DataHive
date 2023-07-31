@@ -3,6 +3,8 @@ package com.datahiveorg.datahive
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.view.WindowCompat
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import com.datahiveorg.datahive.databinding.ActivityMainBinding
 
 
@@ -19,6 +21,10 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
 
         setContentView(view)
+
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView3) as NavHostFragment
+
+
 
         supportActionBar?.hide()
     }

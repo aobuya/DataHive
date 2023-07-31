@@ -52,7 +52,7 @@ class NavDashboard : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentNavDashboardBinding.inflate(inflater, container, false)
         //Load Ads
-        MobileAds.initialize(requireContext())
+        /*MobileAds.initialize(requireContext())
         val adView = binding.adView
         var adRequest = AdRequest.Builder().build()
         adView.loadAd(adRequest)
@@ -61,7 +61,7 @@ class NavDashboard : Fragment() {
         //add2
         val adView2 = binding.adView2
         adRequest = AdRequest.Builder().build()
-        adView2.loadAd(adRequest)
+        adView2.loadAd(adRequest)*/
 
         dataHiveAuth = FirebaseAuth.getInstance()
 

@@ -59,11 +59,11 @@ class ProfileActivity : AppCompatActivity(), ProfileModalBottomSheet.WriteToRoom
         } else {
             binding.signUpRedirect.visibility = View.GONE
         }
-        //Load Ads
+        /*Load Ads
         MobileAds.initialize(this)
         val adView = binding.adView
         val adRequest = AdRequest.Builder().build()
-        adView.loadAd(adRequest)
+        adView.loadAd(adRequest)*/
 
         binding.signOutButton.setOnClickListener {
             dataHiveAuth.signOut()

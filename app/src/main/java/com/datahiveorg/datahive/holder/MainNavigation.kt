@@ -28,5 +28,9 @@ class MainNavigation : AppCompatActivity() {
        val navController = navHostFragment.navController
        binding.bottomNavigation.setupWithNavController(navController)
 
+       binding.mainNavTopAppBar.setNavigationOnClickListener {
+           binding.navDrawerModal.open()
+       }
+
    }
 }

@@ -58,11 +58,11 @@ class NavSystem : Fragment(), SearchView.OnQueryTextListener {
         // Search view
         binding.appUsageSearchView.setOnQueryTextListener(this)
 
-        // Load Ads
+        /* Load Ads
         MobileAds.initialize(requireContext())
         val adView = binding.adView
         val adRequest = AdRequest.Builder().build()
-        adView.loadAd(adRequest)
+        adView.loadAd(adRequest)*/
 
         binding.profileTopAppBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
