@@ -27,8 +27,8 @@
                 android:layout_height="?attr/actionBarSize"
                 android:elevation="0dp"
                 app:layout_collapseMode="pin"
+                app:navigationIcon="@drawable/menu_hamburger"
                 app:title="@string/app_name"
-                app:menu="@menu/profile_menu"
                 app:titleTextAppearance="?attr/textAppearanceTitleLarge"/>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
@@ -61,6 +61,13 @@
                         android:orientation="vertical">
 
                         <!--Ad unit here-->
+                        <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+                            android:id="@+id/adView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            ads:adSize="BANNER"
+                            ads:adUnitId="ca-app-pub-4108486324709922/6635368878" />
 
                     </LinearLayout>
                     <TextView
@@ -453,6 +460,13 @@
                         android:orientation="vertical">
 
                         <!--Ad unit here-->
+                        <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+                            android:id="@+id/adView2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            ads:adSize="BANNER"
+                            ads:adUnitId="ca-app-pub-4108486324709922/7581387528" />
 
                     </LinearLayout>
 
@@ -466,6 +480,5 @@
 
 
     </LinearLayout>
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

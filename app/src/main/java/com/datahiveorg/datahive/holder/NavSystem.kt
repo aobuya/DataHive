@@ -32,7 +32,10 @@ import kotlinx.coroutines.withContext
 import java.util.Locale
 import com.datahiveorg.datahive.R
 import com.datahiveorg.datahive.login.RegisterActivity
-import com.datahiveorg.datahive.profile.ProfileActivity
+import com.google.android.gms.ads.AdRequest
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 
 class NavSystem : Fragment(), SearchView.OnQueryTextListener {
@@ -53,26 +56,19 @@ class NavSystem : Fragment(), SearchView.OnQueryTextListener {
         _binding = FragmentNavSystemBinding.inflate(inflater, container, false)
 
         dataHiveAuth = FirebaseAuth.getInstance()
+        Firebase.database.setPersistenceEnabled(true)
 
         // Search view
         binding.appUsageSearchView.setOnQueryTextListener(this)
 
-        // Load Ads
+        /* Load Ads
         MobileAds.initialize(requireContext())
-        /**val adView = binding.adView
+        val adView = binding.adView
         val adRequest = AdRequest.Builder().build()
-        adView.loadAd(adRequest)**/
+        adView.loadAd(adRequest)*/
 
-        binding.profileTopAppBar.setOnMenuItemClickListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.profile -> {
-                    requireActivity().run {
-                        startActivity(Intent(this, ProfileActivity::class.java))
-                    }
-                    true
-                }
-                else -> false
-            }
+        binding.navSystemTopAppBar.setNavigationOnClickListener {
+            (activity as MainNavigation).showNavigationDrawer()
         }
 
         loadAppDataUsage()

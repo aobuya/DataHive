@@ -21,6 +21,8 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.CommonStatusCodes
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -58,6 +60,7 @@ class RegisterActivity : AppCompatActivity() {
 
 
         dataHiveAuth = FirebaseAuth.getInstance()
+        Firebase.database.setPersistenceEnabled(true)
 
 
 

@@ -6,6 +6,7 @@ import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.ProgressBar
+import androidx.core.view.WindowCompat
 import com.datahiveorg.datahive.databinding.ActivityTocBinding
 
 
@@ -16,7 +17,7 @@ class TOC : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         binding = ActivityTocBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
@@ -33,7 +34,7 @@ class TOC : AppCompatActivity() {
                 }
             }
         }
-        binding.webView.loadUrl("https://docs.google.com/document/d/e/2PACX-1vSlKXV0YEAjKjj41HJBGbZEgwNgHWosibhwRjOtzvFff6a3caJ1M0EYTtdxUTUCk42_P0eOSwf_LUHX/pub?embedded=true")
+        binding.webView.loadUrl("https://datahive-b0d2a.web.app/toc.html")
         binding.webView.webViewClient = WebViewClient()
 
 

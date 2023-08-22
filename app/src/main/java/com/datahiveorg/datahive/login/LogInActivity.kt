@@ -20,6 +20,8 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.CommonStatusCodes
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 class LogInActivity : AppCompatActivity() {
 
@@ -53,6 +55,7 @@ class LogInActivity : AppCompatActivity() {
             )
             .build()
         dataHiveAuth = FirebaseAuth.getInstance()
+        Firebase.database.setPersistenceEnabled(true)
 
         binding.btnLogin.setOnClickListener {
             singInUser()

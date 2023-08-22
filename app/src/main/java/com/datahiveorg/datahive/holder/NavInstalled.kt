@@ -21,9 +21,12 @@ import com.datahiveorg.datahive.app_usage.AppDetails
 import com.datahiveorg.datahive.databinding.FragmentNavSystemBinding
 import android.R
 import android.content.Intent
-import com.datahiveorg.datahive.profile.ProfileActivity
+import com.datahiveorg.datahive.databinding.FragmentNavInstalledBinding
+import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import java.util.*
 import kotlin.collections.ArrayList
 import dev.jahidhasanco.networkusage.*
@@ -35,7 +38,7 @@ import kotlinx.coroutines.withContext
 
 class NavInstalled : Fragment(), SearchView.OnQueryTextListener {
 
-    private var _binding: FragmentNavSystemBinding? = null
+    private var _binding: FragmentNavInstalledBinding? = null
     private val binding get() = _binding!!
 
     private var appDataUsageList = ArrayList<AppDetails>()
@@ -48,34 +51,24 @@ class NavInstalled : Fragment(), SearchView.OnQueryTextListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentNavSystemBinding.inflate(inflater, container, false)
+        _binding = FragmentNavInstalledBinding.inflate(inflater, container, false)
 
 
         dataHiveAuth = FirebaseAuth.getInstance()
+        Firebase.database.setPersistenceEnabled(true)
 
         // Search view
         binding.appUsageSearchView.setOnQueryTextListener(this)
 
-        // Load Ads
+        /* Load Ads
         MobileAds.initialize(requireContext())
-        /**val adView = binding.adView
+        val adView = binding.adView
         val adRequest = AdRequest.Builder().build()
-        adView.loadAd(adRequest)**/
+        adView.loadAd(adRequest)*/
 
-        binding.profileTopAppBar.setOnMenuItemClickListener { menuItem ->
-            when (menuItem.itemId) {
-                com.datahiveorg.datahive.R.id.profile -> {
-                    requireActivity().run {
-                        startActivity(Intent(this, ProfileActivity::class.java))
-
-                    }
-                    true
-                }
-
-                else -> false
-            }
+        binding.navInstalledTopAppBar.setNavigationOnClickListener {
+            (activity as MainNavigation).showNavigationDrawer()
         }
-
         loadAppDataUsage()
 
         return binding.root

@@ -4,49 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph.xml"
     app:startDestination="@id/dashboardFragment">
-
     <fragment
         android:id="@+id/dashboardFragment"
         android:name="com.datahiveorg.datahive.holder.NavDashboard"
         android:label="Dashboard"
         tools:layout="@layout/fragment_nav_dashboard" >
         <action
-            android:id="@+id/action_dashboardFragment_to_profileFragment"
-            app:destination="@id/profileFragment"
+            android:id="@+id/action_dashboardFragment_to_installedFragment"
+            app:destination="@id/installedFragment"
             app:popUpTo="@id/dashboardFragment"
-            app:popUpToInclusive="true"
-            app:popUpToSaveState="true" />
+            app:popUpToInclusive="true" />
     </fragment>
-
     <fragment
-        android:id="@+id/appUsageFragment"
+        android:id="@+id/installedFragment"
         android:name="com.datahiveorg.datahive.holder.NavInstalled"
         android:label="App Usage"
-        tools:layout="@layout/fragment_nav_system" >
+        tools:layout="@layout/fragment_nav_installed" >
         <action
-            android:id="@+id/action_appUsageFragment_to_profileFragment"
-            app:destination="@id/profileFragment"
-            app:popUpTo="@id/appUsageFragment"
-            app:popUpToInclusive="true"
-            app:popUpToSaveState="true" />
+            android:id="@+id/action_installedFragment_to_systemFragment"
+            app:destination="@id/systemFragment"
+            app:popUpTo="@id/installedFragment"
+            app:popUpToInclusive="true" />
     </fragment>
-
     <fragment
         android:id="@+id/systemFragment"
         android:name="com.datahiveorg.datahive.holder.NavSystem"
         android:label="Profile"
-        tools:layout="@layout/fragment_nav_system" >
-        <action
-            android:id="@+id/action_systemFragment_to_profileFragment"
-            app:destination="@id/profileFragment"
-            app:popUpTo="@id/systemFragment"
-            app:popUpToInclusive="true"
-            app:popUpToSaveState="true" />
-    </fragment>
-    <fragment
-        android:id="@+id/profileFragment"
-        android:name="com.datahiveorg.datahive.profile.ProfileFragment"
-        android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
-
+        tools:layout="@layout/fragment_nav_system" />
 </navigation>

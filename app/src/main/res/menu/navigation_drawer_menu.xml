@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <item
+        android:id="@+id/contact_item"
+        android:title="@string/contact_us">
+        <menu>
+            <item
+                android:id="@+id/send_report"
+                android:icon="@drawable/send"
+                android:title="@string/report_tag"
+                android:checkable="true"
+                app:showAsAction="ifRoom"/>
+            <item
+                android:id="@+id/help_and_support"
+                android:icon="@drawable/help"
+                android:title="@string/support_tag"
+                android:checkable="true"
+                app:showAsAction="ifRoom"/>
+
+        </menu>
+    </item>
+    <item
+        android:id="@+id/guidelines"
+        android:title="@string/toc_text">
+        <menu>
+            <item
+                android:id="@+id/terms_of_service"
+                android:icon="@drawable/baseline_library_books_24"
+                android:title="@string/toc_text_toc"
+                android:checkable="true"
+                app:showAsAction="ifRoom"/>
+            <item
+                android:id="@+id/privacy_policy"
+                android:icon="@drawable/policy"
+                android:title="@string/privacy_policy"
+                android:checkable="true"
+                app:showAsAction="ifRoom"/>
+        </menu>
+    </item>
+    <item
+        android:id="@+id/misc_item"
+        android:title="@string/share">
+        <menu>
+            <item
+                android:id="@+id/share"
+                android:icon="@drawable/share"
+                android:title="@string/share"
+                android:checkable="true"
+                app:showAsAction="ifRoom"/>
+        </menu>
+    </item>
+    <item android:title="@string/account">
+        <menu>
+            <item
+                android:id="@+id/log_out"
+                android:icon="@drawable/log_out"
+                android:title="@string/logout"
+                android:checkable="true"/>
+        </menu>
+    </item>
+
+</menu>

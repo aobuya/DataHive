@@ -24,13 +24,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dev.jahidhasanco.networkusage.*
 import android.Manifest
 import androidx.appcompat.app.AlertDialog
-import androidx.navigation.fragment.findNavController
+//import androidx.navigation.fragment.findNavController
 import com.datahiveorg.datahive.databinding.FragmentNavDashboardBinding
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.android.gms.ads.MobileAds
-import android.R
-import com.datahiveorg.datahive.profile.ProfileActivity
+import com.google.android.gms.ads.AdRequest
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 
 class NavDashboard : Fragment() {
@@ -51,8 +52,8 @@ class NavDashboard : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentNavDashboardBinding.inflate(inflater, container, false)
         //Load Ads
-        MobileAds.initialize(requireContext())
-        /**val adView = binding.adView
+        /*MobileAds.initialize(requireContext())
+        val adView = binding.adView
         var adRequest = AdRequest.Builder().build()
         adView.loadAd(adRequest)
         usagesDataList.clear()
@@ -60,19 +61,13 @@ class NavDashboard : Fragment() {
         //add2
         val adView2 = binding.adView2
         adRequest = AdRequest.Builder().build()
-        adView2.loadAd(adRequest)**/
+        adView2.loadAd(adRequest)*/
 
         dataHiveAuth = FirebaseAuth.getInstance()
+        Firebase.database.setPersistenceEnabled(true)
 
-        binding.dashboardTopAppBar.setOnMenuItemClickListener { menuItem ->
-            when(menuItem.itemId) {
-                com.datahiveorg.datahive.R.id.profile -> {
-                    requireActivity().run {
-                        startActivity(Intent(this, ProfileActivity::class.java))
-                    }
-                    true
-                }else -> false
-            }
+        binding.dashboardTopAppBar.setNavigationOnClickListener {
+            (activity as MainNavigation).showNavigationDrawer()
         }
 
         setupPermissions()
@@ -86,10 +81,8 @@ class NavDashboard : Fragment() {
                 val todayM = networkUsage.getUsage(Interval.today, NetworkType.MOBILE)
                 val todayW = networkUsage.getUsage(Interval.today, NetworkType.WIFI)
 
-                binding.wifiUsagesTv.text =
-                    Util.formatData(todayW.downloads, todayW.uploads)[2]
-                binding.dataUsagesTv.text =
-                    Util.formatData(todayM.downloads, todayM.uploads)[2]
+                binding.wifiUsagesTv.text = Util.formatData(todayW.downloads, todayW.uploads)[2]
+                binding.dataUsagesTv.text = Util.formatData(todayM.downloads, todayM.uploads)[2]
                 handler.postDelayed(this, 1000)
             }
         }
@@ -148,8 +141,10 @@ class NavDashboard : Fragment() {
         binding.mobileDataThisMonth.text = Util.formatData(
             last30DaysTotalMobile.downloads, last30DaysTotalMobile.uploads
         )[2]
-        binding.last7DaysMobile.text = Util.formatData(last7DaysTotalMobile.uploads, last7DaysTotalMobile.downloads)[2]
-        binding.last7DaysWifi.text = Util.formatData(last7DaysTotalWIFI.uploads, last7DaysTotalWIFI.downloads)[2]
+        binding.last7DaysMobile.text =
+            Util.formatData(last7DaysTotalMobile.uploads, last7DaysTotalMobile.downloads)[2]
+        binding.last7DaysWifi.text =
+            Util.formatData(last7DaysTotalWIFI.uploads, last7DaysTotalWIFI.downloads)[2]
 
 
         dataUsagesAdapter = DataUsagesAdapter(usagesDataList)
@@ -167,8 +162,7 @@ class NavDashboard : Fragment() {
 
         if (permission != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(
-                    requireActivity(),
-                    Manifest.permission.READ_PHONE_STATE
+                    requireActivity(), Manifest.permission.READ_PHONE_STATE
                 )
             ) {
                 showPermissionExplanationDialog()
@@ -183,16 +177,13 @@ class NavDashboard : Fragment() {
     }
 
     private fun showPermissionExplanationDialog() {
-        val dialog = AlertDialog.Builder(requireContext())
-            .setTitle("Permission Required")
+        val dialog = AlertDialog.Builder(requireContext()).setTitle("Permission Required")
             .setMessage("The app requires access to read phone state for tracking data usages. Please grant the permission.")
             .setPositiveButton("Grant Permission") { _, _ ->
                 requestPermission()
-            }
-            .setNegativeButton("Cancel") { dialog, _ ->
+            }.setNegativeButton("Cancel") { dialog, _ ->
                 dialog.dismiss()
-            }
-            .create()
+            }.create()
 
         dialog.show()
     }
@@ -209,9 +200,7 @@ class NavDashboard : Fragment() {
         val appOps = context?.getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
         val mode = context?.let {
             appOps.checkOpNoThrow(
-                AppOpsManager.OPSTR_GET_USAGE_STATS,
-                Process.myUid(),
-                it.packageName
+                AppOpsManager.OPSTR_GET_USAGE_STATS, Process.myUid(), it.packageName
             )
         }
         val granted = mode == AppOpsManager.MODE_ALLOWED
@@ -224,17 +213,17 @@ class NavDashboard : Fragment() {
     }
 
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
+        requestCode: Int, permissions: Array<out String>, grantResults: IntArray
     ) {
         if (requestCode == PERMISSION_REQUEST_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 if (checkUsagePermission()) {
-                    Toast.makeText(requireContext(), "Permissions granted", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Permissions granted", Toast.LENGTH_SHORT)
+                        .show()
                 }
             } else {
-                Toast.makeText(requireContext(), "Permissions not granted", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Permissions not granted", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
     }

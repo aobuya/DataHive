@@ -9,6 +9,8 @@ import android.widget.Toast
 import androidx.core.view.WindowCompat
 import com.datahiveorg.datahive.databinding.ActivityResetPasswordBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 class ResetPassword : AppCompatActivity() {
     private lateinit var binding : ActivityResetPasswordBinding
@@ -22,6 +24,7 @@ class ResetPassword : AppCompatActivity() {
         setContentView(view)
 
         dataHiveAuth = FirebaseAuth.getInstance()
+        Firebase.database.setPersistenceEnabled(true)
 
         binding.btnResetPassword.setOnClickListener{
             val email = binding.enterEmail.text.trim().toString().trim()

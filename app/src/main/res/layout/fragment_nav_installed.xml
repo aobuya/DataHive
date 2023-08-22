@@ -17,33 +17,27 @@
             style="?attr/collapsingToolbarLayoutMediumStyle"
             android:layout_width="match_parent"
             android:layout_height="?attr/collapsingToolbarLayoutMediumSize"
+            app:contentScrim="@android:color/transparent"
             app:expandedTitleGravity="bottom"
             app:layout_collapseMode="pin"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
             <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/appUsage_TopAppBar"
+                android:id="@+id/nav_installed_TopAppBar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:elevation="0dp"
                 app:layout_collapseMode="pin"
-                app:title="@string/top_apps"
-                app:menu="@menu/profile_menu"/>
+                app:title="@string/installed_apps"
+                app:navigationIcon="@drawable/menu_hamburger"/>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
-
-
-
-
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-
-
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -63,16 +57,15 @@
         </androidx.cardview.widget.CardView>
 
 
-        <com.google.android.gms.ads.AdView
-            xmlns:ads="http://schemas.android.com/apk/res-auto"
+        <!--Ad unit here-->
+        <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
             android:id="@+id/adView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             ads:adSize="BANNER"
-            ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
+            ads:adUnitId="ca-app-pub-4108486324709922/8012632367" />
 
-
-        </com.google.android.gms.ads.AdView>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -82,17 +75,9 @@
             android:paddingEnd="10dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:layout_dodgeInsetEdges="bottom">
-
-
-
-
-
             <Space
                 android:layout_width="20dp"
                 android:layout_height="wrap_content" />
-
-
-
         </LinearLayout>
         <ProgressBar
             android:id="@+id/progress_bar"
@@ -102,22 +87,11 @@
             android:visibility="visible"
             />
 
-
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/listView"
+            android:id="@+id/listViewsystem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:listitem="@layout/app_data_usage_item"/>
-
     </LinearLayout>
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        android:src="@drawable/filter"
-        android:visibility="gone"
-        app:fabSize="normal" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
