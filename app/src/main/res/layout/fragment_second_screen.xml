@@ -14,17 +14,15 @@
         android:layout_gravity="start"
         android:text="@string/skip"
         android:textSize="12sp"
-        android:textColor="@color/seed"/>
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="8dp" />
+        android:textColor="@color/seed"
+        android:fontFamily="@font/inter_bold"/>
 
     <ImageView
         android:id="@+id/add_data"
         android:layout_width="match_parent"
         android:layout_height="460dp"
         android:src="@drawable/adddata"
-        android:contentDescription="@string/TODO" />
+        android:contentDescription="@string/TODO"/>
 
     <Space
         android:layout_width="match_parent"
@@ -38,7 +36,8 @@
         android:text="@string/second_screen_title_text"
         android:textSize="34sp"
         android:textStyle="bold"
-        android:textColor="@color/seed"/>
+        android:textColor="@color/seed"
+        android:fontFamily="@font/inter_bold"/>
 
     <Space
         android:layout_width="match_parent"
@@ -51,7 +50,8 @@
         android:gravity="center"
         android:text="@string/second_description_text"
         android:textSize="18sp"
-        android:textColor="@color/seed"/>
+        android:textColor="@color/seed"
+        android:fontFamily="@font/intervariablefontslntwght"/>
     <Space
         android:layout_width="match_parent"
         android:layout_height="48dp" />

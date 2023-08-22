@@ -30,13 +30,8 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31" >
         <activity
-            android:name=".profile.ProfileActivity"
-            android:exported="false"
-            android:label="@string/title_activity_profile"
-            android:theme="@style/AppTheme" />
-        <activity
             android:name=".termsofservice.PrivacyPolicy"
-            android:exported="false" />
+            android:exported="false"/>
         <activity
             android:name=".termsofservice.TOC"
             android:exported="false" />

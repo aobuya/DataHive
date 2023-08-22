@@ -35,7 +35,7 @@
 
     <!--Getting started screen-->
     <string name="lobby_title">Welcome to DataHive!</string>
-    <string name="lobby_description">Stay in control and effortlessly track how you consume data, ensuring you make the most of your plans and avoid any surprises.</string>
+    <string name="lobby_description">Effortlessly track how you consume data, ensuring you make the most of your plans and avoid any surprises.</string>
     <string name="lobby_button">Get Started</string>
     <string name="create_account">Create an Account Here</string>
 
@@ -133,6 +133,8 @@
     <string name="account">Account</string>
     <string name="installed_apps">Installed Apps</string>
     <string name="dashboard">Dashboard</string>
+    <string name="datahive_logo">DataHive Logo</string>
+    <string name="grant_permission">Grant Permission</string>
 
 
 </resources>

@@ -28,10 +28,10 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="16dp"
             android:layout_toEndOf="@id/app_icon_image_view"
-
+            style="@style/Base.AppTheme"
             android:text="App Name"
             android:textSize="16sp"
-            android:textStyle="bold" />
+            android:fontFamily="@font/inter_semibold" />
 
         <TextView
             android:id="@+id/app_data_usage_text_view"
@@ -41,7 +41,8 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="16dp"
             android:text="0 KB"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:fontFamily="@font/inter_light"/>
 
     </LinearLayout>
 

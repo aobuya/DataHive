@@ -12,33 +12,37 @@
         android:gravity="center"
         android:text="Usage Stats Permission"
         android:textSize="18sp"
-        android:textStyle="bold" />
+        android:fontFamily="@font/inter_semibold" />
 
     <TextView
         android:id="@+id/disclaimer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:text="@string/accept_toc"/>
+        android:text="@string/accept_toc"
+        android:fontFamily="@font/intervariablefontslntwght"/>
 
     <CheckBox
         android:id="@+id/checkbox_accept"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/accept" />
+        android:text="@string/accept"
+        style="@style/Base.AppTheme"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnGrantPermission"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:text="Grant Permission" />
+        android:text="@string/grant_permission"
+        android:fontFamily="@font/intervariablefontslntwght"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnCancel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:text="Cancel" />
+        android:text="Cancel"
+        android:fontFamily="@font/intervariablefontslntwght"/>
 
 </LinearLayout>
