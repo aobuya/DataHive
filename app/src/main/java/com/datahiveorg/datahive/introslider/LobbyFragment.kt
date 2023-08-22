@@ -27,6 +27,8 @@ import com.datahiveorg.datahive.holder.MainNavigation
 
 import com.datahiveorg.datahive.login.RegisterActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 class LobbyFragment : Fragment() {
 
@@ -44,27 +46,26 @@ class LobbyFragment : Fragment() {
         _binding = FragmentLobbyBinding.inflate(inflater, container, false)
 
         dataHiveAuth = FirebaseAuth.getInstance()
+        Firebase.database.setPersistenceEnabled(true)
 
 
         binding.getStartedButton.setOnClickListener {
-            dataHiveAuth.signInAnonymously()
-                .addOnCompleteListener(requireActivity()) { task ->
+            dataHiveAuth.signInAnonymously().addOnCompleteListener(requireActivity()) { task ->
                     if (task.isSuccessful) {
                         Log.d(TAG, "signInAnonymously:success")
+                        requireActivity().run {
+                            startActivity(Intent(this, MainNavigation::class.java))
+                            finish()
+                        }
                     } else {
                         Log.w(TAG, "signInAnonymously:failure", task.exception)
                         Toast.makeText(
                             requireContext(),
-                            "Authentication failed.",
-                            Toast.LENGTH_SHORT,
+                            "Authentication failed. Check your internet connection",
+                            Toast.LENGTH_LONG,
                         ).show()
                     }
                 }
-
-            requireActivity().run {
-                startActivity(Intent(this, MainNavigation::class.java))
-                finish()
-            }
         }
         binding.registerRedirect.setOnClickListener {
             requireActivity().run {
@@ -80,9 +81,7 @@ class LobbyFragment : Fragment() {
         val dialogView = LayoutInflater.from(requireContext())
             .inflate(R.layout.dialog_permission_explanation, null)
 
-        val builder = AlertDialog.Builder(requireContext())
-            .setView(dialogView)
-            .setCancelable(false)
+        val builder = AlertDialog.Builder(requireContext()).setView(dialogView).setCancelable(false)
         usageStatsPermissionDialog = builder.create()
 
         val btnGrantPermission = dialogView.findViewById<Button>(R.id.btnGrantPermission)
@@ -108,8 +107,10 @@ class LobbyFragment : Fragment() {
         val tocDisclaimer = dialogView.findViewById<TextView>(R.id.disclaimer)
         val tocDisclaimerText = getString(R.string.accept_toc)
 
-        val clickableWords = mapOf("Policies" to "https://datahive-b0d2a.web.app/#policies",
-            "Terms and Conditions" to "https://datahive-b0d2a.web.app/#toc")
+        val clickableWords = mapOf(
+            "Policies" to "https://datahive-b0d2a.web.app/#policies",
+            "Terms and Conditions" to "https://datahive-b0d2a.web.app/#toc"
+        )
 
         val spannableString = SpannableString(tocDisclaimerText)
 
@@ -125,10 +126,7 @@ class LobbyFragment : Fragment() {
             }
 
             spannableString.setSpan(
-                clickableSpan,
-                startIndex,
-                endIndex,
-                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                clickableSpan, startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
             )
         }
         tocDisclaimer.text = spannableString

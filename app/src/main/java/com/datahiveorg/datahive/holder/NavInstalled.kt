@@ -22,10 +22,11 @@ import com.datahiveorg.datahive.databinding.FragmentNavSystemBinding
 import android.R
 import android.content.Intent
 import com.datahiveorg.datahive.databinding.FragmentNavInstalledBinding
-import com.datahiveorg.datahive.profile.ProfileActivity
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import java.util.*
 import kotlin.collections.ArrayList
 import dev.jahidhasanco.networkusage.*
@@ -54,6 +55,7 @@ class NavInstalled : Fragment(), SearchView.OnQueryTextListener {
 
 
         dataHiveAuth = FirebaseAuth.getInstance()
+        Firebase.database.setPersistenceEnabled(true)
 
         // Search view
         binding.appUsageSearchView.setOnQueryTextListener(this)
@@ -64,20 +66,9 @@ class NavInstalled : Fragment(), SearchView.OnQueryTextListener {
         val adRequest = AdRequest.Builder().build()
         adView.loadAd(adRequest)*/
 
-        binding.profileTopAppBar.setOnMenuItemClickListener { menuItem ->
-            when (menuItem.itemId) {
-                com.datahiveorg.datahive.R.id.profile -> {
-                    requireActivity().run {
-                        startActivity(Intent(this, ProfileActivity::class.java))
-
-                    }
-                    true
-                }
-
-                else -> false
-            }
+        binding.navInstalledTopAppBar.setNavigationOnClickListener {
+            (activity as MainNavigation).showNavigationDrawer()
         }
-
         loadAppDataUsage()
 
         return binding.root

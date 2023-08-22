@@ -6,6 +6,7 @@ import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.ProgressBar
+import androidx.core.view.WindowCompat
 import com.datahiveorg.datahive.databinding.ActivityPrivacyPolicyBinding
 
 
@@ -14,7 +15,7 @@ class PrivacyPolicy : AppCompatActivity() {
     private lateinit var binding: ActivityPrivacyPolicyBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         binding = ActivityPrivacyPolicyBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
@@ -31,7 +32,7 @@ class PrivacyPolicy : AppCompatActivity() {
                 }
             }
         }
-        binding.webView.loadUrl("https://datahive-b0d2a.web.app/")
+        binding.webView.loadUrl("https://datahive-b0d2a.web.app/toc.html")
         binding.webView.webViewClient = WebViewClient()
     }
 }

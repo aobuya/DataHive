@@ -27,8 +27,8 @@
                 android:layout_height="?attr/actionBarSize"
                 android:elevation="0dp"
                 app:layout_collapseMode="pin"
+                app:navigationIcon="@drawable/menu_hamburger"
                 app:title="@string/app_name"
-                app:menu="@menu/profile_menu"
                 app:titleTextAppearance="?attr/textAppearanceTitleLarge"/>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
@@ -480,6 +480,5 @@
 
 
     </LinearLayout>
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

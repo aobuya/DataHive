@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
     <item
         android:id="@+id/dashboardFragment"
         android:icon="@drawable/home_24"
-        android:title="Dashboard" />
+        android:title="@string/dashboard" />
 
     <item
-        android:id="@+id/appUsageFragment"
+        android:id="@+id/installedFragment"
         android:icon="@drawable/baseline_data_usage_24"
-        android:title="Installed apps" />
+        android:title="@string/installed_apps" />
 
     <item
         android:id="@+id/systemFragment"
         android:icon="@drawable/baseline_app_settings_alt_24"
-        android:title="System Apps" />
+        android:title="@string/system_apps" />
 
 </menu>

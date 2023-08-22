@@ -23,13 +23,13 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
             <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/profile_TopAppBar"
+                android:id="@+id/nav_installed_TopAppBar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:elevation="0dp"
                 app:layout_collapseMode="pin"
-                app:title="@string/system_apps"
-                app:menu="@menu/profile_menu"/>
+                app:title="@string/installed_apps"
+                app:navigationIcon="@drawable/menu_hamburger"/>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 

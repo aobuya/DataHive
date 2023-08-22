@@ -5,17 +5,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
-    android:background="@color/seed">
+    android:background="@color/md_theme_dark_onSurface">
     <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/navigation_drawer_image"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        app:strokeWidth="1dp"
-        app:strokeColor="@color/black"
-        app:shapeAppearanceOverlay="@style/circleImageView"
-        android:src="@drawable/avatar"
-        android:padding="16dp" />
+        android:src="@drawable/hive"
+        android:padding="16dp"/>
 
     <TextView
+        android:id="@+id/navigation_drawer_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -23,15 +22,37 @@
         android:layout_marginEnd="24dp"
         android:textAppearance="?attr/textAppearanceHeadlineSmall"
         android:textColor="?attr/colorOnSurface"
-        android:text="@string/profile" />
+        android:text="@string/app_name" />
 
     <TextView
+        android:id="@+id/navigation_drawer_hub_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:textAppearance="?attr/textAppearanceTitleSmall"
-        android:textColor="?attr/colorOnSurfaceVariant"
+        android:textColor="@color/md_theme_light_primary"
         android:text="@string/email" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/nav_drawer_signUpRedirect"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:text="@string/Register" />
+    <com.google.android.material.button.MaterialButton
+        style="?attr/materialButtonOutlinedStyle"
+        android:id="@+id/nav_drawer_login_redirect"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:text="@string/login" />
+
+
 </LinearLayout>
