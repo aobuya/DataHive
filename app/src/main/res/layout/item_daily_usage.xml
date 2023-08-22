@@ -17,7 +17,8 @@
                 android:layout_height="wrap_content"
                 android:maxEms="20"
                 android:padding="5dp"
-                android:text="Date" />
+                android:text="Date"
+                android:fontFamily="@font/intervariablefontslntwght"/>
 
         <TextView
             android:id="@+id/mobile_data"
@@ -29,7 +30,8 @@
             android:padding="5dp"
             android:textColor="@color/md_theme_light_scrim"
             android:layout_height="wrap_content"
-            android:text="Date" />
+            android:text="Date"
+            android:fontFamily="@font/intervariablefontslntwght"/>
 
         <TextView
             android:id="@+id/wifi_data"
@@ -41,7 +43,8 @@
             android:padding="5dp"
             android:textColor="@color/md_theme_light_scrim"
             android:layout_height="wrap_content"
-            android:text="Date" />
+            android:text="Date"
+            android:fontFamily="@font/intervariablefontslntwght"/>
 
     </LinearLayout>
 

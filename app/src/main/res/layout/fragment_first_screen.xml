@@ -15,17 +15,14 @@
         android:layout_gravity="start"
         android:text="@string/skip"
         android:textColor="@color/md_theme_light_scrim"
-        android:textSize="12sp"/>
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="8dp" />
-
+        android:textSize="12sp"
+        android:fontFamily="@font/inter_semibold"/>
     <ImageView
         android:id="@+id/goals"
         android:layout_width="match_parent"
         android:layout_height="460dp"
         android:contentDescription="@string/TODO"
-        android:src="@drawable/goals" />
+        android:src="@drawable/goals"/>
 
     <Space
         android:layout_width="match_parent"
@@ -38,7 +35,7 @@
         android:gravity="center"
         android:text="@string/first_screen_title_text"
         android:textSize="34sp"
-        android:textStyle="bold"
+        android:fontFamily="@font/inter_bold"
         android:textColor="@color/md_theme_light_scrim"/>
 
     <Space
@@ -52,7 +49,8 @@
         android:gravity="center"
         android:text="@string/first_screen_description_text"
         android:textSize="18sp"
-        android:textColor="@color/md_theme_light_scrim"/>
+        android:textColor="@color/md_theme_light_scrim"
+        android:fontFamily="@font/intervariablefontslntwght"/>
     <Space
         android:layout_width="match_parent"
         android:layout_height="48dp"/>
