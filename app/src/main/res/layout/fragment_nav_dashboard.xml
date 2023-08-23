@@ -76,11 +76,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
-                        android:layout_marginTop="10dp"
                         android:layout_marginEnd="20dp"
-                        android:fontFamily="@font/inter_semibold"
+                        android:fontFamily="@font/inter_bold"
                         android:text="@string/today_data_usage"
-                        android:textSize="18dp" />
+                        android:textSize="18sp"
+                        android:padding="8dp"/>
 
 
                     <LinearLayout
@@ -104,21 +104,23 @@
                                 android:layout_weight="1"
                                 app:cardCornerRadius="8dp"
                                 app:cardElevation="4dp"
-                                app:cardUseCompatPadding="true">
+                                app:cardUseCompatPadding="true"
+                                app:cardPreventCornerOverlap="false">
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:gravity="center"
                                     android:orientation="vertical"
-                                    android:padding="16dp">
+                                    android:padding="16dp"
+                                    android:background="@drawable/custom_text">
 
                                     <ImageView
                                         android:layout_width="40dp"
                                         android:layout_height="40dp"
                                         android:adjustViewBounds="true"
                                         android:scaleType="centerCrop"
-                                        android:src="@drawable/baseline_wifi_24" />
+                                        android:src="@drawable/wifi" />
 
                                     <TextView
                                         android:id="@+id/wifi_label"
@@ -127,8 +129,9 @@
                                         android:layout_weight="1"
                                         android:gravity="center_vertical"
                                         android:maxLines="1"
-                                        android:text="WiFi"
-                                        android:fontFamily="@font/inter_medium"/>
+                                        android:text="@string/wifi"
+                                        android:fontFamily="@font/inter_semibold"
+                                        android:paddingTop="8dp"/>
 
                                     <TextView
                                         android:id="@+id/wifiUsagesTv"
@@ -151,14 +154,16 @@
                                 android:layout_weight="1"
                                 app:cardCornerRadius="8dp"
                                 app:cardElevation="4dp"
-                                app:cardUseCompatPadding="true">
+                                app:cardUseCompatPadding="true"
+                                app:cardPreventCornerOverlap="false">
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:gravity="center"
                                     android:orientation="vertical"
-                                    android:padding="16dp">
+                                    android:padding="16dp"
+                                    android:background="@drawable/custom_text">
 
                                     <ImageView
                                         android:layout_width="40dp"
@@ -166,7 +171,7 @@
                                         android:adjustViewBounds="true"
 
                                         android:scaleType="centerCrop"
-                                        android:src="@drawable/mobile_data" />
+                                        android:src="@drawable/network_cellular" />
 
                                     <TextView
                                         android:id="@+id/data_label"
@@ -175,7 +180,9 @@
                                         android:layout_weight="1"
                                         android:gravity="center_vertical"
                                         android:maxLines="1"
-                                        android:text="Mobile" />
+                                        android:text="@string/mobile"
+                                        android:fontFamily="@font/inter_semibold"
+                                        android:paddingTop="8dp"/>
 
                                     <TextView
                                         android:id="@+id/dataUsagesTv"
@@ -183,7 +190,8 @@
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
                                         android:maxLines="1"
-                                        android:text="0 Kib" />
+                                        android:text="@string/gsm_bandwidth"
+                                        android:fontFamily="@font/inter_light"/>
 
                                 </LinearLayout>
 
@@ -199,9 +207,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_marginEnd="20dp"
-                        android:fontFamily="@font/inter_semibold"
-                        android:text="Last 7 days"
-                        android:textSize="18dp" />
+                        android:fontFamily="@font/inter_bold"
+                        android:text="@string/last_7_days"
+                        android:textSize="18sp"
+                        android:padding="8dp"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -221,28 +230,30 @@
                                 android:layout_weight="1"
                                 app:cardCornerRadius="8dp"
                                 app:cardElevation="4dp"
-                                app:cardUseCompatPadding="true">
+                                app:cardUseCompatPadding="true"
+                                app:cardPreventCornerOverlap="false">
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:gravity="center"
                                     android:orientation="vertical"
-                                    android:padding="16dp">
+                                    android:padding="16dp"
+                                    android:background="@drawable/custom_text">
 
                                     <ImageView
                                         android:layout_width="40dp"
                                         android:layout_height="40dp"
                                         android:adjustViewBounds="true"
                                         android:scaleType="centerCrop"
-
-                                        android:src="@drawable/baseline_wifi_24" />
+                                        android:src="@drawable/wifi" />
 
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="WiFi"
-                                        android:fontFamily="@font/inter_medium"/>
+                                        android:fontFamily="@font/inter_semibold"
+                                        android:paddingTop="8dp"/>
 
                                     <TextView
                                         android:id="@+id/last_7_days_wifi"
@@ -261,14 +272,16 @@
                                 android:layout_weight="1"
                                 app:cardCornerRadius="8dp"
                                 app:cardElevation="4dp"
-                                app:cardUseCompatPadding="true">
+                                app:cardUseCompatPadding="true"
+                                app:cardPreventCornerOverlap="false">
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:gravity="center"
                                     android:orientation="vertical"
-                                    android:padding="16dp">
+                                    android:padding="16dp"
+                                    android:background="@drawable/custom_text">
 
                                     <ImageView
                                         android:layout_width="40dp"
@@ -276,13 +289,14 @@
 
                                         android:adjustViewBounds="true"
                                         android:scaleType="centerCrop"
-                                        android:src="@drawable/mobile_data" />
+                                        android:src="@drawable/network_cellular" />
 
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Mobile"
-                                        android:fontFamily="@font/inter_medium"/>
+                                        android:text="@string/mobile"
+                                        android:fontFamily="@font/inter_semibold"
+                                        android:paddingTop="8dp"/>
 
                                     <TextView
                                         android:id="@+id/last_7_days_mobile"
@@ -315,12 +329,11 @@
                             android:layout_margin="2dp"
                             android:layout_weight="1"
                             android:background="@drawable/custom_text_grey"
-                            android:fontFamily="@font/intervariablefontslntwght"
+                            android:fontFamily="@font/inter_regular"
                             android:maxEms="20"
-                            android:padding="5dp"
+                            android:padding="8dp"
                             android:text="@string/totals"
                             android:textColor="@color/md_theme_light_scrim" />
-
                         <TextView
                             android:id="@+id/mobile_data_this_month_top"
                             android:layout_width="0dp"
@@ -328,9 +341,9 @@
                             android:layout_margin="2dp"
                             android:layout_weight="1"
                             android:background="@drawable/custom_text"
-                            android:fontFamily="@font/intervariablefontslntwght"
+                            android:fontFamily="@font/inter_regular"
                             android:maxEms="20"
-                            android:padding="5dp"
+                            android:padding="8dp"
                             android:text="@string/total_mobile"
                             android:textColor="@color/md_theme_light_scrim" />
 
@@ -341,9 +354,9 @@
                             android:layout_margin="2dp"
                             android:layout_weight="1"
                             android:background="@drawable/custom_text"
-                            android:fontFamily="@font/intervariablefontslntwght"
+                            android:fontFamily="@font/inter_regular"
                             android:maxEms="20"
-                            android:padding="5dp"
+                            android:padding="8dp"
                             android:text="@string/wifi_total"
                             android:textColor="@color/md_theme_light_scrim" />
 
@@ -365,9 +378,9 @@
                             android:layout_margin="2dp"
                             android:layout_weight="1"
                             android:background="@drawable/custom_text_grey"
-                            android:fontFamily="@font/intervariablefontslntwght"
+                            android:fontFamily="@font/inter_regular"
                             android:maxEms="20"
-                            android:padding="5dp"
+                            android:padding="8dp"
                             android:text="@string/last_30_days"
                             android:textColor="@color/md_theme_light_scrim" />
 
@@ -378,9 +391,9 @@
                             android:layout_margin="2dp"
                             android:layout_weight="1"
                             android:background="@drawable/custom_text"
-                            android:fontFamily="@font/intervariablefontslntwght"
+                            android:fontFamily="@font/inter_regular"
                             android:maxEms="20"
-                            android:padding="5dp"
+                            android:padding="8dp"
                             android:textColor="@color/md_theme_light_scrim" />
 
                         <TextView
@@ -391,9 +404,9 @@
                             android:layout_weight="1"
                             android:background="@drawable/custom_text"
                             android:maxEms="20"
-                            android:padding="5dp"
+                            android:padding="8dp"
                             android:textColor="@color/md_theme_light_scrim"
-                            android:fontFamily="@font/intervariablefontslntwght"/>
+                            android:fontFamily="@font/inter_regular"/>
 
                     </LinearLayout>
 
@@ -403,9 +416,10 @@
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="20dp"
-                        android:fontFamily="@font/inter_medium"
+                        android:fontFamily="@font/inter_bold"
+                        android:textSize="18sp"
                         android:text="@string/full_month_data_usages"
-                        android:textSize="18dp" />
+                        android:padding="8dp"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -422,10 +436,10 @@
                             android:layout_weight="1"
                             android:background="@color/seed"
                             android:maxEms="20"
-                            android:padding="5dp"
+                            android:padding="8dp"
                             android:text="Date"
                             android:textColor="@color/md_theme_light_scrim"
-                            android:fontFamily="@font/intervariablefontslntwght"/>
+                            android:fontFamily="@font/inter_regular"/>
 
                         <TextView
                             android:layout_width="0dp"
@@ -433,10 +447,10 @@
                             android:layout_weight="1"
                             android:background="@color/seed"
                             android:maxEms="20"
-                            android:padding="5dp"
+                            android:padding="8dp"
                             android:text="@string/mobile"
                             android:textColor="@color/md_theme_light_scrim"
-                            android:fontFamily="@font/intervariablefontslntwght"/>
+                            android:fontFamily="@font/inter_regular"/>
 
                         <TextView
                             android:id="@+id/wifi_data"
@@ -446,10 +460,10 @@
                             android:layout_weight="1"
                             android:background="@color/seed"
                             android:maxEms="20"
-                            android:padding="5dp"
+                            android:padding="8dp"
                             android:text="@string/wifi"
                             android:textColor="@color/md_theme_light_scrim"
-                            android:fontFamily="@font/intervariablefontslntwght"/>
+                            android:fontFamily="@font/inter_regular"/>
 
                     </LinearLayout>
 
