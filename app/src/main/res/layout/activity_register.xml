@@ -38,7 +38,7 @@
         android:background="@drawable/et_custom"
         android:padding="15dp"
         android:inputType="textEmailAddress"
-        android:fontFamily="@font/intervariablefontslntwght"
+        android:fontFamily="@font/inter_regular"
         android:layout_above="@id/et_password"
         android:textSize="15sp" />
 
@@ -55,7 +55,7 @@
         android:inputType="textPassword"
         android:layout_centerInParent="true"
         android:textSize="15sp"
-        android:fontFamily="@font/intervariablefontslntwght"/>
+        android:fontFamily="@font/inter_regular"/>
 
 
     <EditText
@@ -72,7 +72,7 @@
         android:inputType="textPassword"
         android:padding="15dp"
         android:textSize="15sp"
-        android:fontFamily="@font/intervariablefontslntwght"/>
+        android:fontFamily="@font/inter_regular"/>
 
     <Button
         android:id="@+id/btn_login"
@@ -83,7 +83,7 @@
         android:layout_marginRight="20dp"
         android:layout_marginTop="15dp"
         android:text="@string/Register"
-        android:fontFamily="@font/intervariablefontslntwght"/>
+        android:fontFamily="@font/inter_regular"/>
 
     <Button
         android:id="@+id/btn_google_sign_up"
@@ -99,7 +99,7 @@
         app:icon="@drawable/google_color"
         app:iconSize="20dp"
         app:strokeColor="@color/seed"
-        android:fontFamily="@font/intervariablefontslntwght"/>
+        android:fontFamily="@font/inter_regular"/>
     <Space
         android:layout_width="wrap_content"
         android:layout_margin="10dp"

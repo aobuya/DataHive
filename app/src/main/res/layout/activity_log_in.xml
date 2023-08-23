@@ -40,7 +40,7 @@
         android:background="@drawable/et_custom"
         android:padding="15dp"
         android:inputType="textEmailAddress"
-        android:fontFamily="@font/intervariablefontslntwght"
+        android:fontFamily="@font/inter_regular"
         android:layout_above="@id/et_password"
         android:textSize="15sp" />
 
@@ -57,7 +57,7 @@
         android:inputType="textPassword"
         android:layout_centerInParent="true"
         android:textSize="15sp"
-        android:fontFamily="@font/intervariablefontslntwght"/>
+        android:fontFamily="@font/inter_regular"/>
 
 
     <Button
@@ -70,7 +70,7 @@
         android:layout_marginTop="15dp"
         android:text="@string/login"
         android:gravity="center"
-        android:fontFamily="@font/intervariablefontslntwght"/>
+        android:fontFamily="@font/inter_regular"/>
     <Button
         android:id="@+id/btn_google_sign_in"
         android:visibility="gone"

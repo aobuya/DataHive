@@ -51,7 +51,7 @@
         android:text="@string/second_description_text"
         android:textSize="18sp"
         android:textColor="@color/seed"
-        android:fontFamily="@font/intervariablefontslntwght"/>
+        android:fontFamily="@font/inter_regular"/>
     <Space
         android:layout_width="match_parent"
         android:layout_height="48dp" />

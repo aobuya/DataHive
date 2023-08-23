@@ -35,28 +35,26 @@
         android:textAppearance="?attr/textAppearanceTitleSmall"
         android:textColor="@color/md_theme_light_primary"
         android:text="@string/email"
-        android:fontFamily="@font/intervariablefontslntwght"/>
+        android:fontFamily="@font/inter_regular"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/nav_drawer_signUpRedirect"
-        android:layout_width="286dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_gravity="start"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginRight="20dp"
         android:text="@string/Register"
-        android:fontFamily="@font/intervariablefontslntwght"/>
+        android:fontFamily="@font/inter_regular"/>
     <com.google.android.material.button.MaterialButton
         style="?attr/materialButtonOutlinedStyle"
         android:id="@+id/nav_drawer_login_redirect"
-        android:layout_width="286dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_gravity="start"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:text="@string/login"
-        android:fontFamily="@font/intervariablefontslntwght"/>
-
-
+        android:fontFamily="@font/inter_regular"/>
 </LinearLayout>

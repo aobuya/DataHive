@@ -8,24 +8,12 @@
         android:id="@+id/dashboardFragment"
         android:name="com.datahiveorg.datahive.holder.NavDashboard"
         android:label="Dashboard"
-        tools:layout="@layout/fragment_nav_dashboard" >
-        <action
-            android:id="@+id/action_dashboardFragment_to_installedFragment"
-            app:destination="@id/installedFragment"
-            app:popUpTo="@id/dashboardFragment"
-            app:popUpToInclusive="true" />
-    </fragment>
+        tools:layout="@layout/fragment_nav_dashboard" />
     <fragment
         android:id="@+id/installedFragment"
         android:name="com.datahiveorg.datahive.holder.NavInstalled"
         android:label="App Usage"
-        tools:layout="@layout/fragment_nav_installed" >
-        <action
-            android:id="@+id/action_installedFragment_to_systemFragment"
-            app:destination="@id/systemFragment"
-            app:popUpTo="@id/installedFragment"
-            app:popUpToInclusive="true" />
-    </fragment>
+        tools:layout="@layout/fragment_nav_installed" />
     <fragment
         android:id="@+id/systemFragment"
         android:name="com.datahiveorg.datahive.holder.NavSystem"

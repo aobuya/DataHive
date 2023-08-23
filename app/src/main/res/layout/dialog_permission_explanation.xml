@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:text="@string/accept_toc"
-        android:fontFamily="@font/intervariablefontslntwght"/>
+        android:fontFamily="@font/inter_regular"/>
 
     <CheckBox
         android:id="@+id/checkbox_accept"
@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:text="@string/grant_permission"
-        android:fontFamily="@font/intervariablefontslntwght"/>
+        android:fontFamily="@font/inter_regular"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnCancel"
@@ -43,6 +43,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:text="Cancel"
-        android:fontFamily="@font/intervariablefontslntwght"/>
+        android:fontFamily="@font/inter_regular"/>
 
 </LinearLayout>

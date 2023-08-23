@@ -77,7 +77,7 @@
 
     <!--Profile page-->
     <string name="user">username</string>
-    <string name="last_7_days">LAST 7 DAYS</string>
+    <string name="last_7_days">Last 7 Days</string>
     <string name="toc_text">Community Guidelines and Legal Policies</string>
     <string name="toc_text_toc">Terms Of Service</string>
     <string name="privacy_policy">Privacy Policy</string>
@@ -135,6 +135,7 @@
     <string name="dashboard">Dashboard</string>
     <string name="datahive_logo">DataHive Logo</string>
     <string name="grant_permission">Grant Permission</string>
+    <string name="gsm_bandwidth">0 Kib</string>
 
 
 </resources>

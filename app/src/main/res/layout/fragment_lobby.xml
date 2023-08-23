@@ -50,7 +50,7 @@
         android:layout_height="wrap_content"
         android:text="@string/lobby_button"
         android:textStyle="bold"
-        android:fontFamily="@font/intervariablefontslntwght"
+        android:fontFamily="@font/inter_regular"
         android:layout_gravity="center"/>
     <Space
         android:layout_width="match_parent"

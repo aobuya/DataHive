@@ -11,6 +11,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
+import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.get
 import androidx.navigation.fragment.NavHostFragment
@@ -148,10 +149,12 @@ class MainNavigation : AppCompatActivity() {
         logInButton.setOnClickListener {
             val intent = Intent(this, LogInActivity::class.java)
             startActivity(intent)
+            finishAffinity()
         }
         signUpButton.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
+            finishAffinity()
         }
     }
 
@@ -167,7 +170,7 @@ class MainNavigation : AppCompatActivity() {
                 val reviewInfo = task.result
                 val flow = manager.launchReviewFlow(this, reviewInfo)
                 flow.addOnCompleteListener {
-                    Log.d("InAppReview:", "Success: $reviewInfo",)
+                    Log.d("InAppReview:", "Success: $reviewInfo")
                 }
             } else {
                 Toast.makeText(this, "Something went wrong", LENGTH_SHORT).show()
